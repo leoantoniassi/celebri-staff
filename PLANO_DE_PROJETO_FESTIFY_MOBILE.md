@@ -1,5 +1,5 @@
 # PLANO DE PROJETO ÁGIL DE SOFTWARE
-## Aplicativo Móvel: Festify Staff — Plataforma SaaS B2B White Label de Gestão de Eventos e Buffets
+## Aplicativo Móvel: Festify Staff — Plataforma SaaS White Label de Gestão de Eventos e Buffets
 
 ---
 
@@ -14,7 +14,7 @@
 # 1. INTRODUÇÃO
 
 ### 1.1 Apresentação do Documento e Visão Geral
-Este documento formaliza a iniciação do projeto ágil de software para o desenvolvimento da extensão móvel (**Festify Staff**), referente ao Projeto Integrador do 5º semestre do curso de Análise e Desenvolvimento de Sistemas / Engenharia de Software. O projeto consiste na evolução e pivotagem da plataforma web de gestão de eventos para um modelo **SaaS B2B Multilocatário (White Label)** denominado **Festify**.
+Este documento formaliza a iniciação do projeto ágil de software para o desenvolvimento da extensão móvel (**Festify Staff**), referente ao Projeto Integrador do 5º semestre do curso de Desenvolvimento de Software Multiplataforma. O projeto consiste na evolução e pivotagem da plataforma web de gestão de eventos para um modelo **SaaS B2B Multilocatário (White Label)** denominado **Festify**.
 
 O foco central deste semestre é o desenvolvimento do aplicativo móvel híbrido focado na **equipe operacional em campo** (recepcionistas, garçons, recreadores, gerentes de salão e equipe de apoio), permitindo a execução das atividades do dia do evento com alta mobilidade, precisão e personalização visual dinâmica para cada buffet contratante.
 
@@ -73,7 +73,7 @@ A operação no dia de uma festa de buffet é dinâmica e com ritmo acelerado. O
 4. **Diferencial Comercial White Label:** Permitir que o buffet apresente o aplicativo com sua própria marca para os funcionários, aumentando a percepção de valor do SaaS.
 
 ### 1.5 Identificação do Grupo de Trabalho
-* **Nome da Equipe:** Festify Engineering Team
+* **Nome da Equipe:** L2Tech
 * **Membros do Time e Papéis Scrum:**
   * **Luis Felipe Veronezi** — *Product Owner (PO)*: Responsável pela visão do produto, priorização do Backlog e alinhamento dos requisitos de negócio.
   * **Leonardo Antoniassi** — *Desenvolvedor Fullstack (Dev Lead)*: Responsável pela arquitetura técnica, desenvolvimento do aplicativo móvel, integração com a API Node.js e Docker.
