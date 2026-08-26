@@ -25,9 +25,9 @@ A transição da plataforma de um sistema sob medida para um ecossistema **SaaS 
 
 | Bloco do Canvas | Descrição Detalhada |
 | :--- | :--- |
-| **Parcerias-Chave** | Provedores de nuvem (AWS/GCP), Serviços de E-mail Transactional (SMTP / SendGrid), Provedor de Notificações Push (Expo Push Notifications), Lojas de Apps (Google Play Store e Apple App Store). |
-| **Atividades-Chave** | Desenvolvimento contínuo da API backend REST, manutenção do aplicativo móvel híbrido, suporte a injeção dinâmica de temas White Label, gerenciamento de infraestrutura em containers Docker. |
-| **Recursos-Chave** | API Central Node.js/Express, Banco de dados relacional PostgreSQL, Código-fonte mobile em Flutter/React Native, equipe técnica de desenvolvimento e infraestrutura Docker. |
+| **Parcerias-Chave** | Provedores de nuvem (AWS/GCP), Serviços de E-mail Transactional (SMTP / SendGrid), Provedor de Notificações Push (Firebase Cloud Messaging - FCM), Lojas de Apps (Google Play Store e Apple App Store). |
+| **Atividades-Chave** | Desenvolvimento contínuo da API backend REST, manutenção do aplicativo móvel multiplataforma, suporte a injeção dinâmica de temas White Label, gerenciamento de infraestrutura em containers Docker. |
+| **Recursos-Chave** | API Central Node.js/Express, Banco de dados relacional PostgreSQL, Código-fonte mobile em .NET MAUI / Flutter, equipe técnica de desenvolvimento e infraestrutura Docker. |
 | **Proposta de Valor** | Plataforma de gestão B2B White Label para buffets que injeta automaticamente a identidade visual do cliente (logo, nome fantasia e cores), simplificando a operação de campo, recepção por QR Code e controle de escalas. |
 | **Relacionamento com Clientes** | Atendimento automatizado, onboarding de contratantes, suporte via canal direto de atendimento e autosserviço no painel web administrativo. |
 | **Canais** | Plataforma Web administrativa, Aplicativo móvel (iOS/Android), integração direta com WhatsApp para notificações e campanhas de marketing digital B2B. |
@@ -43,7 +43,7 @@ O aplicativo móvel **Festify Staff** não é um aplicativo isolado; ele é uma 
 |                       ECOSSISTEMA FESTIFY                             |
 |                                                                       |
 |  +------------------------+             +--------------------------+  |
-|  |   Painel Web (React)   |             | App Mobile Festify Staff |  |
+|  |       Painel Web       |             | App Mobile Festify Staff |  |
 |  |  (Gestão / Dashboard)  |             |  (Operação de Campo)     |  |
 |  +-----------+------------+             +------------+-------------+  |
 |              |                                       |                |
@@ -103,8 +103,8 @@ Quando totalmente pronto e integrado, espera-se que o app seja a ferramenta diá
 
 #### 2.3.1 Descrição Textual dos Componentes
 O aplicativo móvel adota uma arquitetura em camadas orientada a serviços REST:
-1. **Camada de Apresentação (Mobile UI Layer):** Desenvolvida em tecnologia híbrida (React Native com Expo / Flutter), organizada em componentes visuais redefiníveis que consomem um `ThemeContext` dinâmico para renderizar as cores e logos do buffet contratante.
-2. **Camada de Gerenciamento de Estado e Cache Local:** Utiliza `AsyncStorage` / `SQLite` para armazenar o token JWT de autenticação, o perfil da marca e a fila de requisições offline (resiliência de rede na portaria).
+1. **Camada de Apresentação (Mobile UI Layer):** Desenvolvida em tecnologia multiplataforma (.NET MAUI / Flutter), organizada em componentes visuais redefiníveis que consomem um gerenciador de temas dinâmico para renderizar as cores e logos do buffet contratante.
+2. **Camada de Gerenciamento de Estado e Cache Local:** Utiliza `SecureStorage` / `SQLite` para armazenar o token JWT de autenticação, o perfil da marca e a fila de requisições offline (resiliência de rede na portaria).
 3. **Camada de Comunicação de Rede (HTTP Client):** Cliente HTTP com interceptadores para envio do Token JWT no cabeçalho `Authorization: Bearer <token>` e tratamento automatizado de reconexão.
 4. **Backend API REST Central (Node.js & Express):** Servidor hospedado em container Docker contendo as rotas de autenticação, escalas, eventos e convidados.
 5. **Camada de Persistência (ORM Sequelize & PostgreSQL):** Banco de dados relacional orquestrado via Docker Compose, com chaves primárias padronizadas em `DataTypes.UUID` e nomenclatura em `snake_case`.
@@ -115,9 +115,9 @@ O aplicativo móvel adota uma arquitetura em camadas orientada a serviços REST:
 graph TD
     subgraph Dispositivo Movel [App Mobile Festify Staff]
         A[Mobile UI Components] --> B[Theme Engine White Label]
-        A --> C[State & Offline Storage - SQLite/AsyncStorage]
+        A --> C[State & Offline Storage - SQLite/SecureStorage]
         A --> D[Nativo: Camera QR Code / Push / WhatsApp]
-        C --> E[HTTP REST Client - Axios/Dio]
+        C --> E[HTTP REST Client - Dio / HttpClient]
     end
 
     subgraph Infraestrutura Backend [Docker Compose Environment]
@@ -138,13 +138,13 @@ graph TD
 
 | Categoria | Especificação Técnica | Justificativa / Motivação |
 | :--- | :--- | :--- |
-| **Plataforma Mobile** | Híbrida (React Native com Expo / Flutter) | Permite compilar código único para Android e iOS, reduzindo o tempo de desenvolvimento em 50% mantendo excelente performance nativa para acesso à câmera. |
+| **Plataforma Mobile** | Multiplataforma (.NET MAUI / Flutter) | Permite compilar código único para Android e iOS, reduzindo o tempo de desenvolvimento em 50% mantendo excelente performance nativa para acesso à câmera. |
 | **Consumo de API** | RESTful com formato JSON | Padronização universal de comunicação e facilidade de integração com a API existente Node.js/Express. |
 | **Persistência Backend** | PostgreSQL + Sequelize ORM | Banco de dados relacional robusto com integridade referencial. Uso obrigatório de `DataTypes.UUID` para evitar colisões e chaves previsíveis. |
 | **Nomenclatura DB** | Campos estritamente em `snake_case` | Conformidade com as boas práticas de banco relacional PostgreSQL e padronização do projeto. |
 | **Infraestrutura** | Containers orquestrados com Docker Compose | Garante reprodutibilidade total do ambiente de desenvolvimento e produção entre os estudantes da equipe. |
 | **Customização White Label** | Injeção dinâmica de identidade visual | Cada buffet contratante possui sua logo (`logo_url`) e paleta de cores (`primary_color`, `secondary_color`) injetadas no app via endpoint de configuração. |
-| **Resiliência Offline** | Cache local de portaria em SQLite/AsyncStorage | Salões de festa frequentemente possuem sinal fraco de internet; a validação de QR Code e contagem deve continuar funcionando localmente e sincronizar ao reconectar. |
+| **Resiliência Offline** | Cache local de portaria em SQLite/SecureStorage | Salões de festa frequentemente possuem sinal fraco de internet; a validação de QR Code e contagem deve continuar funcionando localmente e sincronizar ao reconectar. |
 
 ---
 
@@ -192,7 +192,7 @@ graph TD
 | **US04** | **Como** porteiro do salão, **quero** utilizar uma catraca digital com botões de incremento/decremento, **para que** eu controle a contagem de adultos e crianças presentes. | • Botões táteis grandes `+1` / `-1` para Adultos e Crianças.<br>• Barra de progresso indicando % da capacidade total atingida.<br>• Sincronização da contagem com o servidor central. | **Média** (Should Have) |
 | **US05** | **Como** colaborador do evento, **quero** clicar em um ícone de WhatsApp ao lado do contato do cliente ou gerente, **para que** eu possa abrir uma conversa diretamente no aplicativo nativo. | • Utilização de Deep Link (`whatsapp://send?phone=...`).<br>• Pré-preenchimento opcional do nome do evento.<br>• Funcionar em dispositivos Android e iOS. | **Média** (Should Have) |
 | **US06** | **Como** gerente do evento, **quero** tirar fotos de itens danificados ou avarias durante a festa pelo app, **para que** o incidente seja registrado com imagem no relatório final. | • Acesso à câmera nativa do dispositivo.<br>• Upload da imagem em formato `multipart/form-data`.<br>• Vinculação automática da foto ao ID do evento no banco. | **Média** (Should Have) |
-| **US07** | **Como** recepcionista, **quero** que as validações de entrada continuem funcionando mesmo com queda de internet, **para que** a portaria não fique paralizada. | • Armazenamento local temporário no SQLite/AsyncStorage.<br>• Fila de sincronização enviada automaticamente ao restabelecer a rede.<br>• Indicador visual de "Modo Offline" na tela. | **Baixa** (Nice to Have) |
+| **US07** | **Como** recepcionista, **quero** que as validações de entrada continuem funcionando mesmo com queda de internet, **para que** a portaria não fique paralizada. | • Armazenamento local temporário no SQLite/SecureStorage.<br>• Fila de sincronização enviada automaticamente ao restabelecer a rede.<br>• Indicador visual de "Modo Offline" na tela. | **Baixa** (Nice to Have) |
 
 ### 3.4 Divisão do Trabalho em Grandes Fases (Marcos e Épicos)
 
@@ -227,7 +227,7 @@ gantt
 | **Outubro / EP3** | **Sprint 3** | Leitor de QR Code & Integração com Câmera | • Configuração do leitor de câmera nativo.<br>• Endpoint de validação de convites na API.<br>• Tela de feedback de entrada na portaria. (**US03**) |
 | **Outubro / EP3** | **Sprint 4** | Catraca Digital & Cronograma do Evento | • Interface de contagem tátil (+1/-1) para adultos e crianças. (**US04**)<br>• Barra visual de progresso de lotação do salão.<br>• Componente de Timeline da festa em tempo real. |
 | **Novembro / EF** | **Sprint 5** | Chamadas WhatsApp & Upload de Ocorrências | • Botão de integração com WhatsApp via Deep Link. (**US05**)<br>• Tela de registro de incidentes e envio de foto via `multipart`. (**US06**) |
-| **Dezembro / EF** | **Sprint 6** | Resiliência Offline, Polish e Homologação | • Cache local de validações com SQLite/AsyncStorage. (**US07**)<br>• Testes funcionais e correção de bugs.<br>• Geração do build final e documentação de entrega. |
+| **Dezembro / EF** | **Sprint 6** | Resiliência Offline, Polish e Homologação | • Cache local de validações com SQLite/SecureStorage. (**US07**)<br>• Testes funcionais e correção de bugs.<br>• Geração do build final e documentação de entrega. |
 
 ### 3.6 Definição de Preparada (Definition of Ready - DoR)
 Uma História de Usuário (US) é considerada **Preparada (Ready)** para entrar na Sprint se atender aos seguintes critérios:
@@ -249,8 +249,8 @@ Uma História de Usuário (US) é considerada **Pronta (Done)** e apta para entr
 
 | Risco Identificado | Probabilidade | Impacto | Estratégia de Mitigação |
 | :--- | :---: | :---: | :--- |
-| **R1. Queda ou oscilação de internet no salão durante o evento.** | Alta | Alto | Implementação de cache local temporário (SQLite/AsyncStorage) com fila de sincronização em background (**US07**). |
-| **R2. Incompatibilidade da câmera em modelos de celulares antigos.** | Média | Alto | Utilização de bibliotecas nativas consolidadas (Expo Camera / Flutter Mobile Scanner) e funcionalidade de busca manual de convidados por nome. |
+| **R1. Queda ou oscilação de internet no salão durante o evento.** | Alta | Alto | Implementação de cache local temporário (SQLite/SecureStorage) com fila de sincronização em background (**US07**). |
+| **R2. Incompatibilidade da câmera em modelos de celulares antigos.** | Média | Alto | Utilização de bibliotecas nativas consolidadas (.NET MAUI Camera / Flutter Mobile Scanner) e funcionalidade de busca manual de convidados por nome. |
 | **R3. Choque de horários/agenda na alocação de funcionários.** | Média | Médio | Validação estrita na camada de banco de dados e ORM Sequelize impedindo alocações duplicadas na tabela intermediária de escalas. |
 | **R4. Atraso na entrega dos protótipos de tela (UI/UX).** | Baixa | Médio | Criação de um Design System simplificado reutilizando componentes nativos desde a Sprint 1. |
 | **R5. Dificuldades na orquestração Docker em diferentes SOs da equipe.** | Baixa | Alto | Padronização do arquivo `docker-compose.yml` utilizando imagens oficiais do Node.js Alpine e PostgreSQL. |
