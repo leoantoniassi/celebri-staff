@@ -256,16 +256,3 @@ Uma História de Usuário (US) é considerada **Pronta (Done)** e apta para entr
 | **R5. Dificuldades na orquestração Docker em diferentes SOs da equipe.** | Baixa | Alto | Padronização do arquivo `docker-compose.yml` utilizando imagens oficiais do Node.js Alpine e PostgreSQL. |
 
 ---
-
-## TABELA DE CONTRIBUIÇÃO INDIVIDUAL
-
-Conforme facultado nas orientações do trabalho, a tabela a seguir formaliza o peso da contribuição individual dos membros do time na elaboração do projeto e nas entregas do semestre:
-
-| Membro do Time | Papel Principal no Projeto | Peso da Contribuição |
-| :--- | :--- | :---: |
-| **Luis Felipe Veronezi** | Product Owner (PO) & Gestão Ágil | **1.0** |
-| **Leonardo Antoniassi** | Desenvolvedor Fullstack (Dev Lead) | **1.0** |
-| **Bruno Righi** | UX/UI Designer & QA Engineer | **1.0** |
-
----
-*Documento formalizado e gerado para o Projeto Integrador do 5º Semestre.*
