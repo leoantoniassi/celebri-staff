@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FestifyStaff.ViewModels"
+             x:Class="FestifyStaff.Views.HomePage"
+             x:DataType="vm:HomeViewModel"
+             Title="Minhas Escalas">
+
+    <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+
+        <Label Text="{Binding WelcomeMessage}"
+               FontSize="22"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Label Text="O módulo de escalas chega na próxima etapa. Este login já fala com a API de verdade."
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center" />
+
+        <Button Text="Sair"
+                Command="{Binding LogoutCommand}"
+                BackgroundColor="{DynamicResource ColorSecondary}" />
+
+    </VerticalStackLayout>
+</ContentPage>

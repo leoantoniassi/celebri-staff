@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <!-- O empacotador de recursos do Android (aapt2) falha com o erro
+         APT2265 quando o caminho do projeto tem caracteres não-ASCII — este
+         repositório fica em "...\OneDrive\Área de Trabalho\...". Redireciona
+         obj/ e bin/ para uma pasta só-ASCII fora do OneDrive. Precisa estar
+         num Directory.Build.props (não dentro do .csproj) para valer também
+         na fase de restore, que roda antes das PropertyGroups do .csproj. -->
+    <BaseIntermediateOutputPath>$(LocalAppData)\FestifyStaffBuild\obj\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(LocalAppData)\FestifyStaffBuild\bin\</BaseOutputPath>
+  </PropertyGroup>
+</Project>

@@ -27,7 +27,7 @@ A transição da plataforma de um sistema sob medida para um ecossistema **SaaS 
 | :--- | :--- |
 | **Parcerias-Chave** | Provedores de nuvem (AWS/GCP), Serviços de E-mail Transactional (SMTP / SendGrid), Provedor de Notificações Push (Firebase Cloud Messaging - FCM), Lojas de Apps (Google Play Store e Apple App Store). |
 | **Atividades-Chave** | Desenvolvimento contínuo da API backend REST, manutenção do aplicativo móvel multiplataforma, suporte a injeção dinâmica de temas White Label, gerenciamento de infraestrutura em containers Docker. |
-| **Recursos-Chave** | API Central Node.js/Express, Banco de dados relacional PostgreSQL, Código-fonte mobile em .NET MAUI / Flutter, equipe técnica de desenvolvimento e infraestrutura Docker. |
+| **Recursos-Chave** | API Central Node.js/Express, Banco de dados relacional PostgreSQL, Código-fonte mobile em .NET MAUI, equipe técnica de desenvolvimento e infraestrutura Docker. |
 | **Proposta de Valor** | Plataforma de gestão B2B White Label para buffets que injeta automaticamente a identidade visual do cliente (logo, nome fantasia e cores), simplificando a operação de campo, recepção por QR Code e controle de escalas. |
 | **Relacionamento com Clientes** | Atendimento automatizado, onboarding de contratantes, suporte via canal direto de atendimento e autosserviço no painel web administrativo. |
 | **Canais** | Plataforma Web administrativa, Aplicativo móvel (iOS/Android), integração direta com WhatsApp para notificações e campanhas de marketing digital B2B. |
@@ -83,6 +83,9 @@ A operação no dia de uma festa de buffet é dinâmica e com ritmo acelerado. O
 * **Repositório do Aplicativo Móvel (Festify Staff):** [https://github.com/leoantoniassi/festify-staff](https://github.com/leoantoniassi/festify-staff)
 * **Repositório da Plataforma Web / API Central (Festify Core):** [https://github.com/leoantoniassi/festify](https://github.com/leoantoniassi/festify)
 
+### 1.7 Stack Mobile Definida
+A tecnologia do aplicativo móvel foi decidida: **.NET MAUI** (.NET 9), desenvolvido no **Visual Studio 2026**. O alvo inicial de build e testes é **Android**; suporte a iOS fica para uma etapa posterior, pois exige um ambiente macOS para o build nativo. As demais opções multiplataforma cogitadas inicialmente (ex.: Flutter) foram descartadas.
+
 ---
 
 # 2. APLICATIVO PARA DISPOSITIVO MÓVEL
@@ -103,7 +106,7 @@ Quando totalmente pronto e integrado, espera-se que o app seja a ferramenta diá
 
 #### 2.3.1 Descrição Textual dos Componentes
 O aplicativo móvel adota uma arquitetura em camadas orientada a serviços REST:
-1. **Camada de Apresentação (Mobile UI Layer):** Desenvolvida em tecnologia multiplataforma (.NET MAUI / Flutter), organizada em componentes visuais redefiníveis que consomem um gerenciador de temas dinâmico para renderizar as cores e logos do buffet contratante.
+1. **Camada de Apresentação (Mobile UI Layer):** Desenvolvida em tecnologia multiplataforma (.NET MAUI), organizada em componentes visuais redefiníveis que consomem um gerenciador de temas dinâmico para renderizar as cores e logos do buffet contratante.
 2. **Camada de Gerenciamento de Estado e Cache Local:** Utiliza `SecureStorage` / `SQLite` para armazenar o token JWT de autenticação, o perfil da marca e a fila de requisições offline (resiliência de rede na portaria).
 3. **Camada de Comunicação de Rede (HTTP Client):** Cliente HTTP com interceptadores para envio do Token JWT no cabeçalho `Authorization: Bearer <token>` e tratamento automatizado de reconexão.
 4. **Backend API REST Central (Node.js & Express):** Servidor hospedado em container Docker contendo as rotas de autenticação, escalas, eventos e convidados.
@@ -138,7 +141,7 @@ graph TD
 
 | Categoria | Especificação Técnica | Justificativa / Motivação |
 | :--- | :--- | :--- |
-| **Plataforma Mobile** | Multiplataforma (.NET MAUI / Flutter) | Permite compilar código único para Android e iOS, reduzindo o tempo de desenvolvimento em 50% mantendo excelente performance nativa para acesso à câmera. |
+| **Plataforma Mobile** | Multiplataforma (.NET MAUI) | Permite compilar código único para Android e iOS, reduzindo o tempo de desenvolvimento em 50% mantendo excelente performance nativa para acesso à câmera. |
 | **Consumo de API** | RESTful com formato JSON | Padronização universal de comunicação e facilidade de integração com a API existente Node.js/Express. |
 | **Persistência Backend** | PostgreSQL + Sequelize ORM | Banco de dados relacional robusto com integridade referencial. Uso obrigatório de `DataTypes.UUID` para evitar colisões e chaves previsíveis. |
 | **Nomenclatura DB** | Campos estritamente em `snake_case` | Conformidade com as boas práticas de banco relacional PostgreSQL e padronização do projeto. |
@@ -250,7 +253,7 @@ Uma História de Usuário (US) é considerada **Pronta (Done)** e apta para entr
 | Risco Identificado | Probabilidade | Impacto | Estratégia de Mitigação |
 | :--- | :---: | :---: | :--- |
 | **R1. Queda ou oscilação de internet no salão durante o evento.** | Alta | Alto | Implementação de cache local temporário (SQLite/SecureStorage) com fila de sincronização em background (**US07**). |
-| **R2. Incompatibilidade da câmera em modelos de celulares antigos.** | Média | Alto | Utilização de bibliotecas nativas consolidadas (.NET MAUI Camera / Flutter Mobile Scanner) e funcionalidade de busca manual de convidados por nome. |
+| **R2. Incompatibilidade da câmera em modelos de celulares antigos.** | Média | Alto | Utilização de bibliotecas nativas consolidadas para .NET MAUI (Camera / QR Scanner) e funcionalidade de busca manual de convidados por nome. |
 | **R3. Choque de horários/agenda na alocação de funcionários.** | Média | Médio | Validação estrita na camada de banco de dados e ORM Sequelize impedindo alocações duplicadas na tabela intermediária de escalas. |
 | **R4. Atraso na entrega dos protótipos de tela (UI/UX).** | Baixa | Médio | Criação de um Design System simplificado reutilizando componentes nativos desde a Sprint 1. |
 | **R5. Dificuldades na orquestração Docker em diferentes SOs da equipe.** | Baixa | Alto | Padronização do arquivo `docker-compose.yml` utilizando imagens oficiais do Node.js Alpine e PostgreSQL. |
