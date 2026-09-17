@@ -14,6 +14,7 @@ public class ApiClient(HttpClient http)
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
 
     public Task<ApiResponse<TenantConfig>> GetTenantConfigAsync(string tenantSlug, CancellationToken ct = default)

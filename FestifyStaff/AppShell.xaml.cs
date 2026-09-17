@@ -9,6 +9,5 @@ public partial class AppShell : Shell
         InitializeComponent();
 
         Routing.RegisterRoute("login", typeof(LoginPage));
-        Routing.RegisterRoute("home", typeof(HomePage));
     }
 }
