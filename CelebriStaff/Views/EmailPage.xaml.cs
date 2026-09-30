@@ -2,11 +2,11 @@ using CelebriStaff.ViewModels;
 
 namespace CelebriStaff.Views;
 
-public partial class TenantCodePage : ContentPage
+public partial class EmailPage : ContentPage
 {
-    private readonly TenantCodeViewModel _viewModel;
+    private readonly EmailViewModel _viewModel;
 
-    public TenantCodePage(TenantCodeViewModel viewModel)
+    public EmailPage(EmailViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;

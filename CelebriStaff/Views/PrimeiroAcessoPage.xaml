@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
+             x:Class="CelebriStaff.Views.PrimeiroAcessoPage"
+             x:DataType="vm:PrimeiroAcessoViewModel"
+             Title="Primeiro acesso">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+
+            <Label Text="{Binding NomeFantasia}"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{DynamicResource ColorPrimary}" />
+
+            <Label Text="{Binding Instrucao}"
+                   HorizontalTextAlignment="Center" />
+
+            <Entry Placeholder="Código"
+                   Text="{Binding Codigo}"
+                   Keyboard="Numeric"
+                   MaxLength="6" />
+
+            <Entry Placeholder="Nova senha"
+                   Text="{Binding Senha}"
+                   IsPassword="True" />
+
+            <Entry Placeholder="Confirme a senha"
+                   Text="{Binding ConfirmacaoSenha}"
+                   IsPassword="True" />
+
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+
+            <Label Text="{Binding InfoMessage}"
+                   IsVisible="{Binding InfoMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+
+            <Button Text="Criar senha e entrar"
+                    Command="{Binding CriarSenhaCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="{DynamicResource ColorPrimary}" />
+
+            <Button Text="Reenviar código"
+                    Command="{Binding ReenviarCodigoCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="Transparent"
+                    TextColor="{DynamicResource ColorPrimary}" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
-             x:Class="CelebriStaff.Views.TenantCodePage"
-             x:DataType="vm:TenantCodeViewModel"
+             xmlns:models="clr-namespace:CelebriStaff.Models"
+             x:Class="CelebriStaff.Views.EmailPage"
+             x:DataType="vm:EmailViewModel"
              Title="Celebri Staff">
 
     <ScrollView>
@@ -15,12 +16,13 @@
                    HorizontalOptions="Center"
                    TextColor="{DynamicResource ColorPrimary}" />
 
-            <Label Text="Informe o código do seu buffet para continuar"
+            <Label Text="Informe o e-mail cadastrado pelo seu buffet"
                    HorizontalOptions="Center"
                    HorizontalTextAlignment="Center" />
 
-            <Entry Placeholder="Código da empresa"
-                   Text="{Binding CompanyCode}"
+            <Entry Placeholder="E-mail"
+                   Text="{Binding Email}"
+                   Keyboard="Email"
                    IsSpellCheckEnabled="False"
                    IsTextPredictionEnabled="False" />
 
@@ -34,6 +36,18 @@
                     BackgroundColor="{DynamicResource ColorPrimary}" />
 
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+
+            <!-- Aparece só quando o e-mail está em mais de um buffet. -->
+            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Buffets}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:BuffetIdentificado">
+                        <Button Text="{Binding NomeFantasia}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:EmailViewModel}}, Path=EscolherBuffetCommand, x:DataType=vm:EmailViewModel}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="{DynamicResource ColorPrimary}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

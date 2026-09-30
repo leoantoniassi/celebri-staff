@@ -262,11 +262,10 @@ Uma História de Usuário (US) é considerada **Pronta (Done)** e apta para entr
 
 # 4. GUIA DE TESTE MANUAL
 
-Este guia cobre o que já está implementado no app: código da empresa (tenant),
-login com identidade visual White Label dinâmica e restauração de sessão. O
-módulo de escalas, portaria QR Code, catraca digital e demais US do backlog
-(seção 3.3) ainda não existem — a tela pós-login é um placeholder que só
-prova o fluxo ponta a ponta.
+Este guia cobre o que já está implementado no app: entrada só com o e-mail
+(o app descobre o buffet), primeiro acesso com código enviado por e-mail,
+identidade visual White Label dinâmica, restauração de sessão e a tela
+"Minhas Escalas" (confirmar/recusar presença e check-in no dia do evento).
 
 ### 4.1 Pré-requisitos
 1. **Backend rodando.** Clone o repositório [celebri](https://github.com/leoantoniassi/celebri), copie `.env.example` para `.env` (ajuste `DB_PASS`/`JWT_SECRET`) e suba os containers:
@@ -278,13 +277,15 @@ prova o fluxo ponta a ponta.
    Confirme que subiu certo acessando `http://localhost:3001/api/health` no navegador — deve responder `{"success":true,"message":"API Celebri funcionando!"}`.
 2. **Ambiente mobile.** Visual Studio 2026 com o workload **.NET MAUI** instalado (ou `dotnet` CLI com o workload `maui`), e um emulador Android configurado (Android Studio → Device Manager) ou um celular físico com depuração USB habilitada.
 3. O app aponta para `http://10.0.2.2:3001/api/` quando rodando no emulador Android (alias para o `localhost` da máquina host — ver `Services/Api/AppConfig.cs`), então o backend precisa estar rodando no computador host, não dentro do emulador. Em dispositivo físico, ajuste esse endereço para o IP da máquina na rede local.
+4. **E-mail do código de primeiro acesso.** Sem SMTP configurado no `.env` (`EMAIL_HOST` vazio), o backend não envia o e-mail: o código aparece no log da API (`docker compose logs backend | grep "código de primeiro acesso"`).
 
 ### 4.2 Credenciais de teste (criadas pelo `npm run seed` do backend)
 | Campo | Valor |
 | :--- | :--- |
-| Código da empresa (tenant) | `mais-alegria` |
 | Gerente | `gerente@celebri.com` / `123456` |
 | Operador (já vinculado a um funcionário de campo, "Alice Rodrigues") | `operador@celebri.com` / `123456` |
+
+Para testar o primeiro acesso, cadastre um funcionário **com e-mail** no painel web (Funcionários → Novo). A conta do app é criada automaticamente, sem senha.
 
 ### 4.3 Como rodar o app
 - **Visual Studio:** abra a pasta do repositório, selecione o projeto `CelebriStaff` como alvo de execução, escolha o emulador/dispositivo Android na barra de depuração e pressione **F5**.
@@ -294,15 +295,21 @@ prova o fluxo ponta a ponta.
   ```
 
 ### 4.4 Roteiro de teste manual
-1. **Tela "Código da empresa":** digite `mais-alegria` e toque em **Continuar**.
-   - Esperado: a tela de login abre já com a paleta de cores e (se cadastrada) a logo do tenant.
-   - Teste negativo: digite um código inexistente (ex.: `naoexiste`) — deve aparecer a mensagem "Empresa não encontrada.".
-2. **Tela de login:** entre com uma das contas da tabela acima.
-   - Esperado: nome fantasia do buffet aparece no topo, herdando a cor primária aplicada na etapa anterior.
+1. **Tela de e-mail:** digite `operador@celebri.com` e toque em **Continuar**.
+   - Esperado: o app aplica as cores do buffet e abre a tela de senha já com o e-mail preenchido.
+   - E-mail cadastrado em mais de um buffet: aparece a lista de buffets para escolher.
+   - Teste negativo: e-mail não cadastrado — mensagem "E-mail não cadastrado em nenhum buffet".
+2. **Tela de senha:** digite `123456` e toque em **Entrar**.
    - Teste negativo: senha errada — deve exibir a mensagem de erro devolvida pela API, sem travar o app.
-3. **Tela "Minhas Escalas" (placeholder):** após o login deve exibir "Olá, `<nome do usuário>`!" e o texto avisando que o módulo de escalas é uma próxima etapa.
-4. **Restauração de sessão:** feche o app (sem tocar em "Sair") e abra de novo — deve pular direto para a Home, sem pedir o código da empresa outra vez.
-5. **Logout:** toque em **Sair** na Home — deve voltar para a tela de código da empresa e, ao reabrir o app depois disso, pedir o código de novo (sessão não deve mais ser restaurada).
+3. **Primeiro acesso:** use o e-mail de um funcionário recém-cadastrado no web.
+   - Esperado: o app pede o código de 6 dígitos (ver 4.1, item 4), a nova senha e a confirmação, e entra direto em "Minhas Escalas".
+   - Teste negativo: código errado — "Código inválido ou expirado". Após 5 erros o código é bloqueado; use **Reenviar código**.
+4. **Minhas Escalas:** lista "Próximos eventos" e "Eventos anteriores", com função, local e situação.
+   - **Confirmar/Recusar** registram a resposta (o gerente vê no web, em Eventos → Ver Escala).
+   - **Cheguei no evento** aparece de 3h antes do início até o fim do evento.
+   - Puxe a lista para baixo para atualizar.
+5. **Restauração de sessão:** feche o app (sem tocar em "Sair") e abra de novo — deve pular direto para "Minhas Escalas".
+6. **Logout:** toque em **Sair** — deve voltar para a tela de e-mail.
 
 ### 4.5 Dicas de depuração
 - Se a etapa 1 não aplicar nenhuma cor ou não achar a empresa, confira se o `npm run migrate`/`npm run seed` do backend rodou sem erro.

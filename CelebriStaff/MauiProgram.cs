@@ -43,11 +43,14 @@ public static class MauiProgram
         // ── Shell / páginas ──────────────────────────────────────
         builder.Services.AddSingleton<AppShell>();
 
-        builder.Services.AddTransient<TenantCodeViewModel>();
-        builder.Services.AddTransient<TenantCodePage>();
+        builder.Services.AddTransient<EmailViewModel>();
+        builder.Services.AddTransient<EmailPage>();
 
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<LoginPage>();
+
+        builder.Services.AddTransient<PrimeiroAcessoViewModel>();
+        builder.Services.AddTransient<PrimeiroAcessoPage>();
 
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<HomePage>();

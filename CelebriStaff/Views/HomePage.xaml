@@ -6,20 +6,70 @@
              x:DataType="vm:HomeViewModel"
              Title="Minhas Escalas">
 
-    <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Sair" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
 
-        <Label Text="{Binding WelcomeMessage}"
-               FontSize="22"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+    <Grid RowDefinitions="Auto,*" Padding="16,8,16,0">
 
-        <Label Text="O módulo de escalas chega na próxima etapa. Este login já fala com a API de verdade."
-               HorizontalOptions="Center"
-               HorizontalTextAlignment="Center" />
+        <VerticalStackLayout Spacing="4" Margin="0,0,0,8">
+            <Label Text="{Binding WelcomeMessage}" FontSize="22" FontAttributes="Bold" />
+            <Label Text="{Binding Aviso}"
+                   IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
+        </VerticalStackLayout>
 
-        <Button Text="Sair"
-                Command="{Binding LogoutCommand}"
-                BackgroundColor="{DynamicResource ColorSecondary}" />
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding CarregarCommand}">
+            <CollectionView ItemsSource="{Binding Grupos}" IsGrouped="True" SelectionMode="None">
 
-    </VerticalStackLayout>
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate x:DataType="vm:GrupoEscalas">
+                        <Label Text="{Binding Titulo}" FontSize="14" FontAttributes="Bold"
+                               TextColor="{DynamicResource ColorPrimary}" Margin="4,16,0,6" />
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:EscalaCardViewModel">
+                        <Border Margin="0,0,0,10" Padding="14" StrokeThickness="1" Stroke="#DDDDDD"
+                                StrokeShape="RoundRectangle 14">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{Binding NomeEvento}" FontSize="17" FontAttributes="Bold" />
+                                <Label Text="{Binding Quando}" />
+                                <Label Text="{Binding Local, StringFormat='📍 {0}'}"
+                                       IsVisible="{Binding Local, Converter={StaticResource StringNotEmptyConverter}}" />
+                                <Label Text="{Binding Funcao, StringFormat='Função: {0}'}" />
+                                <Label Text="{Binding Status}" TextColor="{Binding StatusCor}" FontAttributes="Bold" />
+
+                                <HorizontalStackLayout Spacing="8" IsVisible="{Binding PodeResponder}">
+                                    <Button Text="Confirmar"
+                                            IsVisible="{Binding PodeConfirmar}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=ConfirmarCommand, x:DataType=vm:HomeViewModel}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="{DynamicResource ColorPrimary}" />
+                                    <Button Text="Recusar"
+                                            IsVisible="{Binding PodeRecusar}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=RecusarCommand, x:DataType=vm:HomeViewModel}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="Transparent"
+                                            TextColor="#B3261E" BorderColor="#B3261E" BorderWidth="1" />
+                                </HorizontalStackLayout>
+
+                                <Button Text="Cheguei no evento"
+                                        IsVisible="{Binding PodeFazerCheckin}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=CheckinCommand, x:DataType=vm:HomeViewModel}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="{DynamicResource ColorSecondary}" />
+
+                                <Button Text="{Binding TextoModulo}"
+                                        IsVisible="{Binding PodeAbrirModulo}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AbrirModuloCommand, x:DataType=vm:HomeViewModel}"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="{DynamicResource ColorPrimary}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
 </ContentPage>

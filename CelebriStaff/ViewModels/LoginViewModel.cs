@@ -14,6 +14,7 @@ public partial class LoginViewModel : ObservableObject
         _authService = authService;
         NomeFantasia = themeService.NomeFantasia;
         LogoUrl = themeService.LogoUrl;
+        Email = authService.EmailEmAndamento;
     }
 
     [ObservableProperty]

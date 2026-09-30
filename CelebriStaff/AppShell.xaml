@@ -10,9 +10,9 @@
     Title="Celebri Staff">
 
     <ShellContent
-        Title="Empresa"
-        ContentTemplate="{DataTemplate views:TenantCodePage}"
-        Route="tenant" />
+        Title="Entrar"
+        ContentTemplate="{DataTemplate views:EmailPage}"
+        Route="entrar" />
 
     <!-- "home" precisa ser ShellContent (não apenas RegisterRoute) para que
          GoToAsync("//home") possa virar a única página da pilha após o
