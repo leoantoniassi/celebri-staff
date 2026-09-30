@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="CelebriStaff.Views.LeitorQrPage"
+             Title="Ler QR code">
+
+    <Grid RowDefinitions="*,Auto">
+        <zxing:CameraBarcodeReaderView x:Name="Leitor"
+                                       BarcodesDetected="OnBarcodesDetected" />
+
+        <VerticalStackLayout Grid.Row="1" Padding="16" Spacing="8" BackgroundColor="White">
+            <Label x:Name="Mensagem" Text="Aponte a câmera para o QR code do convite."
+                   HorizontalTextAlignment="Center" />
+            <ActivityIndicator x:Name="Carregando" IsRunning="False" IsVisible="False" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

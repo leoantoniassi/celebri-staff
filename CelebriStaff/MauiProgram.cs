@@ -5,6 +5,7 @@ using CelebriStaff.Services.Theme;
 using CelebriStaff.ViewModels;
 using CelebriStaff.Views;
 using Microsoft.Extensions.Logging;
+using ZXing.Net.Maui.Controls;
 
 namespace CelebriStaff;
 
@@ -16,6 +17,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseBarcodeReader()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -51,6 +53,12 @@ public static class MauiProgram
 
         builder.Services.AddTransient<PrimeiroAcessoViewModel>();
         builder.Services.AddTransient<PrimeiroAcessoPage>();
+
+        builder.Services.AddTransient<PortariaViewModel>();
+        builder.Services.AddTransient<PortariaPage>();
+        builder.Services.AddTransient<LeitorQrPage>();
+        builder.Services.AddTransient<EntradaConviteViewModel>();
+        builder.Services.AddTransient<EntradaConvitePage>();
 
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<HomePage>();

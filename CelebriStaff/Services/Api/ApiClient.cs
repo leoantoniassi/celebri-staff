@@ -84,6 +84,30 @@ public class ApiClient(HttpClient http)
     public Task<ApiResponse<object>> CheckinEscalaAsync(string escalaId, CancellationToken ct = default)
         => SendAsync<object>(new HttpRequestMessage(HttpMethod.Post, $"escala/{escalaId}/checkin"), ct);
 
+    // ── Portaria ─────────────────────────────────────────────────
+
+    public Task<ApiResponse<PortariaResumo>> GetPortariaResumoAsync(string eventoId, CancellationToken ct = default)
+        => SendAsync<PortariaResumo>(new HttpRequestMessage(HttpMethod.Get, $"portaria/eventos/{eventoId}"), ct);
+
+    public Task<ApiResponse<List<ConvitePortaria>>> GetConvitesPortariaAsync(string eventoId, string? busca, CancellationToken ct = default)
+    {
+        var url = $"portaria/eventos/{eventoId}/convites";
+        if (!string.IsNullOrWhiteSpace(busca)) url += $"?busca={Uri.EscapeDataString(busca.Trim())}";
+        return SendAsync<List<ConvitePortaria>>(new HttpRequestMessage(HttpMethod.Get, url), ct);
+    }
+
+    public Task<ApiResponse<ConvitePortaria>> LerQrCodeAsync(string eventoId, string token, CancellationToken ct = default)
+        => PostAsync<ConvitePortaria>($"portaria/eventos/{eventoId}/leitura", new { token }, ct);
+
+    public Task<ApiResponse<ConvitePortaria>> RegistrarEntradaAsync(string eventoId, string conviteId, int quantidade, CancellationToken ct = default)
+        => PostAsync<ConvitePortaria>($"portaria/eventos/{eventoId}/convites/{conviteId}/entrada", new { quantidade }, ct);
+
+    public Task<ApiResponse<PortariaResumo>> AjustarAvulsosAsync(string eventoId, int delta, CancellationToken ct = default)
+        => PostAsync<PortariaResumo>($"portaria/eventos/{eventoId}/avulsos", new { delta }, ct);
+
+    private Task<ApiResponse<T>> PostAsync<T>(string url, object corpo, CancellationToken ct)
+        => SendAsync<T>(new HttpRequestMessage(HttpMethod.Post, url) { Content = JsonContent.Create(corpo, options: JsonOptions) }, ct);
+
     private async Task<ApiResponse<T>> SendAsync<T>(HttpRequestMessage request, CancellationToken ct)
     {
         try

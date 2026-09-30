@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
+             x:Class="CelebriStaff.Views.EntradaConvitePage"
+             x:DataType="vm:EntradaConviteViewModel"
+             Title="Entrada do convidado">
+
+    <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+
+        <Label Text="{Binding Nome}" FontSize="26" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+        <Label Text="{Binding Situacao}" HorizontalTextAlignment="Center" />
+
+        <Label Text="Quantas pessoas estão entrando agora?" HorizontalTextAlignment="Center" Margin="0,16,0,0" />
+        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+            <Button Text="−" FontSize="28" Command="{Binding MenosCommand}"
+                    BackgroundColor="Transparent" TextColor="{DynamicResource ColorPrimary}"
+                    BorderColor="{DynamicResource ColorPrimary}" BorderWidth="1" />
+            <Label Grid.Column="1" Text="{Binding Quantidade}" FontSize="44" FontAttributes="Bold"
+                   HorizontalOptions="Center" VerticalOptions="Center" />
+            <Button Grid.Column="2" Text="+" FontSize="28" Command="{Binding MaisCommand}"
+                    BackgroundColor="{DynamicResource ColorPrimary}" />
+        </Grid>
+
+        <Button Text="Registrar entrada" Command="{Binding RegistrarCommand}"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                BackgroundColor="{DynamicResource ColorSecondary}" FontSize="18" />
+
+        <Label Text="{Binding Mensagem}" TextColor="{Binding MensagemCor}" HorizontalTextAlignment="Center"
+               IsVisible="{Binding Mensagem, Converter={StaticResource StringNotEmptyConverter}}" />
+
+        <Button Text="Desfazer 1 entrada (lançamento errado)" Command="{Binding DesfazerUmaCommand}"
+                IsVisible="{Binding JaEntraram, Converter={StaticResource PositivoConverter}}"
+                BackgroundColor="Transparent" TextColor="#B3261E" />
+    </VerticalStackLayout>
+</ContentPage>
