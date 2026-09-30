@@ -105,6 +105,34 @@ public class ApiClient(HttpClient http)
     public Task<ApiResponse<PortariaResumo>> AjustarAvulsosAsync(string eventoId, int delta, CancellationToken ct = default)
         => PostAsync<PortariaResumo>($"portaria/eventos/{eventoId}/avulsos", new { delta }, ct);
 
+    // ── Garçom e cozinha ─────────────────────────────────────────
+
+    public Task<ApiResponse<List<MesaMapa>>> GetMapaMesasAsync(string eventoId, CancellationToken ct = default)
+        => SendAsync<List<MesaMapa>>(new HttpRequestMessage(HttpMethod.Get, $"operacao/eventos/{eventoId}/mesas"), ct);
+
+    public Task<ApiResponse<List<Pedido>>> GetPedidosDaMesaAsync(string eventoId, string mesaId, CancellationToken ct = default)
+        => SendAsync<List<Pedido>>(new HttpRequestMessage(HttpMethod.Get, $"operacao/eventos/{eventoId}/pedidos?mesaId={mesaId}"), ct);
+
+    public Task<ApiResponse<Pedido>> CriarPedidoAsync(string eventoId, string mesaId, IEnumerable<PedidoItem> itens, string? observacao, CancellationToken ct = default)
+        => PostAsync<Pedido>($"operacao/eventos/{eventoId}/pedidos", new
+        {
+            mesaId,
+            observacao,
+            itens = itens.Select(i => new { i.Descricao, i.Quantidade, i.Observacao, i.Alerta }),
+        }, ct);
+
+    public Task<ApiResponse<Pedido>> MudarStatusPedidoAsync(string eventoId, string pedidoId, string status, CancellationToken ct = default)
+        => PatchAsync<Pedido>($"operacao/eventos/{eventoId}/pedidos/{pedidoId}/status", new { status }, ct);
+
+    public Task<ApiResponse<PainelCozinha>> GetPainelCozinhaAsync(string eventoId, CancellationToken ct = default)
+        => SendAsync<PainelCozinha>(new HttpRequestMessage(HttpMethod.Get, $"operacao/eventos/{eventoId}/cozinha"), ct);
+
+    public Task<ApiResponse<ServicoCardapio>> MudarStatusServicoAsync(string eventoId, string servicoId, string status, CancellationToken ct = default)
+        => PatchAsync<ServicoCardapio>($"operacao/eventos/{eventoId}/servicos/{servicoId}", new { status }, ct);
+
+    private Task<ApiResponse<T>> PatchAsync<T>(string url, object corpo, CancellationToken ct)
+        => SendAsync<T>(new HttpRequestMessage(HttpMethod.Patch, url) { Content = JsonContent.Create(corpo, options: JsonOptions) }, ct);
+
     private Task<ApiResponse<T>> PostAsync<T>(string url, object corpo, CancellationToken ct)
         => SendAsync<T>(new HttpRequestMessage(HttpMethod.Post, url) { Content = JsonContent.Create(corpo, options: JsonOptions) }, ct);
 

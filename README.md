@@ -266,6 +266,10 @@ Este guia cobre o que já está implementado no app: entrada só com o e-mail
 (o app descobre o buffet), primeiro acesso com código enviado por e-mail,
 identidade visual White Label dinâmica, restauração de sessão e a tela
 "Minhas Escalas" (confirmar/recusar presença e check-in no dia do evento).
+Portaria, garçom e cozinha abrem pela escala do dia, conforme a função.
+
+O roteiro completo, em sessões com tempo estimado e resultado esperado de
+cada passo (web + app, as 3 etapas), está em [`TESTE_MANUAL.md`](TESTE_MANUAL.md).
 
 ### 4.1 Pré-requisitos
 1. **Backend rodando.** Clone o repositório [celebri](https://github.com/leoantoniassi/celebri), copie `.env.example` para `.env` (ajuste `DB_PASS`/`JWT_SECRET`) e suba os containers:

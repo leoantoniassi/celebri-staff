@@ -60,6 +60,13 @@ public static class MauiProgram
         builder.Services.AddTransient<EntradaConviteViewModel>();
         builder.Services.AddTransient<EntradaConvitePage>();
 
+        builder.Services.AddTransient<GarcomViewModel>();
+        builder.Services.AddTransient<GarcomPage>();
+        builder.Services.AddTransient<MesaViewModel>();
+        builder.Services.AddTransient<MesaPage>();
+        builder.Services.AddTransient<CozinhaViewModel>();
+        builder.Services.AddTransient<CozinhaPage>();
+
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<HomePage>();
 

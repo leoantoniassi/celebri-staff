@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
+             x:Class="CelebriStaff.Views.CozinhaPage"
+             x:DataType="vm:CozinhaViewModel"
+             Title="Cozinha">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16,12" RowSpacing="10">
+        <VerticalStackLayout>
+            <Label Text="{Binding EventoNome}" FontSize="18" FontAttributes="Bold" />
+            <Label Text="{Binding Publico}" TextColor="Gray" />
+            <Label Text="{Binding Erro}" TextColor="Red"
+                   IsVisible="{Binding Erro, Converter={StaticResource StringNotEmptyConverter}}" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*" ColumnSpacing="6">
+            <Button Text="{Binding TituloPedidos}" Command="{Binding MudarAbaCommand}" CommandParameter="pedidos"
+                    BackgroundColor="{DynamicResource ColorPrimary}" />
+            <Button Grid.Column="1" Text="Cardápio" Command="{Binding MudarAbaCommand}" CommandParameter="cardapio"
+                    BackgroundColor="{DynamicResource ColorSecondary}" />
+            <Button Grid.Column="2" Text="Estoque" Command="{Binding MudarAbaCommand}" CommandParameter="estoque"
+                    BackgroundColor="Gray" />
+        </Grid>
+
+        <!-- Pedidos dos garçons, mais antigos primeiro -->
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Pedidos}" IsVisible="{Binding AbaPedidos}" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <Label Text="Nenhum pedido aberto." HorizontalOptions="Center" Margin="0,24" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:PedidoNaCozinha">
+                    <Border Margin="0,0,0,10" Padding="12" StrokeShape="RoundRectangle 12" Stroke="{Binding Cor}" StrokeThickness="2">
+                        <VerticalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="{Binding Cabecalho}" FontAttributes="Bold" FontSize="16" />
+                                <Label Grid.Column="1" Text="{Binding Status}" TextColor="Gray" />
+                            </Grid>
+                            <Label Text="{Binding Itens}" FontSize="16" />
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                <Button Text="Começar" IsVisible="{Binding PodeComecar}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=ComecarCommand, x:DataType=vm:CozinhaViewModel}"
+                                        CommandParameter="{Binding .}" BackgroundColor="#E08A00" />
+                                <Button Grid.Column="1" Text="Pronto" IsVisible="{Binding PodeFinalizar}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=ProntoCommand, x:DataType=vm:CozinhaViewModel}"
+                                        CommandParameter="{Binding .}" BackgroundColor="#1B7F3B" />
+                                <Button Grid.ColumnSpan="2" Text="Voltar para preparo" IsVisible="{Binding PodeReabrir}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=ReabrirCommand, x:DataType=vm:CozinhaViewModel}"
+                                        CommandParameter="{Binding .}" BackgroundColor="Transparent" TextColor="Gray" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- O que será servido e quando -->
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Servicos}" IsVisible="{Binding AbaCardapio}" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <Label Text="O cardápio do evento ainda não foi cadastrado no painel." HorizontalOptions="Center" Margin="0,24" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:ServicoNaCozinha">
+                    <Border Margin="0,0,0,8" Padding="12" StrokeShape="RoundRectangle 12" Stroke="#DDDDDD">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Label Text="{Binding Horario}" FontSize="18" FontAttributes="Bold"
+                                   TextColor="{DynamicResource ColorPrimary}" VerticalOptions="Center" />
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding Item}" FontAttributes="Bold" />
+                                <Label Text="{Binding Quantidade}" />
+                                <Label Text="{Binding Status}" TextColor="Gray" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="2" Text="{Binding ProximaAcao}" VerticalOptions="Center"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=AvancarServicoCommand, x:DataType=vm:CozinhaViewModel}"
+                                    CommandParameter="{Binding .}" BackgroundColor="{DynamicResource ColorSecondary}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Produtos reservados para o evento -->
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Estoque}" IsVisible="{Binding AbaEstoque}" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <Label Text="Nenhum produto reservado para este evento." HorizontalOptions="Center" Margin="0,24" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:EstoqueNaCozinha">
+                    <Border Margin="0,0,0,8" Padding="12" StrokeShape="RoundRectangle 12" Stroke="#DDDDDD">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Nome}" FontAttributes="Bold" />
+                            <Label Text="{Binding Detalhe}" />
+                            <Label Text="⚠ Estoque baixo" TextColor="#B3261E" FontAttributes="Bold" IsVisible="{Binding Baixo}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

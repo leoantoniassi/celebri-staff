@@ -16,5 +16,11 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("portaria-leitor", typeof(LeitorQrPage));
         Routing.RegisterRoute("portaria-entrada", typeof(EntradaConvitePage));
         EscalaCardViewModel.ModulosDisponiveis.Add("portaria");
+
+        Routing.RegisterRoute("garcom", typeof(GarcomPage));
+        Routing.RegisterRoute("garcom-mesa", typeof(MesaPage));
+        Routing.RegisterRoute("cozinha", typeof(CozinhaPage));
+        EscalaCardViewModel.ModulosDisponiveis.Add("garcom");
+        EscalaCardViewModel.ModulosDisponiveis.Add("cozinha");
     }
 }

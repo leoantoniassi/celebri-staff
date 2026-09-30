@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
+             x:Class="CelebriStaff.Views.GarcomPage"
+             x:DataType="vm:GarcomViewModel"
+             Title="Garçom">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label Text="{Binding EventoNome}" FontSize="18" FontAttributes="Bold" />
+            <Label Text="{Binding Resumo}" />
+            <Label Text="{Binding Aviso}" TextColor="#B26A00"
+                   IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
+
+            <!-- Legenda -->
+            <HorizontalStackLayout Spacing="14">
+                <Label Text="● livre" TextColor="#9E9E9E" />
+                <Label Text="● aguardando cozinha" TextColor="#E08A00" />
+                <Label Text="● pronto" TextColor="#1B7F3B" />
+            </HorizontalStackLayout>
+
+            <!-- Mapa do salão: posições vêm do painel web (em %) -->
+            <Border StrokeShape="RoundRectangle 16" Stroke="#DDDDDD" Padding="8" HeightRequest="460">
+                <AbsoluteLayout BindableLayout.ItemsSource="{Binding Mesas}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:MesaNoMapa">
+                            <Grid AbsoluteLayout.LayoutBounds="{Binding Bounds}"
+                                  AbsoluteLayout.LayoutFlags="{Binding Flags}">
+                                <Border BackgroundColor="{Binding Cor}" StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 30">
+                                    <Label Text="{Binding Numero}" TextColor="White" FontAttributes="Bold" FontSize="18"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="{Binding Selo}" FontSize="12" FontAttributes="Bold"
+                                       BackgroundColor="White" TextColor="Black" Padding="4,0"
+                                       HorizontalOptions="End" VerticalOptions="Start" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GarcomViewModel}}, Path=AbrirMesaCommand, x:DataType=vm:GarcomViewModel}"
+                                        CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </AbsoluteLayout>
+            </Border>
+
+            <Label Text="Toque numa mesa para anotar um pedido ou marcar a entrega." TextColor="Gray"
+                   HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
