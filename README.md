@@ -280,7 +280,7 @@ gantt
 
 **Evidências:**
 - **Commits:** 3 commits por repositório, um por etapa.
-  - `celebri`: `1948ad3`, `15853b2`, `984f05b`.
+  - `celebri`: `bd3bbf0`, `5ff3cb8`, `9d91c6b`.
   - `celebri-staff`: `23eb358`, `82cbd20`, `74f8e1c`.
 - **Testes:** **256 testes automatizados** do backend passando, incluindo isolamento entre buffets contra o banco real, e checagens de ponta a ponta contra a API rodando.
 - **App:** compila sem erros nem avisos.
