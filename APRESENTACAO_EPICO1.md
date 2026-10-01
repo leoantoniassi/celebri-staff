@@ -3,6 +3,11 @@
 Roteiro do pitch para a turma: **12 slides, ~10 minutos**. Cada slide tem o conteúdo da tela, quem fala e a fala sugerida (ajustem com as próprias palavras).
 Fonte dos dados: [`README.md`](README.md) (Projeto Ágil do Aplicativo v2.0).
 
+**Slides:**
+- [`apresentacao/APRESENTACAO_EPICO1.pdf`](apresentacao/APRESENTACAO_EPICO1.pdf): para projetar.
+- [`apresentacao/slides.html`](apresentacao/slides.html): abre no navegador.
+- [`apresentacao/NOTAS_DO_APRESENTADOR.md`](apresentacao/NOTAS_DO_APRESENTADOR.md): falas de cada slide.
+
 | Quem | Papel | Slides |
 | :-- | :-- | :-- |
 | **Luis Felipe** | Product Owner | 1–6, 12 |
