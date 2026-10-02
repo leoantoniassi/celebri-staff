@@ -9,6 +9,6 @@
 7. **proposto** — Leonardo (40s): Para o Épico 1, o combinado era a base: app funcionando com a API, login que aplica a marca do buffet e a tela de escalas.
 8. **realizado** — Leonardo (90s): Entregamos o proposto e fomos além. As três telas de operação já funcionam ponta a ponta com a API. Temos 256 testes automatizados no servidor e um roteiro de teste manual para homologar em celulares reais. (Se der, mostrar o app no emulador por 30 s.)
 9. **jornada** — Bruno (60s): Esta é a funcionalidade principal. A Marina, recepcionista, lê o QR da Família Souza. Só o pai chegou, então ela registra 1. Quando o resto chega, o app mostra que faltam 3. Se alguém esquece o celular, ela busca pelo nome.
-10. **desafios** — Leonardo (60s): O maior aprendizado foi que compilar não basta: dois bugs graves só apareceram quando rodamos no emulador. Depois disso, todo fluxo passou a ser testado contra a API de verdade. (Completem a última linha com um desafio de organização da equipe.)
+10. **desafios** — Leonardo (60s): O maior aprendizado foi que compilar não basta: dois bugs graves só apareceram quando rodamos no emulador. Depois disso, todo fluxo passou a ser testado contra a API de verdade.
 11. **proximos** — Bruno (50s): Tratamos dados de funcionários e convidados, então aplicamos minimização e segurança desde já. Até o EP3 vamos homologar em aparelhos reais e completar contador, cronograma e UX.
 12. **encerramento** — Luis (20s): Obrigado! A documentação completa está no README do repositório. Ficamos à disposição.

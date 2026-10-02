@@ -99,7 +99,6 @@ Fonte dos dados: [`README.md`](README.md) (Projeto Ágil do Aplicativo v2.0).
 - Bugs que só apareciam rodando → testar contra API real e emulador, não só com mocks.
 - Login só com e-mail inseguro → código de 6 dígitos com hash, validade e tentativas.
 - Vários porteiros ao mesmo tempo → contagem atômica no banco (testada com 10 simultâneas).
-- *(+ desafios de organização da equipe)*
 
 **Fala:** "O maior aprendizado foi que compilar não basta: dois bugs graves só apareceram quando rodamos no emulador. Depois disso, todo fluxo passou a ser testado contra a API de verdade."
 
