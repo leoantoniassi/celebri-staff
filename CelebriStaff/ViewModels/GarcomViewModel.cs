@@ -21,9 +21,9 @@ public class MesaNoMapa(MesaMapa mesa)
 
     public Color Cor => Mesa.Situacao switch
     {
-        "pronto" => Color.FromArgb("#1B7F3B"),
-        "aguardando" => Color.FromArgb("#E08A00"),
-        _ => Color.FromArgb("#9E9E9E"),
+        "pronto" => Color.FromArgb("#2E7D32"),
+        "aguardando" => Color.FromArgb("#ED6C02"),
+        _ => Color.FromArgb("#6E6E6E"),
     };
 
     public string Selo => Mesa.PedidosProntos > 0 ? "✓" : Mesa.PedidosAbertos > 0 ? Mesa.PedidosAbertos.ToString() : string.Empty;

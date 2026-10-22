@@ -82,7 +82,7 @@ public partial class EntradaConviteViewModel(ApiClient api) : ObservableObject, 
 
             Aplicar(result.Data);
             Mensagem = result.Message;
-            MensagemCor = result.Data.Excedente > 0 ? Color.FromArgb("#B26A00") : Color.FromArgb("#1B7F3B");
+            MensagemCor = result.Data.Excedente > 0 ? Color.FromArgb("#ED6C02") : Color.FromArgb("#2E7D32");
 
             if (voltar && result.Data.Excedente == 0)
             {

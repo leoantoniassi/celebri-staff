@@ -74,11 +74,11 @@ public partial class EscalaCardViewModel : ObservableObject
     {
         (Status, StatusCor) = Escala switch
         {
-            { CheckinEm: { } chegada } => ($"Chegou às {chegada.ToLocalTime():HH\\:mm}", Color.FromArgb("#1B7F3B")),
-            { Confirmacao: "confirmado" } => ("Presença confirmada", Color.FromArgb("#1B7F3B")),
+            { CheckinEm: { } chegada } => ($"Chegou às {chegada.ToLocalTime():HH\\:mm}", Color.FromArgb("#2E7D32")),
+            { Confirmacao: "confirmado" } => ("Presença confirmada", Color.FromArgb("#2E7D32")),
             { Confirmacao: "recusado" } => ("Você recusou", Color.FromArgb("#B3261E")),
             _ when Terminou => ("Sem resposta", Colors.Gray),
-            _ => ("Aguardando sua resposta", Color.FromArgb("#B26A00")),
+            _ => ("Aguardando sua resposta", Color.FromArgb("#ED6C02")),
         };
 
         PodeResponder = !Terminou && Escala.CheckinEm is null;

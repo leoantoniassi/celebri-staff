@@ -10,31 +10,29 @@
     <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16" RowSpacing="12">
 
         <!-- Contador -->
-        <Border Padding="16" StrokeShape="RoundRectangle 16" Stroke="#DDDDDD">
+        <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16" StrokeShape="RoundRectangle 16">
             <VerticalStackLayout Spacing="4">
-                <Label Text="{Binding EventoNome}" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" HorizontalOptions="Center" />
                 <Label Text="{Binding TotalTexto}" FontSize="56" FontAttributes="Bold"
                        HorizontalOptions="Center" TextColor="{DynamicResource ColorPrimary}"
                        AutomationId="TotalPresentes" />
                 <Label Text="pessoas presentes" HorizontalOptions="Center" />
-                <Label Text="{Binding PrevistoTexto}" HorizontalOptions="Center" TextColor="Gray" />
+                <Label Text="{Binding PrevistoTexto}" HorizontalOptions="Center" Style="{StaticResource CaptionText}" />
             </VerticalStackLayout>
         </Border>
 
         <!-- Entrada sem convite -->
         <Grid Grid.Row="1" ColumnDefinitions="*,2*" ColumnSpacing="8">
-            <Button Text="− 1" Command="{Binding DesfazerAvulsoCommand}"
-                    BackgroundColor="Transparent" TextColor="{DynamicResource ColorPrimary}"
-                    BorderColor="{DynamicResource ColorPrimary}" BorderWidth="1" FontSize="20" />
-            <Button Grid.Column="1" Text="+ 1 entrou" Command="{Binding EntrouAvulsoCommand}"
-                    BackgroundColor="{DynamicResource ColorPrimary}" FontSize="20" />
+            <Button Style="{StaticResource SecondaryButtonStyle}" Text="− 1" FontSize="20" Command="{Binding DesfazerAvulsoCommand}" />
+            <Button Grid.Column="1" Style="{StaticResource PrimaryButtonStyle}" Text="+ 1 entrou" FontSize="20" Command="{Binding EntrouAvulsoCommand}" />
         </Grid>
 
         <VerticalStackLayout Grid.Row="2" Spacing="8">
-            <Label Text="{Binding Erro}" TextColor="Red"
+            <Label Text="{Binding Erro}" Style="{StaticResource ErrorTextLabel}"
                    IsVisible="{Binding Erro, Converter={StaticResource StringNotEmptyConverter}}" />
             <Button Text="Ler QR code do convite" Command="{Binding LerQrCodeCommand}"
-                    IsVisible="{Binding UsaConvites}" BackgroundColor="{DynamicResource ColorSecondary}" />
+                    IsVisible="{Binding UsaConvites}"
+                    BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{StaticResource ColorSurface}" />
             <SearchBar Placeholder="Buscar convidado pelo nome" Text="{Binding Busca}"
                        IsVisible="{Binding UsaConvites}" />
         </VerticalStackLayout>
@@ -42,11 +40,13 @@
         <CollectionView Grid.Row="3" ItemsSource="{Binding Convites}" SelectionMode="None"
                         IsVisible="{Binding UsaConvites}">
             <CollectionView.EmptyView>
-                <Label Text="Nenhum convidado encontrado." HorizontalOptions="Center" Margin="0,16" />
+                <StackLayout>
+                    <Label Text="Nenhum convidado encontrado." Style="{StaticResource EmptyStateTitleStyle}" Margin="0,16" />
+                </StackLayout>
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:ConvitePortaria">
-                    <Border Margin="0,0,0,8" Padding="12" StrokeShape="RoundRectangle 12" Stroke="#DDDDDD">
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="12" StrokeShape="RoundRectangle 12">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PortariaViewModel}}, Path=AbrirConviteCommand, x:DataType=vm:PortariaViewModel}"
@@ -54,7 +54,7 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout>
                             <Label Text="{Binding Nome}" FontAttributes="Bold" />
-                            <Label Text="{Binding Situacao}" TextColor="Gray" />
+                            <Label Text="{Binding Situacao}" Style="{StaticResource CaptionText}" />
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

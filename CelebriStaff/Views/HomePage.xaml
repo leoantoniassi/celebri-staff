@@ -10,11 +10,12 @@
         <ToolbarItem Text="Sair" Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
 
-    <Grid RowDefinitions="Auto,*" Padding="16,8,16,0">
+    <Grid RowDefinitions="Auto,*" Padding="16,8,16,8">
 
         <VerticalStackLayout Spacing="4" Margin="0,0,0,8">
-            <Label Text="{Binding WelcomeMessage}" FontSize="22" FontAttributes="Bold" />
+            <Label Text="{Binding WelcomeMessage}" Style="{StaticResource TitleText}" />
             <Label Text="{Binding Aviso}"
+                   Style="{StaticResource CaptionText}"
                    IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
         </VerticalStackLayout>
 
@@ -23,48 +24,58 @@
 
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate x:DataType="vm:GrupoEscalas">
-                        <Label Text="{Binding Titulo}" FontSize="14" FontAttributes="Bold"
-                               TextColor="{DynamicResource ColorPrimary}" Margin="4,16,0,6" />
+                        <Label Text="{Binding Titulo}" Style="{StaticResource SectionHeaderStyle}" Margin="4,16,0,6" />
                     </DataTemplate>
                 </CollectionView.GroupHeaderTemplate>
 
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Padding="32,64" Spacing="8">
+                        <Label Text="Nenhuma escala por aqui" Style="{StaticResource EmptyStateTitleStyle}" />
+                        <Label Text="Você ainda não foi escalado para nenhum evento."
+                               Style="{StaticResource EmptyStateMessageStyle}" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:EscalaCardViewModel">
-                        <Border Margin="0,0,0,10" Padding="14" StrokeThickness="1" Stroke="#DDDDDD"
-                                StrokeShape="RoundRectangle 14">
+                        <Border Style="{StaticResource CardStyle}">
                             <VerticalStackLayout Spacing="6">
-                                <Label Text="{Binding NomeEvento}" FontSize="17" FontAttributes="Bold" />
-                                <Label Text="{Binding Quando}" />
-                                <Label Text="{Binding Local, StringFormat='📍 {0}'}"
-                                       IsVisible="{Binding Local, Converter={StaticResource StringNotEmptyConverter}}" />
-                                <Label Text="{Binding Funcao, StringFormat='Função: {0}'}" />
-                                <Label Text="{Binding Status}" TextColor="{Binding StatusCor}" FontAttributes="Bold" />
+                                <Grid RowDefinitions="Auto,Auto" RowSpacing="2">
+                                    <Label Text="{Binding NomeEvento}" Style="{StaticResource Headline}" />
+                                    <Label Grid.Row="1" Text="{Binding Quando}" Style="{StaticResource CaptionText}" />
+                                </Grid>
 
-                                <HorizontalStackLayout Spacing="8" IsVisible="{Binding PodeResponder}">
-                                    <Button Text="Confirmar"
+                                <Label Text="{Binding Local, StringFormat='📍 {0}'}"
+                                       Style="{StaticResource CaptionText}"
+                                       IsVisible="{Binding Local, Converter={StaticResource StringNotEmptyConverter}}" />
+
+                                <Label Text="{Binding Funcao, StringFormat='Função: {0}'}" Style="{StaticResource BodyText}" />
+
+                                <Label Text="{Binding Status}" Style="{StaticResource StatusBadgeStyle}"
+                                       TextColor="{Binding StatusCor}" />
+
+                                <HorizontalStackLayout Spacing="8" Margin="0,4,0,0" IsVisible="{Binding PodeResponder}">
+                                    <Button Text="Confirmar" Style="{StaticResource PrimaryButtonStyle}"
                                             IsVisible="{Binding PodeConfirmar}"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=ConfirmarCommand, x:DataType=vm:HomeViewModel}"
-                                            CommandParameter="{Binding .}"
-                                            BackgroundColor="{DynamicResource ColorPrimary}" />
-                                    <Button Text="Recusar"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Recusar" Style="{StaticResource DangerButtonStyle}"
                                             IsVisible="{Binding PodeRecusar}"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=RecusarCommand, x:DataType=vm:HomeViewModel}"
-                                            CommandParameter="{Binding .}"
-                                            BackgroundColor="Transparent"
-                                            TextColor="#B3261E" BorderColor="#B3261E" BorderWidth="1" />
+                                            CommandParameter="{Binding .}" />
                                 </HorizontalStackLayout>
 
                                 <Button Text="Cheguei no evento"
                                         IsVisible="{Binding PodeFazerCheckin}"
+                                        Style="{StaticResource SuccessButtonStyle}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=CheckinCommand, x:DataType=vm:HomeViewModel}"
-                                        CommandParameter="{Binding .}"
-                                        BackgroundColor="{DynamicResource ColorSecondary}" />
+                                        CommandParameter="{Binding .}" />
 
                                 <Button Text="{Binding TextoModulo}"
                                         IsVisible="{Binding PodeAbrirModulo}"
+                                        Style="{StaticResource PrimaryButtonStyle}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AbrirModuloCommand, x:DataType=vm:HomeViewModel}"
-                                        CommandParameter="{Binding .}"
-                                        BackgroundColor="{DynamicResource ColorPrimary}" />
+                                        CommandParameter="{Binding .}" />
                             </VerticalStackLayout>
                         </Border>
                     </DataTemplate>

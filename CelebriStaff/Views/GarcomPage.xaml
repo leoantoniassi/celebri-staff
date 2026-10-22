@@ -8,20 +8,20 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">
-            <Label Text="{Binding EventoNome}" FontSize="18" FontAttributes="Bold" />
-            <Label Text="{Binding Resumo}" />
-            <Label Text="{Binding Aviso}" TextColor="#B26A00"
+            <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" />
+            <Label Text="{Binding Resumo}" Style="{StaticResource BodyText}" />
+            <Label Text="{Binding Aviso}" TextColor="{StaticResource ColorWarning}"
                    IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
 
             <!-- Legenda -->
             <HorizontalStackLayout Spacing="14">
-                <Label Text="● livre" TextColor="#9E9E9E" />
-                <Label Text="● aguardando cozinha" TextColor="#E08A00" />
-                <Label Text="● pronto" TextColor="#1B7F3B" />
+                <Label Text="● livre" TextColor="{StaticResource ColorTextSecondary}" />
+                <Label Text="● aguardando cozinha" TextColor="{StaticResource ColorWarning}" />
+                <Label Text="● pronto" TextColor="{StaticResource ColorSuccess}" />
             </HorizontalStackLayout>
 
             <!-- Mapa do salão: posições vêm do painel web (em %) -->
-            <Border StrokeShape="RoundRectangle 16" Stroke="#DDDDDD" Padding="8" HeightRequest="460">
+            <Border Style="{StaticResource CardStyle}" StrokeShape="RoundRectangle 16" Padding="8" Margin="0" HeightRequest="460">
                 <AbsoluteLayout BindableLayout.ItemsSource="{Binding Mesas}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="vm:MesaNoMapa">
@@ -29,11 +29,11 @@
                                   AbsoluteLayout.LayoutFlags="{Binding Flags}">
                                 <Border BackgroundColor="{Binding Cor}" StrokeThickness="0"
                                         StrokeShape="RoundRectangle 30">
-                                    <Label Text="{Binding Numero}" TextColor="White" FontAttributes="Bold" FontSize="18"
+                                    <Label Text="{Binding Numero}" TextColor="{StaticResource ColorSurface}" FontAttributes="Bold" FontSize="18"
                                            HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <Label Text="{Binding Selo}" FontSize="12" FontAttributes="Bold"
-                                       BackgroundColor="White" TextColor="Black" Padding="4,0"
+                                        BackgroundColor="{StaticResource ColorSurface}" TextColor="{StaticResource ColorTextPrimary}" Padding="4,0"
                                        HorizontalOptions="End" VerticalOptions="Start" />
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer
@@ -46,7 +46,8 @@
                 </AbsoluteLayout>
             </Border>
 
-            <Label Text="Toque numa mesa para anotar um pedido ou marcar a entrega." TextColor="Gray"
+            <Label Text="Toque numa mesa para anotar um pedido ou marcar a entrega."
+                   Style="{StaticResource CaptionText}"
                    HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
     </ScrollView>

@@ -27,8 +27,8 @@ public class PedidoDaMesa(Pedido pedido)
 
     public Color Cor => Pedido.Status switch
     {
-        "pronto" => Color.FromArgb("#1B7F3B"),
-        "enviado" or "preparando" => Color.FromArgb("#E08A00"),
+        "pronto" => Color.FromArgb("#2E7D32"),
+        "enviado" or "preparando" => Color.FromArgb("#ED6C02"),
         _ => Colors.Gray,
     };
 }
