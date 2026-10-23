@@ -88,7 +88,7 @@ A operação de uma festa é rápida e barulhenta. Hoje o buffet depende de list
 
 ### 1.8 Evolução da Ideia
 
-**Ponto de partida.** O grupo começou com um sistema web sob medida para **um** buffet ("Mais Alegria", depois "Festify"). Ele foi pivotado para um **SaaS White Label** (renomeado **Celebri**), em que cada buffet assinante tem sua marca. O Plano de Projeto v1.0 previa um app com 7 histórias genéricas: login com **código da empresa**, escalas, portaria com QR, catraca digital, WhatsApp, fotos de ocorrências e modo offline.
+**Ponto de partida.** O grupo começou com um sistema web sob medida para **um** buffet ("Celebri", depois "Festify"). Ele foi pivotado para um **SaaS White Label** (renomeado **Celebri**), em que cada buffet assinante tem sua marca. O Plano de Projeto v1.0 previa um app com 7 histórias genéricas: login com **código da empresa**, escalas, portaria com QR, catraca digital, WhatsApp, fotos de ocorrências e modo offline.
 
 **Refinamentos realizados até o Marco 1:**
 
