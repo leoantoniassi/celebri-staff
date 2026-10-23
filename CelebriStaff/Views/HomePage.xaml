@@ -101,5 +101,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
+
+        <controls:LoadingSkeleton Grid.Row="1" IsVisible="{Binding CarregandoInicial}" />
     </Grid>
 </ContentPage>

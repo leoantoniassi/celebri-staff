@@ -81,13 +81,12 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Label Text="{Binding Mensagem}" Style="{StaticResource CaptionText}" HorizontalTextAlignment="Center"
-                   IsVisible="{Binding Mensagem, Converter={StaticResource StringNotEmptyConverter}}" />
-
             <!-- Pedidos da mesa -->
             <Label Text="Pedidos desta mesa" Style="{StaticResource Headline}" Margin="0,8,0,0"
                    SemanticProperties.HeadingLevel="Level2" />
-            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Pedidos}" Spacing="8">
+            <controls:LoadingSkeleton IsVisible="{Binding CarregandoInicial}" HeightRequest="190" Margin="-16,0" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Pedidos}" Spacing="8"
+                                 IsVisible="{Binding CarregandoInicial, Converter={StaticResource InvertedBoolConverter}}">
                 <BindableLayout.EmptyView>
                     <controls:EmptyStateView Icon="{StaticResource IconReceipt}"
                                              Title="Nenhum pedido ainda"

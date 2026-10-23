@@ -3,11 +3,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Models;
 using CelebriStaff.Services.Api;
+using CelebriStaff.Services.Feedback;
 
 namespace CelebriStaff.ViewModels;
 
 /// <summary>Portaria: contador de pessoas, leitura de QR e busca de convidados.</summary>
-public partial class PortariaViewModel(ApiClient api) : ObservableObject, IQueryAttributable
+public partial class PortariaViewModel(ApiClient api, IFeedbackService feedback) : ObservableObject, IQueryAttributable
 {
     private string _eventoId = string.Empty;
 
@@ -35,6 +36,10 @@ public partial class PortariaViewModel(ApiClient api) : ObservableObject, IQuery
     [ObservableProperty]
     private bool isBusy;
 
+    /// <summary>Só na primeira carga: a tela mostra o skeleton em vez de um estado vazio.</summary>
+    [ObservableProperty]
+    private bool carregandoInicial = true;
+
     public ObservableCollection<ConvitePortaria> Convites { get; } = [];
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -46,15 +51,22 @@ public partial class PortariaViewModel(ApiClient api) : ObservableObject, IQuery
     /// <summary>Recarrega os números (chamado ao abrir a tela e a cada poucos segundos).</summary>
     public async Task AtualizarAsync()
     {
-        var result = await api.GetPortariaResumoAsync(_eventoId);
-        if (!result.Success || result.Data is null)
+        try
         {
-            Erro = result.Message ?? "Não foi possível carregar a portaria.";
-            return;
+            var result = await api.GetPortariaResumoAsync(_eventoId);
+            if (!result.Success || result.Data is null)
+            {
+                Erro = result.Message ?? "Não foi possível carregar a portaria.";
+                return;
+            }
+            Erro = null;
+            AplicarResumo(result.Data);
+            if (UsaConvites) await BuscarConvitesAsync();
         }
-        Erro = null;
-        AplicarResumo(result.Data);
-        if (UsaConvites) await BuscarConvitesAsync();
+        finally
+        {
+            CarregandoInicial = false;
+        }
     }
 
     private void AplicarResumo(PortariaResumo r)
@@ -92,7 +104,7 @@ public partial class PortariaViewModel(ApiClient api) : ObservableObject, IQuery
         {
             var result = await api.AjustarAvulsosAsync(_eventoId, delta);
             if (result is { Success: true, Data: not null }) AplicarResumo(result.Data);
-            else Erro = result.Message ?? "Não foi possível atualizar o contador.";
+            else feedback.Error(result.Message ?? "Não foi possível atualizar o contador.");
         }
         finally
         {
@@ -106,7 +118,7 @@ public partial class PortariaViewModel(ApiClient api) : ObservableObject, IQuery
         var permissao = await Permissions.RequestAsync<Permissions.Camera>();
         if (permissao != PermissionStatus.Granted)
         {
-            Erro = "Sem permissão de câmera. Libere nas configurações do celular ou busque o convidado pelo nome.";
+            feedback.Error("Sem permissão de câmera. Libere nas configurações do celular ou busque o convidado pelo nome.");
             return;
         }
         await Shell.Current.GoToAsync("portaria-leitor", new Dictionary<string, object> { ["eventoId"] = _eventoId });

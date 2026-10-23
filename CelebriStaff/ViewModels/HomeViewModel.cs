@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Services.Api;
 using CelebriStaff.Services.Auth;
+using CelebriStaff.Services.Feedback;
 
 namespace CelebriStaff.ViewModels;
 
@@ -11,11 +12,13 @@ public partial class HomeViewModel : ObservableObject
 {
     private readonly AuthService _authService;
     private readonly ApiClient _api;
+    private readonly IFeedbackService _feedback;
 
-    public HomeViewModel(AuthService authService, ApiClient api)
+    public HomeViewModel(AuthService authService, ApiClient api, IFeedbackService feedback)
     {
         _authService = authService;
         _api = api;
+        _feedback = feedback;
     }
 
     [ObservableProperty]
@@ -23,6 +26,10 @@ public partial class HomeViewModel : ObservableObject
 
     [ObservableProperty]
     private bool isRefreshing;
+
+    /// <summary>Só na primeira carga: mostra o skeleton em vez de uma lista vazia piscando.</summary>
+    [ObservableProperty]
+    private bool carregandoInicial = true;
 
     [ObservableProperty]
     private string? aviso;
@@ -65,6 +72,7 @@ public partial class HomeViewModel : ObservableObject
         finally
         {
             IsRefreshing = false;
+            CarregandoInicial = false;
         }
     }
 
@@ -84,11 +92,13 @@ public partial class HomeViewModel : ObservableObject
         var result = await _api.ResponderEscalaAsync(card.Escala.Id, resposta);
         if (!result.Success)
         {
-            await Shell.Current.DisplayAlertAsync("Escala", result.Message ?? "Não foi possível responder.", "OK");
+            _feedback.Error(result.Message ?? "Não foi possível responder.");
             return;
         }
         card.Escala.Confirmacao = resposta;
         card.AtualizarEstado();
+        if (resposta == "confirmado") _feedback.Success("Presença confirmada!");
+        else _feedback.Info("Recusa registrada.");
     }
 
     [RelayCommand]
@@ -97,12 +107,13 @@ public partial class HomeViewModel : ObservableObject
         var result = await _api.CheckinEscalaAsync(card.Escala.Id);
         if (!result.Success)
         {
-            await Shell.Current.DisplayAlertAsync("Check-in", result.Message ?? "Não foi possível fazer o check-in.", "OK");
+            _feedback.Error(result.Message ?? "Não foi possível fazer o check-in.");
             return;
         }
         card.Escala.CheckinEm = DateTimeOffset.Now;
         card.Escala.Confirmacao = "confirmado";
         card.AtualizarEstado();
+        _feedback.Success("Check-in feito. Bom trabalho!");
     }
 
     [RelayCommand]

@@ -144,5 +144,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <controls:LoadingSkeleton Grid.Row="2" IsVisible="{Binding CarregandoInicial}" />
     </Grid>
 </ContentPage>

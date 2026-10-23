@@ -84,5 +84,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <controls:LoadingSkeleton Grid.Row="3" IsVisible="{Binding CarregandoInicial}" />
     </Grid>
 </ContentPage>

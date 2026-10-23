@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Models;
 using CelebriStaff.Services.Theme;
 using CelebriStaff.Services.Api;
+using CelebriStaff.Services.Feedback;
 
 namespace CelebriStaff.ViewModels;
 
@@ -53,7 +54,7 @@ public class EstoqueNaCozinha(ItemEstoque item)
 }
 
 /// <summary>Cozinha: pedidos dos garçons, cardápio com horários e estoque do evento.</summary>
-public partial class CozinhaViewModel(ApiClient api) : ObservableObject, IQueryAttributable
+public partial class CozinhaViewModel(ApiClient api, IFeedbackService feedback) : ObservableObject, IQueryAttributable
 {
     private string _eventoId = string.Empty;
 
@@ -76,6 +77,10 @@ public partial class CozinhaViewModel(ApiClient api) : ObservableObject, IQueryA
     public bool AbaCardapio => Aba == "cardapio";
     public bool AbaEstoque => Aba == "estoque";
 
+    /// <summary>Só na primeira carga: a tela mostra o skeleton em vez de um estado vazio.</summary>
+    [ObservableProperty]
+    private bool carregandoInicial = true;
+
     public ObservableCollection<PedidoNaCozinha> Pedidos { get; } = [];
     public ObservableCollection<ServicoNaCozinha> Servicos { get; } = [];
     public ObservableCollection<EstoqueNaCozinha> Estoque { get; } = [];
@@ -95,26 +100,33 @@ public partial class CozinhaViewModel(ApiClient api) : ObservableObject, IQueryA
 
     public async Task AtualizarAsync()
     {
-        var result = await api.GetPainelCozinhaAsync(_eventoId);
-        if (!result.Success || result.Data is null)
+        try
         {
-            Erro = result.Message ?? "Não foi possível carregar a cozinha.";
-            return;
+            var result = await api.GetPainelCozinhaAsync(_eventoId);
+            if (!result.Success || result.Data is null)
+            {
+                Erro = result.Message ?? "Não foi possível carregar a cozinha.";
+                return;
+            }
+            Erro = null;
+            var painel = result.Data;
+            Publico = $"{painel.Evento.QtdPessoas} pessoas · {painel.Evento.QtdAdultos} adultos · {painel.Evento.QtdCriancas} crianças";
+
+            Pedidos.Clear();
+            foreach (var p in painel.Pedidos) Pedidos.Add(new PedidoNaCozinha(p));
+            var novos = painel.Pedidos.Count(p => p.Status == "enviado");
+            TituloPedidos = novos > 0 ? $"Pedidos ({novos} novo{(novos > 1 ? "s" : "")})" : "Pedidos";
+
+            Servicos.Clear();
+            foreach (var s in painel.Servicos) Servicos.Add(new ServicoNaCozinha(s));
+
+            Estoque.Clear();
+            foreach (var e in painel.Estoque.OrderByDescending(e => e.EstoqueBaixo)) Estoque.Add(new EstoqueNaCozinha(e));
         }
-        Erro = null;
-        var painel = result.Data;
-        Publico = $"{painel.Evento.QtdPessoas} pessoas · {painel.Evento.QtdAdultos} adultos · {painel.Evento.QtdCriancas} crianças";
-
-        Pedidos.Clear();
-        foreach (var p in painel.Pedidos) Pedidos.Add(new PedidoNaCozinha(p));
-        var novos = painel.Pedidos.Count(p => p.Status == "enviado");
-        TituloPedidos = novos > 0 ? $"Pedidos ({novos} novo{(novos > 1 ? "s" : "")})" : "Pedidos";
-
-        Servicos.Clear();
-        foreach (var s in painel.Servicos) Servicos.Add(new ServicoNaCozinha(s));
-
-        Estoque.Clear();
-        foreach (var e in painel.Estoque.OrderByDescending(e => e.EstoqueBaixo)) Estoque.Add(new EstoqueNaCozinha(e));
+        finally
+        {
+            CarregandoInicial = false;
+        }
     }
 
     [RelayCommand]
@@ -132,7 +144,8 @@ public partial class CozinhaViewModel(ApiClient api) : ObservableObject, IQueryA
     private async Task MudarPedidoAsync(PedidoNaCozinha p, string status)
     {
         var result = await api.MudarStatusPedidoAsync(_eventoId, p.Pedido.Id, status);
-        if (!result.Success) Erro = result.Message;
+        if (!result.Success) feedback.Error(result.Message ?? "Não foi possível atualizar o pedido.");
+        else if (status == "pronto") feedback.Success($"Pedido da mesa {p.Pedido.Mesa} pronto!");
         await AtualizarAsync();
     }
 
@@ -140,7 +153,8 @@ public partial class CozinhaViewModel(ApiClient api) : ObservableObject, IQueryA
     private async Task AvancarServicoAsync(ServicoNaCozinha s)
     {
         var result = await api.MudarStatusServicoAsync(_eventoId, s.Servico.Id, s.ProximoStatus);
-        if (!result.Success) Erro = result.Message;
+        if (!result.Success) feedback.Error(result.Message ?? "Não foi possível atualizar o serviço.");
+        else if (s.ProximoStatus == "servido") feedback.Success($"{s.Item} servido.");
         await AtualizarAsync();
     }
 }

@@ -3,11 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Models;
 using CelebriStaff.Services.Theme;
 using CelebriStaff.Services.Api;
+using CelebriStaff.Services.Feedback;
 
 namespace CelebriStaff.ViewModels;
 
 /// <summary>Registra quantas pessoas de um convite entraram (a portaria pode ajustar o número).</summary>
-public partial class EntradaConviteViewModel(ApiClient api) : ObservableObject, IQueryAttributable
+public partial class EntradaConviteViewModel(ApiClient api, IFeedbackService feedback) : ObservableObject, IQueryAttributable
 {
     private string _eventoId = string.Empty;
     private string _conviteId = string.Empty;
@@ -84,6 +85,7 @@ public partial class EntradaConviteViewModel(ApiClient api) : ObservableObject, 
             Aplicar(result.Data);
             Mensagem = result.Message;
             MensagemCor = result.Data.Excedente > 0 ? Tokens.Warning : Tokens.Success;
+            if (result.Data.Excedente == 0) feedback.Success(quantidade > 0 ? "Entrada registrada." : "Entrada desfeita.");
 
             if (voltar && result.Data.Excedente == 0)
             {

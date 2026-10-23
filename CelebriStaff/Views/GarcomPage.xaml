@@ -7,6 +7,7 @@
              x:DataType="vm:GarcomViewModel"
              Title="Garçom">
 
+<Grid>
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">
             <VerticalStackLayout Spacing="2">
@@ -62,4 +63,7 @@
                    HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
     </ScrollView>
+
+    <controls:LoadingSkeleton IsVisible="{Binding CarregandoInicial}" />
+</Grid>
 </ContentPage>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CelebriStaff.Views.Controls.LoadingSkeleton"
+             BackgroundColor="{DynamicResource ColorBackground}">
+
+    <!-- Carga inicial: três cartões "fantasma" pulsando, no lugar da lista. -->
+    <VerticalStackLayout x:Name="Host" Padding="16,8" Spacing="12" InputTransparent="True">
+        <VerticalStackLayout.Resources>
+            <Style x:Key="Bone" TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="{DynamicResource ColorBorder}" />
+                <Setter Property="CornerRadius" Value="6" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+        </VerticalStackLayout.Resources>
+
+        <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16">
+            <VerticalStackLayout Spacing="10">
+                <BoxView Style="{StaticResource Bone}" WidthRequest="180" HeightRequest="16" />
+                <BoxView Style="{StaticResource Bone}" WidthRequest="120" HeightRequest="12" />
+                <BoxView Style="{StaticResource Bone}" WidthRequest="220" HeightRequest="12" />
+                <BoxView Style="{StaticResource Bone}" HorizontalOptions="Fill" HeightRequest="44" CornerRadius="12" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16">
+            <VerticalStackLayout Spacing="10">
+                <BoxView Style="{StaticResource Bone}" WidthRequest="150" HeightRequest="16" />
+                <BoxView Style="{StaticResource Bone}" WidthRequest="200" HeightRequest="12" />
+                <BoxView Style="{StaticResource Bone}" WidthRequest="100" HeightRequest="12" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16">
+            <VerticalStackLayout Spacing="10">
+                <BoxView Style="{StaticResource Bone}" WidthRequest="170" HeightRequest="16" />
+                <BoxView Style="{StaticResource Bone}" WidthRequest="130" HeightRequest="12" />
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentView>

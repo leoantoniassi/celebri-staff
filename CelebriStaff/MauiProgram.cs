@@ -1,6 +1,7 @@
 using CommunityToolkit.Maui;
 using CelebriStaff.Services.Api;
 using CelebriStaff.Services.Auth;
+using CelebriStaff.Services.Feedback;
 using CelebriStaff.Services.Theme;
 using CelebriStaff.ViewModels;
 using CelebriStaff.Views;
@@ -42,6 +43,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<AuthService>();
         builder.Services.AddSingleton<ThemeService>();
+        builder.Services.AddSingleton<IFeedbackService, FeedbackService>();
 
         // ── Shell / páginas ──────────────────────────────────────
         builder.Services.AddSingleton<AppShell>();

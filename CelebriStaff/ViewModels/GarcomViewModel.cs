@@ -44,6 +44,10 @@ public partial class GarcomViewModel(ApiClient api) : ObservableObject, IQueryAt
     [ObservableProperty]
     private string resumo = string.Empty;
 
+    /// <summary>Só na primeira carga: a tela mostra o skeleton em vez de um estado vazio.</summary>
+    [ObservableProperty]
+    private bool carregandoInicial = true;
+
     public ObservableCollection<MesaNoMapa> Mesas { get; } = [];
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -54,23 +58,30 @@ public partial class GarcomViewModel(ApiClient api) : ObservableObject, IQueryAt
 
     public async Task AtualizarAsync()
     {
-        var result = await api.GetMapaMesasAsync(_eventoId);
-        if (!result.Success || result.Data is null)
+        try
         {
-            Aviso = result.Message ?? "Não foi possível carregar as mesas.";
-            return;
+            var result = await api.GetMapaMesasAsync(_eventoId);
+            if (!result.Success || result.Data is null)
+            {
+                Aviso = result.Message ?? "Não foi possível carregar as mesas.";
+                return;
+            }
+
+            Mesas.Clear();
+            foreach (var m in result.Data) Mesas.Add(new MesaNoMapa(m));
+
+            Aviso = result.Data.Count == 0
+                ? result.Message ?? "Nenhuma mesa cadastrada para este salão. Peça ao gerente para montar o mapa no painel."
+                : null;
+            var prontos = result.Data.Sum(m => m.PedidosProntos);
+            Resumo = prontos > 0
+                ? $"{prontos} pedido(s) pronto(s) para buscar na cozinha"
+                : $"{result.Data.Count(m => m.Situacao == "aguardando")} mesa(s) aguardando a cozinha";
         }
-
-        Mesas.Clear();
-        foreach (var m in result.Data) Mesas.Add(new MesaNoMapa(m));
-
-        Aviso = result.Data.Count == 0
-            ? result.Message ?? "Nenhuma mesa cadastrada para este salão. Peça ao gerente para montar o mapa no painel."
-            : null;
-        var prontos = result.Data.Sum(m => m.PedidosProntos);
-        Resumo = prontos > 0
-            ? $"{prontos} pedido(s) pronto(s) para buscar na cozinha"
-            : $"{result.Data.Count(m => m.Situacao == "aguardando")} mesa(s) aguardando a cozinha";
+        finally
+        {
+            CarregandoInicial = false;
+        }
     }
 
     [RelayCommand]

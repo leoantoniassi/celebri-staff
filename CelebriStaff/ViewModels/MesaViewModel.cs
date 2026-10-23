@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Models;
 using CelebriStaff.Services.Theme;
 using CelebriStaff.Services.Api;
+using CelebriStaff.Services.Feedback;
 
 namespace CelebriStaff.ViewModels;
 
@@ -43,7 +44,7 @@ public class PedidoDaMesa(Pedido pedido)
 }
 
 /// <summary>Comanda da mesa: pedidos já feitos e anotação de um pedido novo.</summary>
-public partial class MesaViewModel(ApiClient api) : ObservableObject, IQueryAttributable
+public partial class MesaViewModel(ApiClient api, IFeedbackService feedback) : ObservableObject, IQueryAttributable
 {
     private string _eventoId = string.Empty;
     private string _mesaId = string.Empty;
@@ -72,6 +73,10 @@ public partial class MesaViewModel(ApiClient api) : ObservableObject, IQueryAttr
     [ObservableProperty]
     private bool isBusy;
 
+    /// <summary>Só na primeira carga: a tela mostra o skeleton em vez de um estado vazio.</summary>
+    [ObservableProperty]
+    private bool carregandoInicial = true;
+
     public ObservableCollection<PedidoItem> Novos { get; } = [];
     public ObservableCollection<PedidoDaMesa> Pedidos { get; } = [];
 
@@ -87,10 +92,17 @@ public partial class MesaViewModel(ApiClient api) : ObservableObject, IQueryAttr
 
     public async Task AtualizarAsync()
     {
-        var result = await api.GetPedidosDaMesaAsync(_eventoId, _mesaId);
-        if (!result.Success || result.Data is null) return;
-        Pedidos.Clear();
-        foreach (var p in result.Data) Pedidos.Add(new PedidoDaMesa(p));
+        try
+        {
+            var result = await api.GetPedidosDaMesaAsync(_eventoId, _mesaId);
+            if (!result.Success || result.Data is null) return;
+            Pedidos.Clear();
+            foreach (var p in result.Data) Pedidos.Add(new PedidoDaMesa(p));
+        }
+        finally
+        {
+            CarregandoInicial = false;
+        }
     }
 
     [RelayCommand]
@@ -104,7 +116,7 @@ public partial class MesaViewModel(ApiClient api) : ObservableObject, IQueryAttr
     {
         if (string.IsNullOrWhiteSpace(Descricao))
         {
-            Mensagem = "Escreva o item (ex.: suco de uva, mais salgados).";
+            feedback.Info("Escreva o item (ex.: suco de uva, mais salgados).");
             return;
         }
         Novos.Add(new PedidoItem
@@ -138,12 +150,12 @@ public partial class MesaViewModel(ApiClient api) : ObservableObject, IQueryAttr
             var result = await api.CriarPedidoAsync(_eventoId, _mesaId, Novos, null);
             if (!result.Success)
             {
-                Mensagem = result.Message ?? "Não foi possível enviar o pedido.";
+                feedback.Error(result.Message ?? "Não foi possível enviar o pedido.");
                 return;
             }
             Novos.Clear();
             TemItens = false;
-            Mensagem = "Pedido enviado para a cozinha!";
+            feedback.Success("Pedido enviado para a cozinha!");
             await AtualizarAsync();
         }
         finally
@@ -165,7 +177,9 @@ public partial class MesaViewModel(ApiClient api) : ObservableObject, IQueryAttr
     private async Task MudarStatusAsync(PedidoDaMesa pedido, string status)
     {
         var result = await api.MudarStatusPedidoAsync(_eventoId, pedido.Pedido.Id, status);
-        if (!result.Success) Mensagem = result.Message ?? "Não foi possível atualizar o pedido.";
+        if (!result.Success) feedback.Error(result.Message ?? "Não foi possível atualizar o pedido.");
+        else if (status == "entregue") feedback.Success("Entrega registrada.");
+        else if (status == "cancelado") feedback.Info("Pedido cancelado.");
         await AtualizarAsync();
     }
 }

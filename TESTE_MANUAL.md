@@ -163,6 +163,24 @@ Aparelho A: `garcom@teste.com` → **Abrir Garçom**. Aparelho B: `cozinha@teste
 
 ---
 
+### Sessão 7 — Visual, feedback e carregamento
+1. [ ] App: abra a Home, a Portaria, o Garçom e a Cozinha (com a API lenta ou recém-aberta).
+   - **Esperado:** aparecem cartões "fantasma" pulsando e só depois a lista; nenhuma tela pisca "Nenhum... encontrado" antes de carregar.
+2. [ ] App: confirme uma escala, faça o check-in e recuse outra.
+   - **Esperado:** toast curto ("Presença confirmada!", "Check-in feito...", "Recusa registrada."); sem pop-up de alerta.
+3. [ ] App: derrube a API e tente confirmar uma escala ou enviar um pedido.
+   - **Esperado:** barra vermelha (snackbar) com a mensagem e botão "OK", por ~5s.
+4. [ ] App (garçom): envie um pedido, marque "Entreguei" e cancele outro.
+   - **Esperado:** toasts "Pedido enviado para a cozinha!", "Entrega registrada." e "Pedido cancelado.".
+5. [ ] App (cozinha): marque um pedido como "Pronto" e um item do cardápio como servido.
+   - **Esperado:** toast de confirmação; erros aparecem como snackbar.
+6. [ ] App (portaria): registre uma entrada pelo convite; negue a permissão de câmera e toque em "Ler QR".
+   - **Esperado:** toast "Entrada registrada."; sem permissão, snackbar explicando como liberar.
+7. [ ] Celular: alterne entre tema claro e escuro do sistema com o app aberto.
+   - **Esperado:** cores, cartões, chips e skeleton acompanham o tema na hora; textos legíveis nos dois.
+
+---
+
 ### Limitações conhecidas (não são bugs)
 - **Atualização:** as telas do app se atualizam a cada ~8s (consulta periódica); não é tempo real.
 - **Sem internet:** sem conexão o app mostra erro e não guarda entradas para enviar depois (o modo offline ficou para o backlog, US07).
