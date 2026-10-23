@@ -1,52 +1,57 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
+             xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
              x:Class="CelebriStaff.Views.LoginPage"
              x:DataType="vm:LoginViewModel"
              Title="Entrar">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24,32" Spacing="16" VerticalOptions="Center">
+        <VerticalStackLayout Padding="24,32" Spacing="24" VerticalOptions="Center">
 
-            <Image Source="{Binding LogoUrl}"
-                   HeightRequest="80"
-                   Aspect="AspectFit"
-                   IsVisible="{Binding LogoUrl, Converter={StaticResource StringNotEmptyConverter}}" />
+            <controls:BrandHero
+                                LogoUrl="{Binding LogoUrl}"
+                                Title="{Binding NomeFantasia}"
+                                Subtitle="Entre com seu e-mail e senha" />
 
-            <Label Text="{Binding NomeFantasia}"
-                   Style="{StaticResource TitleText}"
-                   HorizontalOptions="Center"
-                   TextColor="{DynamicResource ColorPrimary}" />
+            <Border Style="{StaticResource CardStyle}" Padding="20" Margin="0">
+                <VerticalStackLayout Spacing="16">
 
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Placeholder="Email"
-                       Text="{Binding Email}"
-                       Keyboard="Email"
-                       IsSpellCheckEnabled="False"
-                       IsTextPredictionEnabled="False" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="{StaticResource IconMail}" Style="{StaticResource IconLabel}" />
+                            <Entry Grid.Column="1"
+                                   Placeholder="E-mail"
+                                   Text="{Binding Email}"
+                                   Keyboard="Email"
+                                   IsSpellCheckEnabled="False"
+                                   IsTextPredictionEnabled="False"
+                                   SemanticProperties.Description="E-mail" />
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="{StaticResource IconLock}" Style="{StaticResource IconLabel}" />
+                            <Entry Grid.Column="1"
+                                   Placeholder="Senha"
+                                   Text="{Binding Senha}"
+                                   IsPassword="True"
+                                   SemanticProperties.Description="Senha" />
+                        </Grid>
+                    </Border>
+
+                    <controls:ErrorBanner Message="{Binding ErrorMessage}" />
+
+                    <Button Text="Entrar"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding LoginCommand}"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
             </Border>
-
-            <Border Style="{StaticResource InputBorderStyle}">
-                <Entry Placeholder="Senha"
-                       Text="{Binding Senha}"
-                       IsPassword="True" />
-            </Border>
-
-            <Border StrokeShape="RoundRectangle 10"
-                    BackgroundColor="{StaticResource ColorSurfaceAlt}"
-                    Padding="12"
-                    IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}">
-                <Label Text="{Binding ErrorMessage}"
-                       Style="{StaticResource ErrorTextLabel}" />
-            </Border>
-
-            <Button Text="Entrar"
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Command="{Binding LoginCommand}"
-                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
-
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
 
         </VerticalStackLayout>
     </ScrollView>

@@ -1,27 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
+             xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
              x:Class="CelebriStaff.Views.GarcomPage"
              x:DataType="vm:GarcomViewModel"
              Title="Garçom">
 
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">
-            <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" />
-            <Label Text="{Binding Resumo}" Style="{StaticResource BodyText}" />
-            <Label Text="{Binding Aviso}" TextColor="{StaticResource ColorWarning}"
-                   IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
+            <VerticalStackLayout Spacing="2">
+                <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+                <Label Text="{Binding Resumo}" Style="{StaticResource BodyText}" />
+            </VerticalStackLayout>
+
+            <Border StrokeThickness="0" StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{DynamicResource ColorWarningContainer}" Padding="12"
+                    IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}">
+                <Label Text="{Binding Aviso}" TextColor="{DynamicResource ColorOnWarningContainer}" FontSize="14" />
+            </Border>
 
             <!-- Legenda -->
-            <HorizontalStackLayout Spacing="14">
-                <Label Text="● livre" TextColor="{StaticResource ColorTextSecondary}" />
-                <Label Text="● aguardando cozinha" TextColor="{StaticResource ColorWarning}" />
-                <Label Text="● pronto" TextColor="{StaticResource ColorSuccess}" />
-            </HorizontalStackLayout>
+            <FlexLayout Wrap="Wrap" JustifyContent="Start" AlignItems="Start">
+                <controls:StatusChip Text="Livre" Kind="neutral" Margin="0,0,8,6" />
+                <controls:StatusChip Text="Aguardando cozinha" Kind="warning" Margin="0,0,8,6" />
+                <controls:StatusChip Text="Pronto" Kind="success" Margin="0,0,8,6" />
+            </FlexLayout>
 
             <!-- Mapa do salão: posições vêm do painel web (em %) -->
-            <Border Style="{StaticResource CardStyle}" StrokeShape="RoundRectangle 16" Padding="8" Margin="0" HeightRequest="460">
+            <Border Style="{StaticResource CardStyle}" StrokeShape="RoundRectangle 20" Padding="8" Margin="0" HeightRequest="460"
+                    BackgroundColor="{DynamicResource ColorSurfaceAlt}">
                 <AbsoluteLayout BindableLayout.ItemsSource="{Binding Mesas}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="vm:MesaNoMapa">
@@ -29,12 +37,15 @@
                                   AbsoluteLayout.LayoutFlags="{Binding Flags}">
                                 <Border BackgroundColor="{Binding Cor}" StrokeThickness="0"
                                         StrokeShape="RoundRectangle 30">
-                                    <Label Text="{Binding Numero}" TextColor="{StaticResource ColorSurface}" FontAttributes="Bold" FontSize="18"
+                                    <Label Text="{Binding Numero}" TextColor="White" FontFamily="OpenSansSemibold" FontSize="18"
                                            HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
-                                <Label Text="{Binding Selo}" FontSize="12" FontAttributes="Bold"
-                                        BackgroundColor="{StaticResource ColorSurface}" TextColor="{StaticResource ColorTextPrimary}" Padding="4,0"
-                                       HorizontalOptions="End" VerticalOptions="Start" />
+                                <Border StrokeThickness="0" StrokeShape="RoundRectangle 8"
+                                        BackgroundColor="{DynamicResource ColorSurface}"
+                                        Padding="5,1" HorizontalOptions="End" VerticalOptions="Start">
+                                    <Label Text="{Binding Selo}" FontSize="12" FontFamily="OpenSansSemibold"
+                                           TextColor="{DynamicResource ColorTextPrimary}" />
+                                </Border>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GarcomViewModel}}, Path=AbrirMesaCommand, x:DataType=vm:GarcomViewModel}"

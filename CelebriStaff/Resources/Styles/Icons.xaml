@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Glifos da fonte Material Icons (MaterialIcons-Regular.ttf, alias "MaterialIcons").
+         Uso: <Label Text="{StaticResource IconPlace}" Style="{StaticResource IconLabel}" /> -->
+    <x:String x:Key="IconAdd">&#xE145;</x:String>
+    <x:String x:Key="IconRemove">&#xE15B;</x:String>
+    <x:String x:Key="IconCheck">&#xE5CA;</x:String>
+    <x:String x:Key="IconCheckCircle">&#xE86C;</x:String>
+    <x:String x:Key="IconDoneAll">&#xE877;</x:String>
+    <x:String x:Key="IconClose">&#xE5CD;</x:String>
+    <x:String x:Key="IconCancel">&#xE5C9;</x:String>
+    <x:String x:Key="IconBack">&#xE5C4;</x:String>
+    <x:String x:Key="IconRefresh">&#xE5D5;</x:String>
+    <x:String x:Key="IconUndo">&#xE166;</x:String>
+    <x:String x:Key="IconSend">&#xE163;</x:String>
+    <x:String x:Key="IconSearch">&#xE8B6;</x:String>
+    <x:String x:Key="IconEvent">&#xE878;</x:String>
+    <x:String x:Key="IconSchedule">&#xE8B5;</x:String>
+    <x:String x:Key="IconPlace">&#xE55F;</x:String>
+    <x:String x:Key="IconBadge">&#xEA67;</x:String>
+    <x:String x:Key="IconPerson">&#xE7FD;</x:String>
+    <x:String x:Key="IconGroups">&#xF233;</x:String>
+    <x:String x:Key="IconMail">&#xE158;</x:String>
+    <x:String x:Key="IconLock">&#xE897;</x:String>
+    <x:String x:Key="IconKey">&#xE73C;</x:String>
+    <x:String x:Key="IconVisibility">&#xE8F4;</x:String>
+    <x:String x:Key="IconVisibilityOff">&#xE8F5;</x:String>
+    <x:String x:Key="IconLogin">&#xEA77;</x:String>
+    <x:String x:Key="IconLogout">&#xE9BA;</x:String>
+    <x:String x:Key="IconQrScanner">&#xF206;</x:String>
+    <x:String x:Key="IconDoor">&#xEFFD;</x:String>
+    <x:String x:Key="IconHowToReg">&#xE174;</x:String>
+    <x:String x:Key="IconRestaurant">&#xE56C;</x:String>
+    <x:String x:Key="IconTable">&#xEAC6;</x:String>
+    <x:String x:Key="IconRoomService">&#xEB49;</x:String>
+    <x:String x:Key="IconKitchen">&#xE7D3;</x:String>
+    <x:String x:Key="IconMenuBook">&#xEA19;</x:String>
+    <x:String x:Key="IconInventory">&#xE1A1;</x:String>
+    <x:String x:Key="IconReceipt">&#xEF6E;</x:String>
+    <x:String x:Key="IconFire">&#xEF55;</x:String>
+    <x:String x:Key="IconHourglass">&#xE88B;</x:String>
+    <x:String x:Key="IconWarning">&#xE002;</x:String>
+    <x:String x:Key="IconError">&#xE000;</x:String>
+    <x:String x:Key="IconInfo">&#xE88E;</x:String>
+    <x:String x:Key="IconCelebration">&#xEA65;</x:String>
+    <x:String x:Key="IconFlashOn">&#xF00B;</x:String>
+    <x:String x:Key="IconFlashOff">&#xF00A;</x:String>
+    <x:String x:Key="IconDelete">&#xE872;</x:String>
+
+    <Style TargetType="Label" x:Key="IconLabel">
+        <Setter Property="FontFamily" Value="MaterialIcons" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextColor" Value="{DynamicResource ColorTextSecondary}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="IconLabelLarge" BasedOn="{StaticResource IconLabel}">
+        <Setter Property="FontSize" Value="48" />
+        <Setter Property="TextColor" Value="{DynamicResource ColorBrandText}" />
+    </Style>
+</ResourceDictionary>

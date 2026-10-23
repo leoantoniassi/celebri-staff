@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Models;
+using CelebriStaff.Services.Theme;
 using CelebriStaff.Services.Api;
 using Microsoft.Maui.Layouts;
 
@@ -21,9 +22,9 @@ public class MesaNoMapa(MesaMapa mesa)
 
     public Color Cor => Mesa.Situacao switch
     {
-        "pronto" => Color.FromArgb("#2E7D32"),
-        "aguardando" => Color.FromArgb("#ED6C02"),
-        _ => Color.FromArgb("#6E6E6E"),
+        "pronto" => Tokens.Success,
+        "aguardando" => Tokens.Warning,
+        _ => Tokens.TextSecondary,
     };
 
     public string Selo => Mesa.PedidosProntos > 0 ? "✓" : Mesa.PedidosAbertos > 0 ? Mesa.PedidosAbertos.ToString() : string.Empty;

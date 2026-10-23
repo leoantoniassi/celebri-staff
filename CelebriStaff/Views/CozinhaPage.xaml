@@ -1,45 +1,87 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
+             xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
              x:Class="CelebriStaff.Views.CozinhaPage"
              x:DataType="vm:CozinhaViewModel"
              Title="Cozinha">
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="16,12" RowSpacing="10">
-        <VerticalStackLayout>
-            <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" />
+    <ContentPage.Resources>
+        <!-- Aba: inativa = texto neutro sobre fundo suave; ativa (DataTrigger) = marca. -->
+        <Style x:Key="TabButtonStyle" TargetType="Button" BasedOn="{StaticResource CompactButtonStyle}">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{DynamicResource ColorTextSecondary}" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16,12" RowSpacing="12">
+        <VerticalStackLayout Spacing="2">
+            <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
             <Label Text="{Binding Publico}" Style="{StaticResource CaptionText}" />
-            <Label Text="{Binding Erro}" Style="{StaticResource ErrorTextLabel}"
-                   IsVisible="{Binding Erro, Converter={StaticResource StringNotEmptyConverter}}" />
+            <controls:ErrorBanner Message="{Binding Erro}" Margin="0,6,0,0" />
         </VerticalStackLayout>
 
-        <Grid Grid.Row="1" ColumnDefinitions="*,*,*" ColumnSpacing="6">
-            <Button Style="{StaticResource CompactButtonStyle}" Text="{Binding TituloPedidos}" Command="{Binding MudarAbaCommand}" CommandParameter="pedidos" />
-            <Button Grid.Column="1" Style="{StaticResource CompactButtonStyle}" Text="Cardápio" Command="{Binding MudarAbaCommand}" CommandParameter="cardapio" />
-            <Button Grid.Column="2" Style="{StaticResource CompactButtonStyle}" Text="Estoque" Command="{Binding MudarAbaCommand}" CommandParameter="estoque" />
-        </Grid>
+        <!-- Abas (segmented control) -->
+        <Border Grid.Row="1" Padding="4" StrokeShape="RoundRectangle 14"
+                BackgroundColor="{DynamicResource ColorSurfaceAlt}" StrokeThickness="0">
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="4">
+                <Button Style="{StaticResource TabButtonStyle}" Text="{Binding TituloPedidos}"
+                        Command="{Binding MudarAbaCommand}" CommandParameter="pedidos"
+                        SemanticProperties.Description="Aba de pedidos">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding AbaPedidos}" Value="True">
+                            <Setter Property="BackgroundColor" Value="{DynamicResource ColorPrimary}" />
+                            <Setter Property="TextColor" Value="{DynamicResource ColorOnPrimary}" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Grid.Column="1" Style="{StaticResource TabButtonStyle}" Text="Cardápio"
+                        Command="{Binding MudarAbaCommand}" CommandParameter="cardapio"
+                        SemanticProperties.Description="Aba do cardápio">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding AbaCardapio}" Value="True">
+                            <Setter Property="BackgroundColor" Value="{DynamicResource ColorPrimary}" />
+                            <Setter Property="TextColor" Value="{DynamicResource ColorOnPrimary}" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Grid.Column="2" Style="{StaticResource TabButtonStyle}" Text="Estoque"
+                        Command="{Binding MudarAbaCommand}" CommandParameter="estoque"
+                        SemanticProperties.Description="Aba do estoque">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding AbaEstoque}" Value="True">
+                            <Setter Property="BackgroundColor" Value="{DynamicResource ColorPrimary}" />
+                            <Setter Property="TextColor" Value="{DynamicResource ColorOnPrimary}" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+        </Border>
 
         <!-- Pedidos dos garçons, mais antigos primeiro -->
         <CollectionView Grid.Row="2" ItemsSource="{Binding Pedidos}" IsVisible="{Binding AbaPedidos}" SelectionMode="None">
             <CollectionView.EmptyView>
-                <StackLayout>
-                    <Label Text="Nenhum pedido aberto." Style="{StaticResource EmptyStateTitleStyle}" Margin="0,24" />
-                </StackLayout>
+                <controls:EmptyStateView Icon="{StaticResource IconReceipt}"
+                                         Title="Nenhum pedido aberto"
+                                         Message="Os pedidos dos garçons aparecem aqui assim que forem enviados." />
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:PedidoNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10" Padding="12" StrokeShape="RoundRectangle 12" Stroke="{Binding Cor}" StrokeThickness="2">
-                        <VerticalStackLayout Spacing="6">
-                            <Grid ColumnDefinitions="*,Auto">
-                                <Label Text="{Binding Cabecalho}" FontAttributes="Bold" FontSize="16" />
-                                <Label Grid.Column="1" Text="{Binding Status}" Style="{StaticResource CaptionText}" />
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10" Padding="14" StrokeShape="RoundRectangle 14"
+                            Stroke="{Binding Cor}" StrokeThickness="2">
+                        <VerticalStackLayout Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <Label Text="{Binding Cabecalho}" FontFamily="OpenSansSemibold" FontSize="16" />
+                                <controls:StatusChip Grid.Column="1" Text="{Binding Status}" Kind="{Binding StatusKind}" />
                             </Grid>
                             <Label Text="{Binding Itens}" FontSize="16" />
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                                 <Button Style="{StaticResource CompactButtonStyle}" Text="Começar" IsVisible="{Binding PodeComecar}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=ComecarCommand, x:DataType=vm:CozinhaViewModel}"
-                                        CommandParameter="{Binding .}" BackgroundColor="{DynamicResource ColorSecondary}" />
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{DynamicResource ColorOnSecondary}" />
                                 <Button Grid.Column="1" Style="{StaticResource SuccessButtonStyle}" Text="Pronto" IsVisible="{Binding PodeFinalizar}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=ProntoCommand, x:DataType=vm:CozinhaViewModel}"
                                         CommandParameter="{Binding .}" />
@@ -56,24 +98,26 @@
         <!-- O que será servido e quando -->
         <CollectionView Grid.Row="2" ItemsSource="{Binding Servicos}" IsVisible="{Binding AbaCardapio}" SelectionMode="None">
             <CollectionView.EmptyView>
-                <StackLayout>
-                    <Label Text="O cardápio do evento ainda não foi cadastrado no painel." Style="{StaticResource EmptyStateTitleStyle}" Margin="0,24" />
-                </StackLayout>
+                <controls:EmptyStateView Icon="{StaticResource IconMenuBook}"
+                                         Title="Cardápio ainda vazio"
+                                         Message="O cardápio do evento ainda não foi cadastrado no painel." />
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ServicoNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="12" StrokeShape="RoundRectangle 12">
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14" StrokeShape="RoundRectangle 14">
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                            <Label Text="{Binding Horario}" FontSize="18" FontAttributes="Bold"
-                                   TextColor="{DynamicResource ColorPrimary}" VerticalOptions="Center" />
-                            <VerticalStackLayout Grid.Column="1">
-                                <Label Text="{Binding Item}" FontAttributes="Bold" />
-                                <Label Text="{Binding Quantidade}" />
-                                <Label Text="{Binding Status}" Style="{StaticResource CaptionText}" />
+                            <Label Text="{Binding Horario}" FontSize="18" FontFamily="OpenSansSemibold"
+                                   TextColor="{DynamicResource ColorBrandText}" VerticalOptions="Center" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="{Binding Item}" FontFamily="OpenSansSemibold" />
+                                <Label Text="{Binding Quantidade}" Style="{StaticResource BodyText}" />
+                                <controls:StatusChip Text="{Binding Status}" Kind="{Binding StatusKind}" Margin="0,4,0,0" />
                             </VerticalStackLayout>
                             <Button Grid.Column="2" Text="{Binding ProximaAcao}" VerticalOptions="Center"
+                                    Style="{StaticResource CompactButtonStyle}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=AvancarServicoCommand, x:DataType=vm:CozinhaViewModel}"
-                                    CommandParameter="{Binding .}" BackgroundColor="{DynamicResource ColorSecondary}" />
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{DynamicResource ColorOnSecondary}" />
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -83,17 +127,18 @@
         <!-- Produtos reservados para o evento -->
         <CollectionView Grid.Row="2" ItemsSource="{Binding Estoque}" IsVisible="{Binding AbaEstoque}" SelectionMode="None">
             <CollectionView.EmptyView>
-                <StackLayout>
-                    <Label Text="Nenhum produto reservado para este evento." Style="{StaticResource EmptyStateTitleStyle}" Margin="0,24" />
-                </StackLayout>
+                <controls:EmptyStateView Icon="{StaticResource IconInventory}"
+                                         Title="Sem produtos reservados"
+                                         Message="Nenhum produto foi reservado para este evento." />
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EstoqueNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="12" StrokeShape="RoundRectangle 12">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Nome}" FontAttributes="Bold" />
-                            <Label Text="{Binding Detalhe}" />
-                            <Label Text="⚠ Estoque baixo" TextColor="{StaticResource ColorError}" FontAttributes="Bold" IsVisible="{Binding Baixo}" />
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14" StrokeShape="RoundRectangle 14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="{Binding Nome}" FontFamily="OpenSansSemibold" />
+                            <Label Text="{Binding Detalhe}" Style="{StaticResource CaptionText}" />
+                            <controls:StatusChip Text="Estoque baixo" Kind="error" Icon="{StaticResource IconWarning}"
+                                                 IsVisible="{Binding Baixo}" Margin="0,4,0,0" />
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

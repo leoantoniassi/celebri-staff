@@ -3,6 +3,7 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Models;
+using CelebriStaff.Services.Theme;
 using CelebriStaff.Services.Api;
 
 namespace CelebriStaff.ViewModels;
@@ -19,7 +20,8 @@ public class PedidoNaCozinha(Pedido pedido)
         "pronto" => "Pronto — aguardando garçom",
         _ => Pedido.Status,
     };
-    public Color Cor => Pedido.TemAlerta ? Color.FromArgb("#B3261E") : Color.FromArgb("#DDDDDD");
+    public string StatusKind => Pedido.Status switch { "enviado" => "info", "preparando" => "warning", "pronto" => "success", _ => "neutral" };
+    public Color Cor => Pedido.TemAlerta ? Tokens.Error : Tokens.Border;
     public bool PodeComecar => Pedido.Status == "enviado";
     public bool PodeFinalizar => Pedido.Status is "enviado" or "preparando";
     public bool PodeReabrir => Pedido.Status == "pronto";
@@ -34,6 +36,7 @@ public class ServicoNaCozinha(ServicoCardapio servico)
     public string Item => Servico.Item;
     public string Quantidade => Servico.Quantidade is { } q ? $"{q.ToString("0.##", PtBr)} {Servico.Unidade}" : "Quantidade livre";
     public string Status => Servico.Status switch { "preparando" => "Em preparo", "servido" => "Servido", _ => "Pendente" };
+    public string StatusKind => Servico.Status switch { "preparando" => "warning", "servido" => "success", _ => "neutral" };
     public string ProximaAcao => Servico.Status switch { "pendente" => "Começar preparo", "preparando" => "Marcar servido", _ => "Reabrir" };
     public string ProximoStatus => Servico.Status switch { "pendente" => "preparando", "preparando" => "servido", _ => "pendente" };
 }

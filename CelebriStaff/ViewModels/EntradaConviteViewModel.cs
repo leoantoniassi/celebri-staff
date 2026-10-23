@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Models;
+using CelebriStaff.Services.Theme;
 using CelebriStaff.Services.Api;
 
 namespace CelebriStaff.ViewModels;
@@ -27,7 +28,7 @@ public partial class EntradaConviteViewModel(ApiClient api) : ObservableObject, 
     private string? mensagem;
 
     [ObservableProperty]
-    private Color mensagemCor = Colors.Gray;
+    private Color mensagemCor = Tokens.TextSecondary;
 
     [ObservableProperty]
     private bool isBusy;
@@ -76,13 +77,13 @@ public partial class EntradaConviteViewModel(ApiClient api) : ObservableObject, 
             if (result is not { Success: true, Data: not null })
             {
                 Mensagem = result.Message ?? "Não foi possível registrar.";
-                MensagemCor = Colors.Red;
+                MensagemCor = Tokens.Error;
                 return;
             }
 
             Aplicar(result.Data);
             Mensagem = result.Message;
-            MensagemCor = result.Data.Excedente > 0 ? Color.FromArgb("#ED6C02") : Color.FromArgb("#2E7D32");
+            MensagemCor = result.Data.Excedente > 0 ? Tokens.Warning : Tokens.Success;
 
             if (voltar && result.Data.Excedente == 0)
             {

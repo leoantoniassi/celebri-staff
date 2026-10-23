@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CelebriStaff.Models;
+using CelebriStaff.Services.Theme;
 using CelebriStaff.Services.Api;
 
 namespace CelebriStaff.ViewModels;
@@ -12,10 +13,18 @@ public class PedidoDaMesa(Pedido pedido)
     public Pedido Pedido { get; } = pedido;
     public string Itens => string.Join("\n", Pedido.Itens.Select(i => (i.Alerta ? "⚠ " : "") + i.Linha));
     public string Cabecalho => $"{Pedido.CriadoEm.ToLocalTime():HH\\:mm} · {Rotulo}";
+    public string Hora => $"Enviado às {Pedido.CriadoEm.ToLocalTime():HH\\:mm}";
+    public string StatusKind => Pedido.Status switch
+    {
+        "pronto" => "success",
+        "enviado" or "preparando" => "warning",
+        "cancelado" => "error",
+        _ => "neutral",
+    };
     public bool PodeEntregar => Pedido.Status == "pronto";
     public bool PodeCancelar => Pedido.Status == "enviado";
 
-    private string Rotulo => Pedido.Status switch
+    public string Rotulo => Pedido.Status switch
     {
         "enviado" => "Enviado à cozinha",
         "preparando" => "Em preparo",
@@ -27,9 +36,9 @@ public class PedidoDaMesa(Pedido pedido)
 
     public Color Cor => Pedido.Status switch
     {
-        "pronto" => Color.FromArgb("#2E7D32"),
-        "enviado" or "preparando" => Color.FromArgb("#ED6C02"),
-        _ => Colors.Gray,
+        "pronto" => Tokens.Success,
+        "enviado" or "preparando" => Tokens.Warning,
+        _ => Tokens.TextSecondary,
     };
 }
 

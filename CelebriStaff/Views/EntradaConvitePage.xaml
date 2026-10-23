@@ -1,39 +1,55 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
+             xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
              x:Class="CelebriStaff.Views.EntradaConvitePage"
              x:DataType="vm:EntradaConviteViewModel"
              Title="Entrada do convidado">
 
-    <VerticalStackLayout Padding="24" Spacing="16" VerticalOptions="Center">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20" VerticalOptions="Center">
 
-        <Label Text="{Binding Nome}" FontSize="26" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-        <Label Text="{Binding Situacao}" Style="{StaticResource BodyText}" HorizontalTextAlignment="Center" />
+            <Border Style="{StaticResource CardStyle}" Margin="0" Padding="20">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{StaticResource IconGroups}" Style="{StaticResource IconLabelLarge}" />
+                    <Label Text="{Binding Nome}"
+                           Style="{StaticResource TitleText}"
+                           HorizontalTextAlignment="Center"
+                           SemanticProperties.HeadingLevel="Level1" />
+                    <Label Text="{Binding Situacao}"
+                           Style="{StaticResource CaptionText}"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
 
-        <Label Text="Quantas pessoas estão entrando agora?" HorizontalTextAlignment="Center" Margin="0,16,0,0" />
-        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
-            <Button Text="−" FontSize="28"
-                    Style="{StaticResource SecondaryButtonStyle}"
-                    Command="{Binding MenosCommand}" />
-            <Label Grid.Column="1" Text="{Binding Quantidade}" FontSize="44" FontAttributes="Bold"
-                   HorizontalOptions="Center" VerticalOptions="Center" />
-            <Button Grid.Column="2" Text="+" FontSize="28"
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Command="{Binding MaisCommand}" />
-        </Grid>
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Quantas pessoas estão entrando agora?"
+                       Style="{StaticResource BodyText}"
+                       HorizontalTextAlignment="Center" />
+                <controls:QuantityStepper Value="{Binding Quantidade}"
+                                          MinusCommand="{Binding MenosCommand}"
+                                          PlusCommand="{Binding MaisCommand}" />
+            </VerticalStackLayout>
 
-        <Button Text="Registrar entrada" Command="{Binding RegistrarCommand}"
-                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-                BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{StaticResource ColorSurface}"
-                FontSize="18" />
+            <Button Text="Registrar entrada"
+                    Command="{Binding RegistrarCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="{DynamicResource ColorSecondary}"
+                    TextColor="{DynamicResource ColorOnSecondary}"
+                    FontSize="17"
+                    MinimumHeightRequest="52" />
 
-        <Label Text="{Binding Mensagem}" TextColor="{Binding MensagemCor}" HorizontalTextAlignment="Center"
-               IsVisible="{Binding Mensagem, Converter={StaticResource StringNotEmptyConverter}}" />
+            <Label Text="{Binding Mensagem}"
+                   TextColor="{Binding MensagemCor}"
+                   FontFamily="OpenSansSemibold"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding Mensagem, Converter={StaticResource StringNotEmptyConverter}}" />
 
-        <Button Text="Desfazer 1 entrada (lançamento errado)"
-                Style="{StaticResource CompactDangerButtonStyle}"
-                Command="{Binding DesfazerUmaCommand}"
-                IsVisible="{Binding JaEntraram, Converter={StaticResource PositivoConverter}}" />
-    </VerticalStackLayout>
+            <Button Text="Desfazer 1 entrada (lançamento errado)"
+                    Style="{StaticResource CompactDangerButtonStyle}"
+                    Command="{Binding DesfazerUmaCommand}"
+                    IsVisible="{Binding JaEntraram, Converter={StaticResource PositivoConverter}}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

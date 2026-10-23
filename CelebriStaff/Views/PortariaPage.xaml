@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
              xmlns:models="clr-namespace:CelebriStaff.Models"
+             xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
              x:Class="CelebriStaff.Views.PortariaPage"
              x:DataType="vm:PortariaViewModel"
              Title="Portaria">
@@ -10,52 +11,75 @@
     <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16" RowSpacing="12">
 
         <!-- Contador -->
-        <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16" StrokeShape="RoundRectangle 16">
-            <VerticalStackLayout Spacing="4">
+        <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16" StrokeShape="RoundRectangle 20">
+            <VerticalStackLayout Spacing="2">
                 <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" HorizontalOptions="Center" />
-                <Label Text="{Binding TotalTexto}" FontSize="56" FontAttributes="Bold"
-                       HorizontalOptions="Center" TextColor="{DynamicResource ColorPrimary}"
-                       AutomationId="TotalPresentes" />
-                <Label Text="pessoas presentes" HorizontalOptions="Center" />
+                <Label Text="{Binding TotalTexto}"
+                       FontSize="64"
+                       FontFamily="OpenSansSemibold"
+                       HorizontalOptions="Center"
+                       TextColor="{DynamicResource ColorBrandText}"
+                       AutomationId="TotalPresentes"
+                       SemanticProperties.Description="Total de pessoas presentes" />
+                <Label Text="pessoas presentes" Style="{StaticResource BodyText}" HorizontalOptions="Center" />
                 <Label Text="{Binding PrevistoTexto}" HorizontalOptions="Center" Style="{StaticResource CaptionText}" />
             </VerticalStackLayout>
         </Border>
 
         <!-- Entrada sem convite -->
         <Grid Grid.Row="1" ColumnDefinitions="*,2*" ColumnSpacing="8">
-            <Button Style="{StaticResource SecondaryButtonStyle}" Text="− 1" FontSize="20" Command="{Binding DesfazerAvulsoCommand}" />
-            <Button Grid.Column="1" Style="{StaticResource PrimaryButtonStyle}" Text="+ 1 entrou" FontSize="20" Command="{Binding EntrouAvulsoCommand}" />
+            <Button Style="{StaticResource SecondaryButtonStyle}" Text="− 1" FontSize="20"
+                    SemanticProperties.Description="Desfazer uma entrada sem convite"
+                    Command="{Binding DesfazerAvulsoCommand}" />
+            <Button Grid.Column="1" Style="{StaticResource PrimaryButtonStyle}" Text="+ 1 entrou" FontSize="20"
+                    SemanticProperties.Description="Registrar uma entrada sem convite"
+                    Command="{Binding EntrouAvulsoCommand}" />
         </Grid>
 
         <VerticalStackLayout Grid.Row="2" Spacing="8">
-            <Label Text="{Binding Erro}" Style="{StaticResource ErrorTextLabel}"
-                   IsVisible="{Binding Erro, Converter={StaticResource StringNotEmptyConverter}}" />
-            <Button Text="Ler QR code do convite" Command="{Binding LerQrCodeCommand}"
+            <controls:ErrorBanner Message="{Binding Erro}" />
+
+            <Button Text="Ler QR code do convite"
+                    Command="{Binding LerQrCodeCommand}"
                     IsVisible="{Binding UsaConvites}"
-                    BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{StaticResource ColorSurface}" />
-            <SearchBar Placeholder="Buscar convidado pelo nome" Text="{Binding Busca}"
-                       IsVisible="{Binding UsaConvites}" />
+                    BackgroundColor="{DynamicResource ColorSecondary}"
+                    TextColor="{DynamicResource ColorOnSecondary}"
+                    MinimumHeightRequest="52" />
+
+            <Border Style="{StaticResource InputBorderStyle}" IsVisible="{Binding UsaConvites}" Padding="14,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Label Text="{StaticResource IconSearch}" Style="{StaticResource IconLabel}" />
+                    <Entry Grid.Column="1"
+                           Placeholder="Buscar convidado pelo nome"
+                           Text="{Binding Busca}"
+                           SemanticProperties.Description="Buscar convidado pelo nome" />
+                </Grid>
+            </Border>
         </VerticalStackLayout>
 
         <CollectionView Grid.Row="3" ItemsSource="{Binding Convites}" SelectionMode="None"
                         IsVisible="{Binding UsaConvites}">
             <CollectionView.EmptyView>
-                <StackLayout>
-                    <Label Text="Nenhum convidado encontrado." Style="{StaticResource EmptyStateTitleStyle}" Margin="0,16" />
-                </StackLayout>
+                <controls:EmptyStateView Icon="{StaticResource IconGroups}"
+                                         Title="Nenhum convidado encontrado"
+                                         Message="Ajuste a busca ou leia o QR code do convite." />
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:ConvitePortaria">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="12" StrokeShape="RoundRectangle 12">
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14,12" StrokeShape="RoundRectangle 14">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PortariaViewModel}}, Path=AbrirConviteCommand, x:DataType=vm:PortariaViewModel}"
                                 CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Nome}" FontAttributes="Bold" />
-                            <Label Text="{Binding Situacao}" Style="{StaticResource CaptionText}" />
-                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Label Text="{StaticResource IconPerson}" Style="{StaticResource IconLabel}" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="{Binding Nome}" FontFamily="OpenSansSemibold" />
+                                <Label Text="{Binding Situacao}" Style="{StaticResource CaptionText}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="&#xE5CC;" Style="{StaticResource IconLabel}" />
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

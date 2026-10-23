@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CelebriStaff.Views.Controls.EmptyStateView">
+
+    <!-- Estado vazio: ícone em disco suave + título + mensagem + ação opcional. -->
+    <VerticalStackLayout Padding="32,48" Spacing="12" HorizontalOptions="Center">
+
+        <Border x:Name="IconDisc"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 40"
+                BackgroundColor="{DynamicResource ColorSurfaceAlt}"
+                WidthRequest="80"
+                HeightRequest="80"
+                HorizontalOptions="Center">
+            <Label x:Name="IconView" Style="{StaticResource IconLabelLarge}" />
+        </Border>
+
+        <Label x:Name="TitleView" Style="{StaticResource EmptyStateTitleStyle}" />
+        <Label x:Name="MessageView" Style="{StaticResource EmptyStateMessageStyle}" />
+
+        <Button x:Name="ActionButton"
+                Style="{StaticResource SecondaryButtonStyle}"
+                HorizontalOptions="Center"
+                Margin="0,8,0,0"
+                IsVisible="False" />
+    </VerticalStackLayout>
+</ContentView>

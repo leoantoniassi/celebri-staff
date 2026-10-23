@@ -1,6 +1,7 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CelebriStaff.Models;
+using CelebriStaff.Services.Theme;
 
 namespace CelebriStaff.ViewModels;
 
@@ -42,7 +43,10 @@ public partial class EscalaCardViewModel : ObservableObject
     private string status = string.Empty;
 
     [ObservableProperty]
-    private Color statusCor = Colors.Gray;
+    private string statusKind = "neutral";
+
+    [ObservableProperty]
+    private string statusIcon = string.Empty;
 
     [ObservableProperty]
     private bool podeResponder;
@@ -72,13 +76,14 @@ public partial class EscalaCardViewModel : ObservableObject
 
     public void AtualizarEstado()
     {
-        (Status, StatusCor) = Escala switch
+        // Ícones: Material Icons (done_all, check_circle, cancel, schedule, hourglass_empty).
+        (Status, StatusKind, StatusIcon) = Escala switch
         {
-            { CheckinEm: { } chegada } => ($"Chegou às {chegada.ToLocalTime():HH\\:mm}", Color.FromArgb("#2E7D32")),
-            { Confirmacao: "confirmado" } => ("Presença confirmada", Color.FromArgb("#2E7D32")),
-            { Confirmacao: "recusado" } => ("Você recusou", Color.FromArgb("#B3261E")),
-            _ when Terminou => ("Sem resposta", Colors.Gray),
-            _ => ("Aguardando sua resposta", Color.FromArgb("#ED6C02")),
+            { CheckinEm: { } chegada } => ($"Chegou às {chegada.ToLocalTime():HH\\:mm}", "success", ""),
+            { Confirmacao: "confirmado" } => ("Presença confirmada", "success", ""),
+            { Confirmacao: "recusado" } => ("Você recusou", "error", ""),
+            _ when Terminou => ("Sem resposta", "neutral", ""),
+            _ => ("Aguardando sua resposta", "warning", ""),
         };
 
         PodeResponder = !Terminou && Escala.CheckinEm is null;

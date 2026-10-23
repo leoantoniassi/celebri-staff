@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CelebriStaff.Views.Controls.ErrorBanner"
+             IsVisible="False">
+
+    <!-- Faixa de erro padrão: some quando Message está vazia. -->
+    <Border StrokeThickness="0"
+            StrokeShape="RoundRectangle 12"
+            BackgroundColor="{DynamicResource ColorErrorContainer}"
+            Padding="12">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+            <Label Text="{StaticResource IconError}"
+                   Style="{StaticResource IconLabel}"
+                   TextColor="{DynamicResource ColorOnErrorContainer}"
+                   VerticalOptions="Start" />
+            <Label x:Name="MessageView"
+                   Grid.Column="1"
+                   FontSize="14"
+                   TextColor="{DynamicResource ColorOnErrorContainer}"
+                   VerticalOptions="Center"
+                   SemanticProperties.HeadingLevel="None" />
+        </Grid>
+    </Border>
+</ContentView>

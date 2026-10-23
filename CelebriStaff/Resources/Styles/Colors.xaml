@@ -1,48 +1,57 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary 
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <!-- Tokens white-label: sobrescritos em runtime pelo ThemeService.Apply.
+    <!-- Paleta padrão do Celebri (mesma do painel web: celebri/frontend/src/index.css).
+         Tokens white-label: sobrescritos em runtime pelo ThemeService.Apply.
          Referenciar SEMPRE via {DynamicResource}. -->
-    <Color x:Key="ColorPrimary">#FEDC57</Color>
-    <Color x:Key="ColorSecondary">#7DBA00</Color>
-    <Color x:Key="ColorTertiary">#6600A1</Color>
+    <Color x:Key="ColorPrimary">#1CEAFF</Color>
+    <Color x:Key="ColorSecondary">#FF45FF</Color>
+    <Color x:Key="ColorTertiary">#1F357F</Color>
 
-    <!-- Tokens semânticos (neutros, não dependem do tema do buffet) -->
-    <Color x:Key="ColorBackground">#F7F7F9</Color>
+    <!-- Derivados da marca (ThemeService.Apply recalcula para garantir contraste AA):
+         OnPrimary/OnSecondary = texto sobre botão de marca;
+         BrandText = cor de marca segura para TEXTO e ícones sobre ColorSurface/ColorBackground. -->
+    <Color x:Key="ColorOnPrimary">#021A1D</Color>
+    <Color x:Key="ColorOnSecondary">#29012A</Color>
+    <Color x:Key="ColorBrandText">#1F357F</Color>
+
+    <!-- Neutros: valores do tema CLARO. O ThemeService.ApplyMode troca estes
+         mesmos tokens para o tema ESCURO quando o sistema entra em modo escuro. -->
+    <Color x:Key="ColorBackground">#FAFCFD</Color>
     <Color x:Key="ColorSurface">#FFFFFF</Color>
-    <Color x:Key="ColorSurfaceAlt">#F1F1F4</Color>
-    <Color x:Key="ColorTextPrimary">#212121</Color>
-    <Color x:Key="ColorTextSecondary">#6E6E6E</Color>
-    <Color x:Key="ColorOnPrimary">#24201A</Color>
-    <Color x:Key="ColorError">#B3261E</Color>
-    <Color x:Key="ColorSuccess">#2E7D32</Color>
-    <Color x:Key="ColorWarning">#ED6C02</Color>
-    <Color x:Key="ColorBorder">#DDDDDD</Color>
+    <Color x:Key="ColorSurfaceAlt">#F3F6F6</Color>
+    <Color x:Key="ColorTextPrimary">#020708</Color>
+    <Color x:Key="ColorTextSecondary">#566E71</Color>
+    <Color x:Key="ColorBorder">#B0CACD</Color>
     <Color x:Key="ColorShadow">#14000000</Color>
 
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
-    <Color x:Key="Gray900">#212121</Color>
-    <Color x:Key="Gray950">#141414</Color>
+    <!-- Status (base fixa nos dois temas; containers variam por tema) -->
+    <Color x:Key="ColorSuccess">#2E7D32</Color>
+    <Color x:Key="ColorWarning">#C94400</Color>
+    <Color x:Key="ColorInfo">#1565C0</Color>
+    <Color x:Key="ColorError">#BA1A1A</Color>
+    <Color x:Key="ColorSuccessContainer">#D7F0D5</Color>
+    <Color x:Key="ColorWarningContainer">#FFE0B2</Color>
+    <Color x:Key="ColorInfoContainer">#D6E6FF</Color>
+    <Color x:Key="ColorErrorContainer">#FFDAD6</Color>
+    <Color x:Key="ColorOnSuccessContainer">#0B2E0D</Color>
+    <Color x:Key="ColorOnWarningContainer">#3B1A00</Color>
+    <Color x:Key="ColorOnInfoContainer">#001A3D</Color>
+    <Color x:Key="ColorOnErrorContainer">#410002</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource ColorPrimary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource ColorSecondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource ColorTertiary}"/>
 
-    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
-    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
-    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
-    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}"/>
-    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}"/>
-    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
-    <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
-    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+    <!-- Gradiente da marca Celebri (ciano -> magenta, 45 graus) -->
+    <LinearGradientBrush x:Key="BrandGradientBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#1CEAFF" Offset="0.0" />
+        <GradientStop Color="#FF45FF" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <Color x:Key="BrandNavy">#0E1A3A</Color>
 </ResourceDictionary>
