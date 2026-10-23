@@ -17,7 +17,7 @@
                    IsVisible="False" />
             <Label x:Name="TextView"
                    FontSize="12"
-                   FontFamily="OpenSansSemibold"
+                   FontFamily="InterSemibold"
                    VerticalOptions="Center" />
         </HorizontalStackLayout>
     </Border>

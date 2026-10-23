@@ -42,7 +42,7 @@
 
             <Label Text="{Binding Mensagem}"
                    TextColor="{Binding MensagemCor}"
-                   FontFamily="OpenSansSemibold"
+                   FontFamily="InterSemibold"
                    HorizontalTextAlignment="Center"
                    IsVisible="{Binding Mensagem, Converter={StaticResource StringNotEmptyConverter}}" />
 

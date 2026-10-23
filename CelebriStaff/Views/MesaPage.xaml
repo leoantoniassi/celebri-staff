@@ -8,6 +8,7 @@
              x:DataType="vm:MesaViewModel"
              Title="Comanda">
 
+    <Grid RowDefinitions="*,Auto">
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">
             <Label Text="{Binding Titulo}" Style="{StaticResource TitleText}" SemanticProperties.HeadingLevel="Level1" />
@@ -73,11 +74,6 @@
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
 
-                    <Button Text="Enviar pedido para a cozinha" Command="{Binding EnviarCommand}"
-                            BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{DynamicResource ColorOnSecondary}"
-                            MinimumHeightRequest="52"
-                            IsVisible="{Binding TemItens}"
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
                 </VerticalStackLayout>
             </Border>
 
@@ -114,4 +110,15 @@
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
+
+    <!-- Barra fixa: o envio fica sempre ao alcance do polegar enquanto há itens na comanda -->
+    <Border Grid.Row="1" IsVisible="{Binding TemItens}" StrokeShape="RoundRectangle 0"
+            StrokeThickness="0" Padding="16,10"
+            BackgroundColor="{DynamicResource ColorSurface}">
+        <Button Text="Enviar pedido para a cozinha" Command="{Binding EnviarCommand}"
+                BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{DynamicResource ColorOnSecondary}"
+                MinimumHeightRequest="52"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+    </Border>
+    </Grid>
 </ContentPage>

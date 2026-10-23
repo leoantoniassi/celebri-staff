@@ -37,7 +37,15 @@ public partial class LeitorQrPage : ContentPage, IQueryAttributable
     protected override void OnDisappearing()
     {
         Leitor.IsDetecting = false;
+        Leitor.IsTorchOn = false;
         base.OnDisappearing();
+    }
+
+    private void OnLanternaClicked(object? sender, EventArgs e)
+    {
+        Leitor.IsTorchOn = !Leitor.IsTorchOn;
+        // flashlight_on / flashlight_off (Material Icons)
+        Lanterna.Text = Leitor.IsTorchOn ? "" : "";
     }
 
     private void OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
@@ -45,6 +53,7 @@ public partial class LeitorQrPage : ContentPage, IQueryAttributable
         var valor = e.Results.FirstOrDefault()?.Value;
         if (string.IsNullOrWhiteSpace(valor) || _processando) return;
         _processando = true;
+        try { HapticFeedback.Default.Perform(HapticFeedbackType.Click); } catch { /* sem vibração */ }
 
         MainThread.BeginInvokeOnMainThread(async () => await ProcessarAsync(valor));
     }

@@ -10,13 +10,34 @@
             <zxing:CameraBarcodeReaderView x:Name="Leitor"
                                            BarcodesDetected="OnBarcodesDetected" />
 
-            <!-- Moldura de leitura: quatro cantos na cor da marca sobre a câmera -->
-            <Grid WidthRequest="240" HeightRequest="240"
-                  HorizontalOptions="Center" VerticalOptions="Center"
-                  InputTransparent="True">
-                <Border StrokeThickness="3" Stroke="{DynamicResource ColorPrimary}"
+            <!-- Escurece tudo fora da moldura de leitura (240x240 no centro) -->
+            <Grid RowDefinitions="*,240,*" ColumnDefinitions="*,240,*" InputTransparent="True">
+                <BoxView Grid.ColumnSpan="3" Color="Black" Opacity="0.55" />
+                <BoxView Grid.Row="1" Color="Black" Opacity="0.55" />
+                <BoxView Grid.Row="1" Grid.Column="2" Color="Black" Opacity="0.55" />
+                <BoxView Grid.Row="2" Grid.ColumnSpan="3" Color="Black" Opacity="0.55" />
+
+                <Border Grid.Row="1" Grid.Column="1"
+                        StrokeThickness="3" Stroke="{DynamicResource ColorPrimary}"
                         StrokeShape="RoundRectangle 24" BackgroundColor="Transparent" />
             </Grid>
+
+            <!-- Lanterna -->
+            <Button x:Name="Lanterna"
+                    Text="&#xF00A;"
+                    FontFamily="MaterialIcons"
+                    FontSize="24"
+                    Padding="0"
+                    WidthRequest="52"
+                    HeightRequest="52"
+                    CornerRadius="26"
+                    Margin="0,0,16,16"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    BackgroundColor="#99000000"
+                    TextColor="White"
+                    SemanticProperties.Description="Ligar ou desligar a lanterna"
+                    Clicked="OnLanternaClicked" />
         </Grid>
 
         <VerticalStackLayout Grid.Row="1" Padding="20,16" Spacing="8" BackgroundColor="{DynamicResource ColorSurface}">

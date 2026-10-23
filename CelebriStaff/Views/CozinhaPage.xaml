@@ -73,7 +73,7 @@
                             Stroke="{Binding Cor}" StrokeThickness="2">
                         <VerticalStackLayout Spacing="8">
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                <Label Text="{Binding Cabecalho}" FontFamily="OpenSansSemibold" FontSize="16" />
+                                <Label Text="{Binding Cabecalho}" FontFamily="InterSemibold" FontSize="16" />
                                 <controls:StatusChip Grid.Column="1" Text="{Binding Status}" Kind="{Binding StatusKind}" />
                             </Grid>
                             <Label Text="{Binding Itens}" FontSize="16" />
@@ -106,10 +106,10 @@
                 <DataTemplate x:DataType="vm:ServicoNaCozinha">
                     <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14" StrokeShape="RoundRectangle 14">
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                            <Label Text="{Binding Horario}" FontSize="18" FontFamily="OpenSansSemibold"
+                            <Label Text="{Binding Horario}" FontSize="18" FontFamily="InterSemibold"
                                    TextColor="{DynamicResource ColorBrandText}" VerticalOptions="Center" />
                             <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                <Label Text="{Binding Item}" FontFamily="OpenSansSemibold" />
+                                <Label Text="{Binding Item}" FontFamily="InterSemibold" />
                                 <Label Text="{Binding Quantidade}" Style="{StaticResource BodyText}" />
                                 <controls:StatusChip Text="{Binding Status}" Kind="{Binding StatusKind}" Margin="0,4,0,0" />
                             </VerticalStackLayout>
@@ -135,7 +135,7 @@
                 <DataTemplate x:DataType="vm:EstoqueNaCozinha">
                     <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14" StrokeShape="RoundRectangle 14">
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding Nome}" FontFamily="OpenSansSemibold" />
+                            <Label Text="{Binding Nome}" FontFamily="InterSemibold" />
                             <Label Text="{Binding Detalhe}" Style="{StaticResource CaptionText}" />
                             <controls:StatusChip Text="Estoque baixo" Kind="error" Icon="{StaticResource IconWarning}"
                                                  IsVisible="{Binding Baixo}" Margin="0,4,0,0" />

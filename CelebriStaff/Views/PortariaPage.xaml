@@ -16,7 +16,7 @@
                 <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" HorizontalOptions="Center" />
                 <Label Text="{Binding TotalTexto}"
                        FontSize="64"
-                       FontFamily="OpenSansSemibold"
+                       FontFamily="InterSemibold"
                        HorizontalOptions="Center"
                        TextColor="{DynamicResource ColorBrandText}"
                        AutomationId="TotalPresentes"
@@ -44,7 +44,15 @@
                     IsVisible="{Binding UsaConvites}"
                     BackgroundColor="{DynamicResource ColorSecondary}"
                     TextColor="{DynamicResource ColorOnSecondary}"
-                    MinimumHeightRequest="52" />
+                    ContentLayout="Left,10"
+                    FontSize="16"
+                    MinimumHeightRequest="56"
+                    SemanticProperties.Description="Ler QR code do convite com a câmera">
+                <Button.ImageSource>
+                    <FontImageSource FontFamily="MaterialIcons" Glyph="&#xF206;" Size="26"
+                                     Color="{DynamicResource ColorOnSecondary}" />
+                </Button.ImageSource>
+            </Button>
 
             <Border Style="{StaticResource InputBorderStyle}" IsVisible="{Binding UsaConvites}" Padding="14,0">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
@@ -75,7 +83,7 @@
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                             <Label Text="{StaticResource IconPerson}" Style="{StaticResource IconLabel}" />
                             <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                <Label Text="{Binding Nome}" FontFamily="OpenSansSemibold" />
+                                <Label Text="{Binding Nome}" FontFamily="InterSemibold" />
                                 <Label Text="{Binding Situacao}" Style="{StaticResource CaptionText}" />
                             </VerticalStackLayout>
                             <Label Grid.Column="2" Text="&#xE5CC;" Style="{StaticResource IconLabel}" />

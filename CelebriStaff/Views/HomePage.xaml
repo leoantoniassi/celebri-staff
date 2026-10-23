@@ -8,19 +8,37 @@
              Title="Minhas Escalas">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Sair" Command="{Binding LogoutCommand}" />
+        <ToolbarItem Text="Sair" Command="{Binding LogoutCommand}"
+                     SemanticProperties.Description="Sair da conta">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE9BA;" Size="24"
+                                 Color="{DynamicResource ColorTextPrimary}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,*" Padding="16,8,16,0">
 
-        <VerticalStackLayout Spacing="4" Margin="4,4,0,8">
-            <Label Text="{Binding WelcomeMessage}"
-                   Style="{StaticResource TitleText}"
-                   SemanticProperties.HeadingLevel="Level1" />
-            <Label Text="{Binding Aviso}"
-                   Style="{StaticResource CaptionText}"
-                   IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
-        </VerticalStackLayout>
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Margin="4,4,0,8">
+            <!-- Avatar com a inicial do nome, na cor da marca -->
+            <Border StrokeThickness="0" StrokeShape="RoundRectangle 22"
+                    BackgroundColor="{DynamicResource ColorPrimary}"
+                    WidthRequest="44" HeightRequest="44" VerticalOptions="Start"
+                    SemanticProperties.Description="Seu perfil">
+                <Label Text="{Binding Inicial}"
+                       Style="{StaticResource Headline}"
+                       TextColor="{DynamicResource ColorOnPrimary}"
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                <Label Text="{Binding WelcomeMessage}"
+                       Style="{StaticResource TitleText}"
+                       SemanticProperties.HeadingLevel="Level1" />
+                <Label Text="{Binding Aviso}"
+                       Style="{StaticResource CaptionText}"
+                       IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
+            </VerticalStackLayout>
+        </Grid>
 
         <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding CarregarCommand}">
             <CollectionView ItemsSource="{Binding Grupos}" IsGrouped="True" SelectionMode="None">

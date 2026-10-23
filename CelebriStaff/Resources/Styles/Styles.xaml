@@ -32,9 +32,8 @@
     <Style TargetType="Button" x:Key="ButtonBaseStyle">
         <Setter Property="TextColor" Value="{DynamicResource ColorOnPrimary}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource ColorPrimary}" />
-        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontFamily" Value="InterSemibold"/>
         <Setter Property="FontSize" Value="15"/>
-        <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="BorderWidth" Value="0"/>
         <Setter Property="CornerRadius" Value="12"/>
         <Setter Property="Padding" Value="16,10"/>
@@ -71,7 +70,7 @@
     <Style TargetType="Editor">
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontFamily" Value="InterRegular"/>
         <Setter Property="FontSize" Value="15" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
@@ -80,7 +79,7 @@
     <Style TargetType="Entry">
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontFamily" Value="InterRegular"/>
         <Setter Property="FontSize" Value="15" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="HeightRequest" Value="44"/>
@@ -111,7 +110,7 @@
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontFamily" Value="InterRegular" />
         <Setter Property="FontSize" Value="15" />
     </Style>
 
@@ -119,7 +118,7 @@
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
         <Setter Property="TitleColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontFamily" Value="InterRegular"/>
         <Setter Property="FontSize" Value="15" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
     </Style>
@@ -137,7 +136,7 @@
         <Setter Property="PlaceholderColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="CancelButtonColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontFamily" Value="InterRegular" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
     </Style>
@@ -188,13 +187,13 @@
 
     <Style TargetType="Label" x:Key="TitleText">
         <Setter Property="FontSize" Value="22" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="JakartaBold" />
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
     </Style>
 
     <Style TargetType="Label" x:Key="Headline">
         <Setter Property="FontSize" Value="17" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="JakartaBold" />
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
     </Style>
 
@@ -215,7 +214,7 @@
 
     <Style TargetType="Label" x:Key="SectionHeaderStyle">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="InterSemibold" />
         <Setter Property="TextColor" Value="{DynamicResource ColorBrandText}" />
     </Style>
 
@@ -294,14 +293,14 @@
     <!-- Badge / chip de status -->
     <Style TargetType="Label" x:Key="StatusBadgeStyle">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="InterSemibold" />
         <Setter Property="HorizontalOptions" Value="Start" />
     </Style>
 
     <!-- Mensagem de estado vazio -->
     <Style TargetType="Label" x:Key="EmptyStateTitleStyle">
         <Setter Property="FontSize" Value="17" />
-        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="InterSemibold" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
