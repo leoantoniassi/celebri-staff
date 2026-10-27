@@ -5,11 +5,13 @@ namespace CelebriStaff;
 public partial class App : Application
 {
     private readonly AppShell _shell;
+    private readonly ThemeService _theme;
 
     public App(AppShell shell, ThemeService theme)
     {
         InitializeComponent();
         _shell = shell;
+        _theme = theme;
 
         // Tema claro/escuro segue o sistema; ThemeService troca os tokens em runtime.
         theme.ApplyMode(RequestedTheme);
@@ -18,6 +20,10 @@ public partial class App : Application
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        return new Window(_shell);
+        var window = new Window(_shell);
+        // A Activity só existe aqui: reaplica a barra de status.
+        window.Created += (_, _) => _theme.ApplyStatusBar();
+        window.Activated += (_, _) => _theme.ApplyStatusBar();
+        return window;
     }
 }

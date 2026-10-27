@@ -70,7 +70,11 @@
     <Style TargetType="Editor">
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
+<<<<<<< HEAD
         <Setter Property="FontFamily" Value="Inter"/>
+=======
+        <Setter Property="FontFamily" Value="InterRegular"/>
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="FontSize" Value="15" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
@@ -79,7 +83,11 @@
     <Style TargetType="Entry">
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
+<<<<<<< HEAD
         <Setter Property="FontFamily" Value="Inter"/>
+=======
+        <Setter Property="FontFamily" Value="InterRegular"/>
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="FontSize" Value="15" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="HeightRequest" Value="44"/>
@@ -110,7 +118,11 @@
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
+<<<<<<< HEAD
         <Setter Property="FontFamily" Value="Inter" />
+=======
+        <Setter Property="FontFamily" Value="InterRegular" />
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="FontSize" Value="15" />
     </Style>
 
@@ -118,7 +130,11 @@
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
         <Setter Property="TitleColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
+<<<<<<< HEAD
         <Setter Property="FontFamily" Value="Inter"/>
+=======
+        <Setter Property="FontFamily" Value="InterRegular"/>
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="FontSize" Value="15" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
     </Style>
@@ -136,7 +152,11 @@
         <Setter Property="PlaceholderColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="CancelButtonColor" Value="{DynamicResource ColorTextSecondary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
+<<<<<<< HEAD
         <Setter Property="FontFamily" Value="Inter" />
+=======
+        <Setter Property="FontFamily" Value="InterRegular" />
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="FontSize" Value="15" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
     </Style>
@@ -188,12 +208,20 @@
     <Style TargetType="Label" x:Key="TitleText">
         <Setter Property="FontFamily" Value="PlusJakartaSansBold" />
         <Setter Property="FontSize" Value="22" />
+<<<<<<< HEAD
+=======
+        <Setter Property="FontFamily" Value="JakartaBold" />
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
     </Style>
 
     <Style TargetType="Label" x:Key="Headline">
         <Setter Property="FontFamily" Value="PlusJakartaSansBold" />
         <Setter Property="FontSize" Value="17" />
+<<<<<<< HEAD
+=======
+        <Setter Property="FontFamily" Value="JakartaBold" />
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />
     </Style>
 
@@ -215,6 +243,10 @@
     <Style TargetType="Label" x:Key="SectionHeaderStyle">
         <Setter Property="FontFamily" Value="PlusJakartaSansSemibold" />
         <Setter Property="FontSize" Value="14" />
+<<<<<<< HEAD
+=======
+        <Setter Property="FontFamily" Value="InterSemibold" />
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="TextColor" Value="{DynamicResource ColorBrandText}" />
     </Style>
 
@@ -294,6 +326,10 @@
     <Style TargetType="Label" x:Key="StatusBadgeStyle">
         <Setter Property="FontFamily" Value="InterSemibold" />
         <Setter Property="FontSize" Value="12" />
+<<<<<<< HEAD
+=======
+        <Setter Property="FontFamily" Value="InterSemibold" />
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="HorizontalOptions" Value="Start" />
     </Style>
 
@@ -301,6 +337,10 @@
     <Style TargetType="Label" x:Key="EmptyStateTitleStyle">
         <Setter Property="FontFamily" Value="PlusJakartaSansSemibold" />
         <Setter Property="FontSize" Value="17" />
+<<<<<<< HEAD
+=======
+        <Setter Property="FontFamily" Value="InterSemibold" />
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="TextColor" Value="{DynamicResource ColorTextPrimary}" />

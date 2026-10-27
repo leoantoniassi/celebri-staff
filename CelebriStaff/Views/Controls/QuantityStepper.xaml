@@ -19,7 +19,7 @@
 
         <Label x:Name="ValueLabel"
                FontSize="36"
-               FontFamily="OpenSansSemibold"
+               FontFamily="InterSemibold"
                MinimumWidthRequest="64"
                HorizontalTextAlignment="Center"
                VerticalOptions="Center" />

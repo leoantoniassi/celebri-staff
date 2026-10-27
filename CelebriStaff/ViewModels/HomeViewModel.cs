@@ -25,6 +25,9 @@ public partial class HomeViewModel : ObservableObject
     private string welcomeMessage = string.Empty;
 
     [ObservableProperty]
+    private string inicial = "?";
+
+    [ObservableProperty]
     private bool isRefreshing;
 
     /// <summary>Só na primeira carga: mostra o skeleton em vez de uma lista vazia piscando.</summary>
@@ -42,6 +45,7 @@ public partial class HomeViewModel : ObservableObject
         IsRefreshing = true;
         // A página da home é reaproveitada pelo Shell entre logins.
         WelcomeMessage = _authService.CurrentUser is { } user ? $"Olá, {user.Nome.Split(' ')[0]}!" : "Bem-vindo(a)!";
+        Inicial = _authService.CurrentUser is { Nome.Length: > 0 } u ? u.Nome.Trim()[..1].ToUpperInvariant() : "?";
         try
         {
             var result = await _api.GetMinhasEscalasAsync();

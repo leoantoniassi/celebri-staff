@@ -36,9 +36,16 @@
                         <DataTemplate x:DataType="vm:MesaNoMapa">
                             <Grid AbsoluteLayout.LayoutBounds="{Binding Bounds}"
                                   AbsoluteLayout.LayoutFlags="{Binding Flags}">
+<<<<<<< HEAD
                                 <Border BackgroundColor="{Binding Cor}" StrokeThickness="0"
                                         StrokeShape="RoundRectangle 30">
                                     <Label Text="{Binding Numero}" TextColor="White" FontFamily="PlusJakartaSansSemibold" FontSize="18"
+=======
+                                <Border BackgroundColor="{Binding Cor}" Stroke="{Binding CorBorda}" StrokeThickness="2"
+                                        StrokeShape="RoundRectangle 30"
+                                        SemanticProperties.Description="{Binding Numero, StringFormat='Mesa {0}'}">
+                                    <Label Text="{Binding Numero}" TextColor="{Binding CorTexto}" FontFamily="InterSemibold" FontSize="18"
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
                                            HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <Border StrokeThickness="0" StrokeShape="RoundRectangle 8"

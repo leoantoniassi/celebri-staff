@@ -20,12 +20,16 @@ public class MesaNoMapa(MesaMapa mesa)
     public Rect Bounds => new(Mesa.PosX / 100, Mesa.PosY / 100, Tamanho, Tamanho);
     public AbsoluteLayoutFlags Flags => AbsoluteLayoutFlags.PositionProportional;
 
+    /// <summary>"Livre" vira cartão neutro (legível nos dois temas); com pedido, cor de status + texto branco.</summary>
     public Color Cor => Mesa.Situacao switch
     {
         "pronto" => Tokens.Success,
         "aguardando" => Tokens.Warning,
-        _ => Tokens.TextSecondary,
+        _ => Tokens.Get("ColorSurface"),
     };
+
+    public Color CorTexto => Mesa.Situacao is "pronto" or "aguardando" ? Colors.White : Tokens.Get("ColorTextPrimary");
+    public Color CorBorda => Mesa.Situacao is "pronto" or "aguardando" ? Cor : Tokens.Get("ColorBorder");
 
     public string Selo => Mesa.PedidosProntos > 0 ? "✓" : Mesa.PedidosAbertos > 0 ? Mesa.PedidosAbertos.ToString() : string.Empty;
 }

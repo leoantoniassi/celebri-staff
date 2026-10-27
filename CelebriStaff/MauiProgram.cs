@@ -14,6 +14,14 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        // O campo já é desenhado pelo Border (InputBorderStyle): tira o sublinhado nativo do Android.
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("SemSublinhado", (handler, _) =>
+        {
+#if ANDROID
+            handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+        });
+
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -21,12 +29,18 @@ public static class MauiProgram
             .UseBarcodeReader()
             .ConfigureFonts(fonts =>
             {
+<<<<<<< HEAD
                 fonts.AddFont("PlusJakartaSans-Regular.ttf", "PlusJakartaSans");
                 fonts.AddFont("PlusJakartaSans-SemiBold.ttf", "PlusJakartaSansSemibold");
                 fonts.AddFont("PlusJakartaSans-Bold.ttf", "PlusJakartaSansBold");
                 fonts.AddFont("Inter-Regular.ttf", "Inter");
                 fonts.AddFont("Inter-Medium.ttf", "InterMedium");
                 fonts.AddFont("Inter-SemiBold.ttf", "InterSemibold");
+=======
+                fonts.AddFont("Inter-Regular.ttf", "InterRegular");
+                fonts.AddFont("Inter-SemiBold.ttf", "InterSemibold");
+                fonts.AddFont("PlusJakartaSans-Bold.ttf", "JakartaBold");
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
                 fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcons");
             });
 

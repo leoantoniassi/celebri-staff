@@ -16,7 +16,11 @@
                 <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" HorizontalOptions="Center" />
                 <Label Text="{Binding TotalTexto}"
                        FontSize="64"
+<<<<<<< HEAD
                        FontFamily="PlusJakartaSansBold"
+=======
+                       FontFamily="InterSemibold"
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
                        HorizontalOptions="Center"
                        TextColor="{DynamicResource ColorBrandText}"
                        AutomationId="TotalPresentes"
@@ -44,7 +48,15 @@
                     IsVisible="{Binding UsaConvites}"
                     BackgroundColor="{DynamicResource ColorSecondary}"
                     TextColor="{DynamicResource ColorOnSecondary}"
-                    MinimumHeightRequest="52" />
+                    ContentLayout="Left,10"
+                    FontSize="16"
+                    MinimumHeightRequest="56"
+                    SemanticProperties.Description="Ler QR code do convite com a câmera">
+                <Button.ImageSource>
+                    <FontImageSource FontFamily="MaterialIcons" Glyph="&#xF206;" Size="26"
+                                     Color="{DynamicResource ColorOnSecondary}" />
+                </Button.ImageSource>
+            </Button>
 
             <Border Style="{StaticResource InputBorderStyle}" IsVisible="{Binding UsaConvites}" Padding="14,0">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">

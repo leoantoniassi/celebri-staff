@@ -106,6 +106,32 @@ public class ThemeService : INotifyPropertyChanged
         }
 
         ApplyBrand();
+        ApplyStatusBar();
+    }
+
+    /// <summary>
+    /// Barra de status na cor do fundo do tema, com ícones contrastantes.
+    /// Pode rodar antes da Activity existir; nesse caso é refeita ao abrir a janela.
+    /// </summary>
+    public void ApplyStatusBar()
+    {
+        // StatusBar.SetColor/SetStyle só existem a partir do Android 23 (e no iOS/Windows).
+#if ANDROID
+        if (!OperatingSystem.IsAndroidVersionAtLeast(23)) return;
+#endif
+
+        try
+        {
+            var background = Tokens.Get("ColorBackground");
+            CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(background);
+            CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(
+                _dark ? CommunityToolkit.Maui.Core.StatusBarStyle.LightContent
+                      : CommunityToolkit.Maui.Core.StatusBarStyle.DarkContent);
+        }
+        catch
+        {
+            // Plataforma sem barra de status ou Activity ainda não criada.
+        }
     }
 
     private void ApplyBrand()

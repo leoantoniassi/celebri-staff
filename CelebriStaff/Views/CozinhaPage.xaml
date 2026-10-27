@@ -73,7 +73,11 @@
                             Stroke="{Binding Cor}" StrokeThickness="2">
                         <VerticalStackLayout Spacing="8">
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+<<<<<<< HEAD
                                 <Label Text="{Binding Cabecalho}" FontFamily="PlusJakartaSansSemibold" FontSize="16" />
+=======
+                                <Label Text="{Binding Cabecalho}" FontFamily="InterSemibold" FontSize="16" />
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
                                 <controls:StatusChip Grid.Column="1" Text="{Binding Status}" Kind="{Binding StatusKind}" />
                             </Grid>
                             <Label Text="{Binding Itens}" FontSize="16" />
@@ -106,7 +110,11 @@
                 <DataTemplate x:DataType="vm:ServicoNaCozinha">
                     <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14" StrokeShape="RoundRectangle 14">
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+<<<<<<< HEAD
                             <Label Text="{Binding Horario}" FontSize="18" FontFamily="PlusJakartaSansSemibold"
+=======
+                            <Label Text="{Binding Horario}" FontSize="18" FontFamily="InterSemibold"
+>>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
                                    TextColor="{DynamicResource ColorBrandText}" VerticalOptions="Center" />
                             <VerticalStackLayout Grid.Column="1" Spacing="2">
                                 <Label Text="{Binding Item}" FontFamily="InterSemibold" />
