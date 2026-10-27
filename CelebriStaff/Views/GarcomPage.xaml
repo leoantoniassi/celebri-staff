@@ -38,13 +38,13 @@
                                   AbsoluteLayout.LayoutFlags="{Binding Flags}">
                                 <Border BackgroundColor="{Binding Cor}" StrokeThickness="0"
                                         StrokeShape="RoundRectangle 30">
-                                    <Label Text="{Binding Numero}" TextColor="White" FontFamily="OpenSansSemibold" FontSize="18"
+                                    <Label Text="{Binding Numero}" TextColor="White" FontFamily="PlusJakartaSansSemibold" FontSize="18"
                                            HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
                                 <Border StrokeThickness="0" StrokeShape="RoundRectangle 8"
                                         BackgroundColor="{DynamicResource ColorSurface}"
                                         Padding="5,1" HorizontalOptions="End" VerticalOptions="Start">
-                                    <Label Text="{Binding Selo}" FontSize="12" FontFamily="OpenSansSemibold"
+                                    <Label Text="{Binding Selo}" FontSize="12" FontFamily="InterSemibold"
                                            TextColor="{DynamicResource ColorTextPrimary}" />
                                 </Border>
                                 <Grid.GestureRecognizers>

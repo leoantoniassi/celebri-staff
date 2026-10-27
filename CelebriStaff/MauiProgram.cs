@@ -21,8 +21,12 @@ public static class MauiProgram
             .UseBarcodeReader()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("PlusJakartaSans-Regular.ttf", "PlusJakartaSans");
+                fonts.AddFont("PlusJakartaSans-SemiBold.ttf", "PlusJakartaSansSemibold");
+                fonts.AddFont("PlusJakartaSans-Bold.ttf", "PlusJakartaSansBold");
+                fonts.AddFont("Inter-Regular.ttf", "Inter");
+                fonts.AddFont("Inter-Medium.ttf", "InterMedium");
+                fonts.AddFont("Inter-SemiBold.ttf", "InterSemibold");
                 fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcons");
             });
 
