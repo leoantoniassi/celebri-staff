@@ -3,6 +3,10 @@
 
 ---
 
+> ℹ️ **Nota de Sucessão:** Este documento registra a versão inicial (v1.0 — 26/08/2026) do Plano de Projeto. Após a conclusão e entrega do **Marco 1 / EP2**, a documentação viva e atualizada do projeto do aplicativo móvel passou a ser mantida integralmente no [README.md](README.md) (versão 2.0). Consulte o `README.md` para visualizar o backlog atualizado com as US entregues, telas operacionais e roteiro de homologação.
+
+---
+
 ## SEÇÃO PRÉ-TEXTUAL: HISTÓRICO DE REVISÃO
 
 | Data | Versão | Descrição das Alterações | Autor(es) |
