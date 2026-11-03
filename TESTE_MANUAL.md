@@ -23,7 +23,8 @@ sessão, o número do item e o que apareceu na tela.
 1. [ ] No repositório `celebri`: `docker compose up -d --build` e depois `docker compose exec backend npm run seed`.
    - **Esperado:** `http://localhost:3001/api/health` responde `success: true`; o log da API mostra as migrations até `011_garcom_cozinha.sql` aplicadas.
 2. [ ] Abrir o painel em `http://localhost:8080` e entrar com `gerente@celebri.com` / `123456`.
-3. [ ] Rodar o app (`dotnet build -t:Run -f net10.0-android`) no emulador **e**, para a sessão 3, num celular Android real (a câmera do emulador não lê QR de verdade). No celular, troque o endereço da API em `Services/Api/AppConfig.cs` pelo IP do PC na rede.
+3. [ ] Rodar o app (`dotnet build -t:Run -f net10.0-android`) no emulador **e**, para a sessão 3, num celular Android real (a câmera do emulador não lê QR de verdade). No celular, ligue o cabo USB e rode `adb reverse tcp:3001 tcp:3001` (refaça ao reconectar o cabo); não precisa mexer no IP.
+   - **Esperado:** `adb reverse --list` mostra `tcp:3001 tcp:3001` e o login do app funciona no celular.
 4. [ ] O **código de primeiro acesso** chega por e-mail: no ambiente de dev o SMTP é o **Mailpit** (definido no `docker-compose.dev.yml`). Abra `http://localhost:8025` para ver o e-mail com o código e deixe `docker compose logs -f backend` aberto (sem SMTP, o código aparece no log).
    - **Esperado:** o e-mail "🔑 Seu código de acesso" chega na caixa do Mailpit com 6 dígitos, e o log mostra `[Email] Código enviado.`.
 

@@ -463,7 +463,7 @@ O roteiro completo de homologação — 5 sessões, ~2h, com o resultado esperad
    ```
    As migrations são aplicadas ao subir a API. Teste: `http://localhost:3001/api/health`.
 2. **App:** Visual Studio 2026 com o workload **.NET MAUI**, e um emulador Android ou celular com depuração USB.
-3. No emulador, o app usa `http://10.0.2.2:3001/api/` (ver `Services/Api/AppConfig.cs`). No celular, troque pelo IP do computador na rede.
+3. No emulador, o app usa `http://10.0.2.2:3001/api/` (ver `Services/Api/AppConfig.cs`). No **celular físico**, ligue-o no cabo USB e rode `adb reverse tcp:3001 tcp:3001`: o app usa `http://127.0.0.1:3001/api/` e o adb leva até a API no PC, então o IP do computador não importa. Refaça o comando sempre que reconectar o cabo. Para testar por Wi-Fi, preencha `LanHost` no `AppConfig.cs` com o IP do PC e suba a API com `API_BIND=0.0.0.0` (a rede e o firewall precisam liberar a porta 3001).
 4. **Código de primeiro acesso (o app pede o código por e-mail):** no ambiente de dev o SMTP é o **Mailpit** (definido no `docker-compose.dev.yml`) — o e-mail sai de verdade e fica numa caixa local em `http://localhost:8025`. Sem SMTP configurado, o código aparece no log da API: `docker compose logs backend | grep "Código de primeiro acesso"`.
 
 ### 6.2 Credenciais de teste (seed)
