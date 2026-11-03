@@ -16,11 +16,7 @@
                 <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" HorizontalOptions="Center" />
                 <Label Text="{Binding TotalTexto}"
                        FontSize="64"
-<<<<<<< HEAD
                        FontFamily="PlusJakartaSansBold"
-=======
-                       FontFamily="InterSemibold"
->>>>>>> 199feb0442ba6171d433ac2ecac2191153969fcd
                        HorizontalOptions="Center"
                        TextColor="{DynamicResource ColorBrandText}"
                        AutomationId="TotalPresentes"
