@@ -1,0 +1,287 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Celebri Staff — Marco 2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #2b2b2b; }
+  section { width: 1920px; height: 1080px; position: relative; overflow: hidden; box-sizing: border-box;
+            page-break-after: always; break-after: page; margin: 0 auto;
+            font-family: 'Nunito Sans', Arial, sans-serif; }
+  section * { box-sizing: border-box; }
+  h1, h2, h3, p, ul, ol, table { margin: 0; }
+  ul, ol { padding-left: 1.2em; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #D5DAE6; padding: 0.35em 0.6em; text-align: left; vertical-align: top; }
+  aside { display: none; }
+  @media screen { section { margin-bottom: 24px; } }
+
+  .claro { background: #FBFBF8; color: #1A2233; padding: 112px 128px 150px; display: flex; flex-direction: column; gap: 40px; }
+  .escuro { background: #16254F; color: #F4F6FB; padding: 112px 128px 150px; display: flex; flex-direction: column; gap: 40px; }
+  .kicker { font-size: 26px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #B82AB8; }
+  .escuro .kicker { color: #1CEAFF; }
+  h2 { font-family: 'Rubik', Arial, sans-serif; font-size: 60px; font-weight: 600; line-height: 1.1; }
+  h3 { font-family: 'Rubik', Arial, sans-serif; font-size: 36px; font-weight: 600; color: #16254F; }
+  .escuro h3 { color: #1CEAFF; }
+  .card { background: #EEF1F8; padding: 32px 40px; border-radius: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .escuro .card { background: #22356B; }
+  .card p, .card li { font-size: 28px; line-height: 1.4; color: #4A5568; }
+  .escuro .card p, .escuro .card li, .card.navy p, .card.navy li { color: #DCE3F2; }
+  .card.navy { background: #16254F; }
+  .card.navy h3 { color: #1CEAFF; }
+  .row { display: flex; gap: 28px; align-items: stretch; }
+  .row > * { flex: 1; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .num { position: absolute; left: 128px; bottom: 60px; font-size: 24px; color: #6B7280; }
+  .escuro .num { color: #AEB9D6; }
+  .tag { white-space: nowrap; display: inline-block; font-size: 22px; font-weight: 700; padding: 4px 14px; border-radius: 999px; }
+  .ok { background: #D7F5E3; color: #146C3A; }
+  .wip { background: #FFF1CC; color: #8A5A00; }
+  .plan { background: #E3E7F0; color: #3B4458; }
+  .tbl { font-size: 27px; }
+  .tbl tr:nth-child(even) { background: #EEF1F8; }
+  .tbl th { background: #16254F; color: #F4F6FB; }
+  .phone { width: 250px; height: 540px; object-fit: contain; border-radius: 18px; border: 1px solid #D5DAE6; background: #fff; }
+</style></head><body>
+
+<!-- 1 · CAPA -->
+<section style="background:#16254F;color:#F4F6FB;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<div style="position:absolute;left:0;top:0;width:24px;height:1080px;background:#1CEAFF"></div>
+<p style="font-size:30px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#1CEAFF">Projeto Integrador · 5º semestre · Marco 2 (EP3)</p>
+<h1 style="font-family:'Rubik', Arial, sans-serif;font-size:140px;font-weight:700;line-height:1.05">Celebri Staff</h1>
+<p style="font-size:48px;line-height:1.3;color:#C9D3EA">O app da equipe do buffet no dia da festa.</p>
+<p style="font-size:30px;color:#C9D3EA">Equipe L2Tech — Luis Felipe Veronezi · Leonardo Antoniassi · Bruno Righi</p>
+<aside>Luis (15s): Somos a L2Tech. Hoje mostramos como o Celebri Staff está, o que fechamos do Épico 1 e o que fizemos no Épico 2.</aside>
+</section>
+
+<!-- 2 · SOLUÇÃO -->
+<section class="escuro">
+<p class="kicker">A solução</p>
+<h2>O app que os funcionários do buffet usam durante a festa — com a marca do buffet.</h2>
+<div class="grid2">
+<div class="card"><h3>Todos</h3><p>Entrar só com o e-mail · minhas escalas · confirmar · check-in</p></div>
+<div class="card"><h3>Porteiro</h3><p>Contador compartilhado · QR do convite (1 ou N pessoas) · busca por nome</p></div>
+<div class="card"><h3>Garçom</h3><p>Mapa das mesas · comanda para a cozinha · alerta de alergia</p></div>
+<div class="card"><h3>Cozinha</h3><p>Pedidos · cardápio com horários · estoque</p></div>
+</div>
+<p style="font-size:26px;color:#AEB9D6">Sistema para 1 buffet → SaaS White Label → app por função, sem cobrança, login só com e-mail</p>
+<p class="num">2 / 12</p>
+<aside>Luis (60s): A ideia se manteve desde o Marco 1: o painel web é do gerente e o app é da equipe no salão. Neste épico o que mudou foi deixar o app pronto para ser usado de verdade.</aside>
+</section>
+
+<!-- 3 · FUNCIONALIDADES DE APP -->
+<section class="claro">
+<p class="kicker">Funcionalidades de aplicativo</p>
+<h2>Por que é um app nativo, e não um site no celular</h2>
+<div class="grid3">
+<div class="card"><h3>📷 Câmera + QR</h3><p>Leitor nativo com foco e rotação automáticos e <b>lanterna</b> para salão escuro.</p></div>
+<div class="card"><h3>📳 Vibração</h3><p>Ao ler o convite e ao concluir uma ação: confirma <b>sem olhar</b> para a tela.</p></div>
+<div class="card"><h3>🔐 Cofre do Android</h3><p>Token e usuário no <b>SecureStorage</b>, criptografado pelo Keystore.</p></div>
+<div class="card"><h3>🔁 Sessão persistente</h3><p>Abre o app e já cai nas <b>suas escalas</b>, sem logar de novo.</p></div>
+<div class="card"><h3>🌗 Tema do sistema</h3><p>Segue o <b>modo claro/escuro</b> do celular; barra de status na cor do tema.</p></div>
+<div class="card"><h3>🎨 White Label</h3><p>Troca cores, logo e nome <b>em tempo de execução</b> — um app, a marca de cada buffet.</p></div>
+</div>
+<p style="font-size:26px;color:#6B7280">+ ícone e splash próprios, tela cheia, toasts e navegação nativos (.NET MAUI → APK Android)</p>
+<p class="num">3 / 12</p>
+<aside>Bruno (60s): O Celebri Staff é um app nativo Android feito em .NET MAUI. A porteira aponta a câmera, o celular vibra quando lê o convite e, se estiver escuro, ela liga a lanterna pelo app. O login fica criptografado no Android, e o tema segue o modo escuro do celular.</aside>
+</section>
+
+<!-- 4 · REVIEW ÉPICO 1 -->
+<section class="claro">
+<p class="kicker">Review do Épico 1</p>
+<h2>Entregamos a base, adiantamos a operação — e fechamos as pendências</h2>
+<div class="row">
+<div class="card" style="flex:0.85;background:#16254F"><h3 style="color:#1CEAFF">Resultados (30/09)</h3>
+<p style="color:#DCE3F2">✓ Login por e-mail + código de primeiro acesso</p>
+<p style="color:#DCE3F2">✓ Escalas: confirmar, recusar, check-in</p>
+<p style="color:#DCE3F2">✓ Adiantados: portaria, garçom, cozinha</p>
+<p style="color:#DCE3F2">✓ 256 testes no backend</p></div>
+<table class="tbl" style="flex:1.15">
+<tr><th style="width:52%">Pendência</th><th>Como ficou</th></tr>
+<tr><td>UX das telas</td><td><span class="tag ok">✓ resolvida</span> design system</td></tr>
+<tr><td>SMTP do código</td><td><span class="tag ok">✓ dev</span> Mailpit</td></tr>
+<tr><td>LGPD: privacidade e anonimização</td><td><span class="tag ok">✓ API</span></td></tr>
+<tr><td>Homologar em celular real</td><td><span class="tag wip">◐ parcial</span> app no celular por USB</td></tr>
+<tr><td>Adulto/criança · cronograma · atalho do gerente</td><td><span class="tag plan">→ EF</span> replanejados</td></tr>
+</table>
+</div>
+<p class="num">4 / 12</p>
+<aside>Luis (60s): No Épico 1 entregamos a base e adiantamos as telas de operação. Das pendências, fechamos UX, o e-mail do código em dev e a LGPD. A homologação começou. Três itens foram replanejados de forma consciente.</aside>
+</section>
+
+<!-- 5 · DESCRIÇÃO ÉPICO 2 -->
+<section class="claro">
+<p class="kicker">Épico 2 · descrição</p>
+<h2>Do "funciona no emulador" para "dá para usar numa festa"</h2>
+<div class="row">
+<div class="card" style="border-top:8px solid #B82AB8"><h3>Objetivo</h3><p>App <b>pronto para uma festa de verdade</b>: telas claras, celular físico e API segura para dados reais.</p></div>
+<div class="card" style="border-top:8px solid #16254F"><h3>Escopo</h3><p>Homologação, UX, adulto/criança, cronograma, atalho do gerente, SMTP.<br><b>Incluído no caminho:</b> segurança e LGPD da API.</p></div>
+<div class="card" style="border-top:8px solid #6B7280"><h3>Limitações</h3><p>~5 semanas (01/10–03/11) · QR só testa em celular com câmera · sem servidor de produção (SMTP real, HTTPS).</p></div>
+</div>
+<p class="num">5 / 12</p>
+<aside>Luis (45s): O objetivo do Épico 2 era sair do funciona no emulador para dá para usar numa festa. Faltavam telas claras, rodar no celular de verdade e uma API segura para dados reais de convidados.</aside>
+</section>
+
+<!-- 6 · PROPOSTO -->
+<section class="claro">
+<p class="kicker">Épico 2 · o que propusemos</p>
+<h2>Seis compromissos do Marco 1</h2>
+<div class="grid2">
+<div class="card" style="flex-direction:row;align-items:center;gap:28px"><p style="font-family:'Rubik';font-size:54px;font-weight:700;color:#16254F">1</p><p style="font-size:30px;color:#1A2233">Homologar portaria, garçom e cozinha em celulares reais</p></div>
+<div class="card" style="flex-direction:row;align-items:center;gap:28px"><p style="font-family:'Rubik';font-size:54px;font-weight:700;color:#16254F">2</p><p style="font-size:30px;color:#1A2233">Contador adulto/criança com barra de lotação</p></div>
+<div class="card" style="flex-direction:row;align-items:center;gap:28px"><p style="font-family:'Rubik';font-size:54px;font-weight:700;color:#16254F">3</p><p style="font-size:30px;color:#1A2233">Cronograma do evento com avisos de horário</p></div>
+<div class="card" style="flex-direction:row;align-items:center;gap:28px"><p style="font-family:'Rubik';font-size:54px;font-weight:700;color:#16254F">4</p><p style="font-size:30px;color:#1A2233">Atalho do gerente para os módulos</p></div>
+<div class="card" style="flex-direction:row;align-items:center;gap:28px"><p style="font-family:'Rubik';font-size:54px;font-weight:700;color:#16254F">5</p><p style="font-size:30px;color:#1A2233">Refinar a UX das telas de operação</p></div>
+<div class="card" style="flex-direction:row;align-items:center;gap:28px"><p style="font-family:'Rubik';font-size:54px;font-weight:700;color:#16254F">6</p><p style="font-size:30px;color:#1A2233">SMTP e fluxo com Pull Requests</p></div>
+</div>
+<p class="num">6 / 12</p>
+<aside>Leonardo (40s): Este foi o combinado no Marco 1: seis itens, metade de validação e acabamento, metade de funcionalidade nova.</aside>
+</section>
+
+<!-- 7 · REALIZADO APP -->
+<section class="claro">
+<p class="kicker">Épico 2 · o que realizamos no app</p>
+<h2>Um visual só, pensado para o salão</h2>
+<div style="display:flex;gap:48px;align-items:start">
+<div style="flex:1;display:flex;flex-direction:column;gap:22px">
+<p style="font-size:30px;line-height:1.35"><b>✓ Design system:</b> paleta Celebri, <b>modo escuro</b>, ícones e 6 componentes reutilizáveis</p>
+<p style="font-size:30px;line-height:1.35"><b>✓ Feedback:</b> toast + vibração no sucesso, aviso de erro, skeleton no carregamento</p>
+<p style="font-size:30px;line-height:1.35"><b>✓ Identidade:</b> fontes Inter/Plus Jakarta, logo, ícone e splash novos</p>
+<p style="font-size:30px;line-height:1.35"><b>✓ Celular físico</b> pelo cabo USB, sem IP fixo</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;gap:16px">
+<div style="flex:1;background:#FFFFFF;border:1px solid #D5DAE6;border-radius:18px;padding:22px 26px;display:flex;flex-direction:column;gap:10px">
+<p style="font-size:22px;font-weight:700;color:#6B7280">MODO CLARO</p>
+<div style="display:flex;gap:10px"><span style="width:56px;height:56px;border-radius:12px;background:#16254F"></span><span style="width:56px;height:56px;border-radius:12px;background:#B82AB8"></span><span style="width:56px;height:56px;border-radius:12px;background:#1CEAFF"></span><span style="width:56px;height:56px;border-radius:12px;background:#EEF1F8;border:1px solid #D5DAE6"></span></div>
+</div>
+<div style="flex:1;background:#0E1730;border-radius:18px;padding:22px 26px;display:flex;flex-direction:column;gap:10px">
+<p style="font-size:22px;font-weight:700;color:#AEB9D6">MODO ESCURO</p>
+<div style="display:flex;gap:10px"><span style="width:56px;height:56px;border-radius:12px;background:#22356B"></span><span style="width:56px;height:56px;border-radius:12px;background:#E07BE0"></span><span style="width:56px;height:56px;border-radius:12px;background:#1CEAFF"></span><span style="width:56px;height:56px;border-radius:12px;background:#1A2547;border:1px solid #33467A"></span></div>
+</div>
+</div>
+<div class="card" style="padding:24px 30px;gap:14px">
+<p style="font-size:22px;font-weight:700;color:#B82AB8;letter-spacing:2px">6 COMPONENTES REUTILIZÁVEIS</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
+<p style="font-size:25px;color:#1A2233"><b>BrandHero</b> — marca do buffet</p>
+<p style="font-size:25px;color:#1A2233"><b>StatusChip</b> — livre / aguardando / pronto</p>
+<p style="font-size:25px;color:#1A2233"><b>QuantityStepper</b> — − 1 +</p>
+<p style="font-size:25px;color:#1A2233"><b>ErrorBanner</b> — falha de conexão</p>
+<p style="font-size:25px;color:#1A2233"><b>EmptyState</b> — "nenhuma escala"</p>
+<p style="font-size:25px;color:#1A2233"><b>LoadingSkeleton</b> — carregando</p>
+</div>
+</div>
+<div style="display:flex;gap:12px;align-items:center;font-size:24px;color:#4A5568">
+<span class="tag plan">Marco 1</span> cada tela com um visual <span style="font-size:30px">→</span> <span class="tag ok">Marco 2</span> mesmos blocos em todas as telas
+</div>
+</div>
+</div>
+<p class="num">7 / 12 · Demonstração ao vivo no celular, se houver tempo</p>
+<aside>Bruno (75s): No app, o foco foi a experiência no salão. Padronizamos as telas com a mesma paleta e componentes, criamos o modo escuro e passamos a confirmar cada ação com toast e vibração. E o app roda no celular físico só com o cabo.</aside>
+</section>
+
+<!-- 8 · REALIZADO API + PLACAR -->
+<section class="claro">
+<p class="kicker">Épico 2 · o que realizamos na API</p>
+<h2>Segurança e LGPD antes de dados reais — e o placar honesto</h2>
+<div class="row">
+<div class="card" style="flex:1.1;gap:18px"><h3>Auditoria em 8 fases</h3>
+<p>• Bloqueio de conta e limite de tentativas</p>
+<p>• Sessão de 8h <b>revogável</b> (migration 012)</p>
+<p>• Funcionário de campo sem rotas de gerente</p>
+<p>• Auditoria, exportação e anonimização (013)</p>
+<p>• Política de privacidade · CI com CodeQL</p></div>
+<div style="flex:0.9;display:flex;flex-direction:column;gap:22px">
+<table class="tbl">
+<tr><th>Proposto</th><th style="width:38%">Situação</th></tr>
+<tr><td>UX das telas</td><td><span class="tag ok">✓ feito</span></td></tr>
+<tr><td>SMTP</td><td><span class="tag ok">✓ dev</span></td></tr>
+<tr><td>Homologação</td><td><span class="tag wip">◐ em curso</span></td></tr>
+<tr><td>Adulto/criança · cronograma · gerente</td><td><span class="tag plan">→ EF</span></td></tr>
+</table>
+<div style="display:flex;gap:16px">
+<div style="flex:1;background:#16254F;padding:22px 28px;border-radius:16px"><p style="font-family:'Rubik';font-size:56px;font-weight:700;color:#1CEAFF">895</p><p style="font-size:23px;color:#DCE3F2">testes no backend (eram 256)</p></div>
+<div style="flex:1;background:#16254F;padding:22px 28px;border-radius:16px"><p style="font-family:'Rubik';font-size:56px;font-weight:700;color:#1CEAFF">8</p><p style="font-size:23px;color:#DCE3F2">fases de segurança</p></div>
+</div>
+</div>
+</div>
+<p class="num">8 / 12</p>
+<aside>Leonardo (60s): Na API fizemos uma auditoria de segurança em oito fases antes de colocar dados reais de convidados no app. Sendo honestos com o placar: UX e segurança feitos, homologação em andamento, e adulto/criança, cronograma e atalho do gerente não saíram neste épico. Os testes do servidor foram de 256 para 895.</aside>
+</section>
+
+<!-- 9 · CAMADA DE DADOS -->
+<section class="claro" style="gap:32px">
+<p class="kicker">Arquitetura · camada de dados</p>
+<h2>No celular, só o necessário. O resto, na nuvem.</h2>
+<div style="display:flex;gap:28px;align-items:stretch">
+<div style="flex:1.05;display:flex;flex-direction:column;gap:18px">
+<div class="card" style="border-left:10px solid #16254F;padding:24px 32px"><h3 style="font-size:32px">🔐 SecureStorage <span style="font-size:22px;color:#6B7280">(Keystore)</span></h3>
+<p style="font-size:25px"><code>auth_token</code> — JWT de 8h<br><code>current_user</code> — JSON: id, nome, e-mail, papel, empresa, funcionário</p></div>
+<div class="card" style="border-left:10px solid #B82AB8;padding:24px 32px"><h3 style="font-size:32px">⚙️ Preferences</h3>
+<p style="font-size:25px"><code>tenant_slug</code> — buffet escolhido (busca as cores ao reabrir)</p></div>
+<div class="card" style="border-left:10px solid #6B7280;padding:24px 32px"><h3 style="font-size:32px">🧠 Memória</h3>
+<p style="font-size:25px">Cores, logo, modo escuro, listas das telas</p></div>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;font-size:60px;color:#16254F">⇄</div>
+<div style="flex:0.95;display:flex;flex-direction:column;gap:18px">
+<div class="card navy" style="padding:28px 34px;flex:1"><h3 style="font-size:32px">☁️ API + PostgreSQL</h3>
+<p style="font-size:25px;color:#DCE3F2">Escalas · convites e contador · mesas · pedidos · cardápio · estoque</p>
+<p style="font-size:25px;color:#DCE3F2">Isolado por buffet · contador atômico · atualiza a cada 8 s</p></div>
+<div class="card" style="padding:24px 32px"><h3 style="font-size:32px">🚫 Sem banco local — por quê</h3>
+<p style="font-size:25px">Dados da festa são <b>compartilhados</b> entre funcionários · lista de convidados <b>fora do celular</b> (LGPD)</p></div>
+</div>
+</div>
+<p class="num">9 / 12 · Modelo e diagramas completos no README, seção 2.6.5</p>
+<aside>Leonardo (60s): O servidor é a fonte da verdade. No celular guardamos só o token e o usuário, criptografados, e o identificador do buffet. Tudo da festa fica na API, porque dois porteiros precisam ver o mesmo total. E não deixamos lista de convidados no celular do funcionário.</aside>
+</section>
+
+<!-- 10 · DESAFIOS -->
+<section class="claro">
+<p class="kicker">Desafios</p>
+<h2>O que travou o caminho e como seguimos</h2>
+<table class="tbl">
+<tr><th style="width:44%">Desafio</th><th>Como enfrentamos</th></tr>
+<tr><td>IP do PC mudava a cada rede; o celular não achava a API</td><td>App fala com a API pelo <b>cabo USB</b> (<code>adb reverse</code>)</td></tr>
+<tr><td>Conflito de merge na padronização do design</td><td>Resolvido arquivo a arquivo + novo build do app</td></tr>
+<tr><td>Auditoria de segurança grande</td><td><b>8 fases</b>, cada uma com testes — inclusive tentativas de burlar</td></tr>
+<tr><td>Não cabia tudo no prazo</td><td>PO priorizou <b>UX e segurança</b>; o resto foi replanejado no backlog</td></tr>
+<tr><td><i>Organização da equipe</i></td><td><i>(a completar pela equipe)</i></td></tr>
+</table>
+<p class="num">10 / 12</p>
+<aside>Leonardo (50s): O desafio mais prático foi o celular físico não achar a API cada vez que mudávamos de rede; resolvemos pelo cabo USB. O mais importante foi de prioridade: escolhemos deixar o app seguro e usável antes de criar telas novas.</aside>
+</section>
+
+<!-- 11 · PRÓXIMOS PASSOS -->
+<section class="claro">
+<p class="kicker">Próximos passos</p>
+<h2>Até a entrega final (10/12)</h2>
+<div class="row">
+<div class="card navy"><h3>Fechar o Épico 2</h3>
+<ol style="font-size:34px;line-height:1.6">
+<li>Homologação completa em celulares reais</li>
+<li>Contador adulto/criança + lotação</li>
+<li>Cronograma com avisos</li>
+<li>Atalho do gerente</li>
+</ol></div>
+<div class="card"><h3>Épico 3</h3>
+<ol start="5" style="font-size:34px;line-height:1.6;color:#1A2233">
+<li>WhatsApp em 1 toque</li>
+<li>Ocorrências com foto</li>
+<li>Modo offline da portaria</li>
+<li>Aviso de privacidade, SMTP de produção e build final</li>
+</ol></div>
+</div>
+<p class="num">11 / 12</p>
+<aside>Luis (40s): Até a entrega final, primeiro fechamos o que ficou do Épico 2 e a homologação, depois WhatsApp, fotos e modo offline, e terminamos com o build final.</aside>
+</section>
+
+<!-- 12 · ENCERRAMENTO -->
+<section style="background:#16254F;color:#F4F6FB;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<div style="position:absolute;left:0;top:0;width:24px;height:1080px;background:#1CEAFF"></div>
+<h1 style="font-family:'Rubik', Arial, sans-serif;font-size:96px;font-weight:700;line-height:1.1">A festa inteira na palma da mão da equipe.</h1>
+<p style="font-size:36px;color:#C9D3EA">Obrigado! Perguntas?</p>
+<p style="font-size:28px;color:#C9D3EA">github.com/leoantoniassi/celebri-staff · github.com/leoantoniassi/celebri</p>
+<aside>Luis (15s): Obrigado! A documentação atualizada, com backlog e camada de dados, está no README do repositório.</aside>
+</section>
+
+</body></html>
