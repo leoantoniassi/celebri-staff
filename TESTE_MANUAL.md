@@ -21,7 +21,7 @@ sessão, o número do item e o que apareceu na tela.
 ## Sessão 0 — Preparar o ambiente (15 min)
 
 1. [ ] No repositório `celebri`: `docker compose up -d --build` e depois `docker compose exec backend npm run seed`.
-   - **Esperado:** `http://localhost:3001/api/health` responde `success: true`; o log da API mostra as migrations até `011_garcom_cozinha.sql` aplicadas.
+   - **Esperado:** `http://localhost:3001/api/health` responde `success: true`; o log da API mostra as migrations até `013_lgpd_auditoria_anonimizacao.sql` aplicadas.
 2. [ ] Abrir o painel em `http://localhost:8080` e entrar com `gerente@celebri.com` / `123456`.
 3. [ ] Rodar o app (`dotnet build -t:Run -f net10.0-android`) no emulador **e**, para a sessão 3, num celular Android real (a câmera do emulador não lê QR de verdade). No celular, ligue o cabo USB e rode `adb reverse tcp:3001 tcp:3001` (refaça ao reconectar o cabo); não precisa mexer no IP.
    - **Esperado:** `adb reverse --list` mostra `tcp:3001 tcp:3001` e o login do app funciona no celular.
