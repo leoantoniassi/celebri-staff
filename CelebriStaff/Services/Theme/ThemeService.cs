@@ -70,13 +70,18 @@ public class ThemeService : INotifyPropertyChanged
 
         if (_dark)
         {
-            Set(resources, "ColorBackground", "#111417");
-            Set(resources, "ColorSurface", "#181D22");
-            Set(resources, "ColorSurfaceAlt", "#1E2429");
-            Set(resources, "ColorTextPrimary", "#EDF2F5");
-            Set(resources, "ColorTextSecondary", "#B6C4CF");
-            Set(resources, "ColorBorder", "#2E3842");
+            Set(resources, "ColorBackground", "#0B0F14");
+            Set(resources, "ColorSurface", "#141A21");
+            Set(resources, "ColorSurfaceAlt", "#1B222B");
+            Set(resources, "ColorSurfaceContainer", "#222B35");
+            Set(resources, "ColorSurfaceHigh", "#2A3440");
+            Set(resources, "ColorTextPrimary", "#EDF2F7");
+            Set(resources, "ColorTextSecondary", "#A9B7C5");
+            Set(resources, "ColorBorder", "#26313C");
+            Set(resources, "ColorOutline", "#374553");
             Set(resources, "ColorShadow", "#66000000");
+            Set(resources, "ColorGlass", "#CC141A21");
+            Set(resources, "ColorScrim", "#99000000");
             Set(resources, "ColorSuccessContainer", "#1B5E20");
             Set(resources, "ColorWarningContainer", "#7E2A00");
             Set(resources, "ColorInfoContainer", "#0D47A1");
@@ -88,13 +93,18 @@ public class ThemeService : INotifyPropertyChanged
         }
         else
         {
-            Set(resources, "ColorBackground", "#FAFCFD");
+            Set(resources, "ColorBackground", "#F6F8FB");
             Set(resources, "ColorSurface", "#FFFFFF");
-            Set(resources, "ColorSurfaceAlt", "#F3F6F6");
-            Set(resources, "ColorTextPrimary", "#020708");
-            Set(resources, "ColorTextSecondary", "#566E71");
-            Set(resources, "ColorBorder", "#B0CACD");
-            Set(resources, "ColorShadow", "#14000000");
+            Set(resources, "ColorSurfaceAlt", "#F1F5F8");
+            Set(resources, "ColorSurfaceContainer", "#EAF0F4");
+            Set(resources, "ColorSurfaceHigh", "#E1E9EE");
+            Set(resources, "ColorTextPrimary", "#0B1220");
+            Set(resources, "ColorTextSecondary", "#5B6B7C");
+            Set(resources, "ColorBorder", "#E3EAEF");
+            Set(resources, "ColorOutline", "#C9D5DD");
+            Set(resources, "ColorShadow", "#1A0B1220");
+            Set(resources, "ColorGlass", "#CCFFFFFF");
+            Set(resources, "ColorScrim", "#66000000");
             Set(resources, "ColorSuccessContainer", "#D7F0D5");
             Set(resources, "ColorWarningContainer", "#FFE0B2");
             Set(resources, "ColorInfoContainer", "#D6E6FF");
@@ -144,12 +154,39 @@ public class ThemeService : INotifyPropertyChanged
         resources["ColorTertiary"] = _tertiary;
         resources["ColorOnPrimary"] = BestOn(_primary);
         resources["ColorOnSecondary"] = BestOn(_secondary);
+        resources["ColorOnGradient"] = BestOnGradient(_primary, _secondary);
 
         // Cor de marca segura para texto/ícones: azul-marinho no claro, ciano no escuro,
         // ajustada até atingir contraste AA sobre o fundo do tema.
-        var surface = _dark ? Color.FromArgb("#181D22") : Colors.White;
+        var surface = _dark ? Color.FromArgb("#141A21") : Colors.White;
         resources["ColorBrandText"] = EnsureContrast(_dark ? _primary : _tertiary, surface);
+
+        // Fundo suave da marca (chips, halos, ícones) e texto legível sobre ele.
+        var background = _dark ? Color.FromArgb("#0B0F14") : Colors.White;
+        var accentSoft = _dark ? Mix(_primary, background, 0.82f) : Mix(_primary, background, 0.88f);
+        resources["ColorAccentSoft"] = accentSoft;
+        resources["ColorOnAccentSoft"] = EnsureContrast(_dark ? _primary : _tertiary, accentSoft);
+
+        // Gradientes white-label recriados com as cores do buffet.
+        var softA = _dark ? 0.30f : 0.24f;
+        var softB = _dark ? 0.18f : 0.12f;
+        resources["BrandGradientBrush"] = Gradient(_primary, _secondary, new Point(0, 0), new Point(1, 1));
+        resources["BrandGradientVerticalBrush"] = Gradient(_primary, _secondary, new Point(0, 0), new Point(0, 1));
+        resources["BrandGradientSoftBrush"] = Gradient(_primary, _secondary, new Point(0, 0), new Point(1, 1), softA, softB);
     }
+
+    // ── Gradientes ────────────────────────────────────────────────
+
+    private static LinearGradientBrush Gradient(
+        Color start, Color end, Point startPoint, Point endPoint, float startAlpha = 1f, float endAlpha = 1f)
+    {
+        var brush = new LinearGradientBrush { StartPoint = startPoint, EndPoint = endPoint };
+        brush.GradientStops.Add(new GradientStop(WithAlpha(start, startAlpha), 0));
+        brush.GradientStops.Add(new GradientStop(WithAlpha(end, endAlpha), 1));
+        return brush;
+    }
+
+    private static Color WithAlpha(Color c, float alpha) => new(c.Red, c.Green, c.Blue, alpha);
 
     // ── Contraste (WCAG) ──────────────────────────────────────────
 
@@ -163,6 +200,13 @@ public class ThemeService : INotifyPropertyChanged
 
     private static Color BestOn(Color background)
         => Contrast(OnDark, background) >= Contrast(Colors.White, background) ? OnDark : Colors.White;
+
+    private static Color BestOnGradient(Color start, Color end)
+    {
+        var darkMin = Math.Min(Contrast(OnDark, start), Contrast(OnDark, end));
+        var lightMin = Math.Min(Contrast(Colors.White, start), Contrast(Colors.White, end));
+        return darkMin >= lightMin ? OnDark : Colors.White;
+    }
 
     private static Color EnsureContrast(Color color, Color against)
     {

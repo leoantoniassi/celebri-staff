@@ -49,6 +49,22 @@
     <x:String x:Key="IconFlashOn">&#xF00B;</x:String>
     <x:String x:Key="IconFlashOff">&#xF00A;</x:String>
     <x:String x:Key="IconDelete">&#xE872;</x:String>
+    <x:String x:Key="IconChevronRight">&#xE5CC;</x:String>
+    <x:String x:Key="IconChevronLeft">&#xE5CB;</x:String>
+    <x:String x:Key="IconArrowForward">&#xE5C8;</x:String>
+    <x:String x:Key="IconArrowUpward">&#xE5D8;</x:String>
+    <x:String x:Key="IconExpandMore">&#xE5CF;</x:String>
+    <x:String x:Key="IconMoreVert">&#xE5D4;</x:String>
+    <x:String x:Key="IconPeople">&#xE7FB;</x:String>
+    <x:String x:Key="IconVerified">&#xE8E8;</x:String>
+    <x:String x:Key="IconTrendingUp">&#xE8E5;</x:String>
+    <x:String x:Key="IconStar">&#xE838;</x:String>
+    <x:String x:Key="IconNotifications">&#xE7F4;</x:String>
+    <x:String x:Key="IconFilterList">&#xE152;</x:String>
+    <x:String x:Key="IconAccessTime">&#xE8B5;</x:String>
+    <x:String x:Key="IconPaid">&#xEF63;</x:String>
+    <x:String x:Key="IconLocalDining">&#xE56B;</x:String>
+    <x:String x:Key="IconPhotoCamera">&#xE412;</x:String>
 
     <Style TargetType="Label" x:Key="IconLabel">
         <Setter Property="FontFamily" Value="MaterialIcons" />
@@ -63,5 +79,19 @@
     <Style TargetType="Label" x:Key="IconLabelLarge" BasedOn="{StaticResource IconLabel}">
         <Setter Property="FontSize" Value="48" />
         <Setter Property="TextColor" Value="{DynamicResource ColorBrandText}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="IconLabelOnAccent" BasedOn="{StaticResource IconLabel}">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextColor" Value="{DynamicResource ColorOnAccentSoft}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="IconTileStyle">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource ColorAccentSoft}" />
+        <Setter Property="WidthRequest" Value="42" />
+        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="Padding" Value="0" />
     </Style>
 </ResourceDictionary>

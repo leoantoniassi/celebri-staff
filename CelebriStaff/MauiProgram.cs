@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Behaviors;
 using CelebriStaff.Services.Api;
 using CelebriStaff.Services.Auth;
 using CelebriStaff.Services.Feedback;
@@ -20,6 +21,21 @@ public static class MauiProgram
 #if ANDROID
             handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #endif
+        });
+
+        // Feedback de toque em todos os botões, sem repetir Behavior em cada tela.
+        Microsoft.Maui.Handlers.ButtonHandler.Mapper.AppendToMapping("FeedbackToque", (_, view) =>
+        {
+            if (view is not Button button || button.Behaviors.OfType<TouchBehavior>().Any()) return;
+
+            button.Behaviors.Add(new TouchBehavior
+            {
+                PressedScale = 0.97,
+                PressedOpacity = 0.86,
+                PressedAnimationDuration = 90,
+                HoveredScale = 1.01,
+                HoveredAnimationDuration = 120,
+            });
         });
 
         var builder = MauiApp.CreateBuilder();

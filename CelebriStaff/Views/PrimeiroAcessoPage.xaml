@@ -3,74 +3,96 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
              xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
+             xmlns:behaviors="clr-namespace:CelebriStaff.Views.Behaviors"
              x:Class="CelebriStaff.Views.PrimeiroAcessoPage"
              x:DataType="vm:PrimeiroAcessoViewModel"
+             behaviors:PageEntrance.Enabled="True"
              Title="Primeiro acesso">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24,32" Spacing="24" VerticalOptions="Center">
+    <Grid>
+        <Border StrokeThickness="0"
+                StrokeShape="RoundRectangle 0,0,0,48"
+                Background="{DynamicResource BrandGradientSoftBrush}"
+                HeightRequest="260"
+                VerticalOptions="Start"
+                InputTransparent="True" />
 
-            <controls:BrandHero
-                                Title="{Binding NomeFantasia}"
-                                Subtitle="{Binding Instrucao}" />
+        <ScrollView>
+            <VerticalStackLayout Padding="24,32" Spacing="26" VerticalOptions="Center">
 
-            <Border Style="{StaticResource CardStyle}" Padding="20" Margin="0">
-                <VerticalStackLayout Spacing="16">
+                <controls:BrandHero
+                                    Title="{Binding NomeFantasia}"
+                                    Subtitle="{Binding Instrucao}" />
 
-                    <Border Style="{StaticResource InputBorderStyle}">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                            <Label Text="{StaticResource IconBadge}" Style="{StaticResource IconLabel}" />
-                            <Entry Grid.Column="1"
-                                   Placeholder="Código de 6 dígitos"
-                                   Text="{Binding Codigo}"
-                                   Keyboard="Numeric"
-                                   MaxLength="6"
-                                   SemanticProperties.Description="Código recebido por e-mail" />
-                        </Grid>
-                    </Border>
+                <Border Style="{StaticResource CardStyle}" Padding="22" Margin="0">
+                    <VerticalStackLayout Spacing="16">
 
-                    <Border Style="{StaticResource InputBorderStyle}">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                            <Label Text="{StaticResource IconLock}" Style="{StaticResource IconLabel}" />
-                            <Entry Grid.Column="1"
-                                   Placeholder="Nova senha"
-                                   Text="{Binding Senha}"
-                                   IsPassword="True"
-                                   SemanticProperties.Description="Nova senha" />
-                        </Grid>
-                    </Border>
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="PRIMEIRO ACESSO" Style="{StaticResource Eyebrow}" />
+                            <Label Text="Defina sua senha" Style="{StaticResource Headline}" />
+                        </VerticalStackLayout>
 
-                    <Border Style="{StaticResource InputBorderStyle}">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                            <Label Text="{StaticResource IconLock}" Style="{StaticResource IconLabel}" />
-                            <Entry Grid.Column="1"
-                                   Placeholder="Confirme a senha"
-                                   Text="{Binding ConfirmacaoSenha}"
-                                   IsPassword="True"
-                                   SemanticProperties.Description="Confirmação da nova senha" />
-                        </Grid>
-                    </Border>
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                <Label Text="{StaticResource IconBadge}"
+                                       Style="{StaticResource IconLabel}"
+                                       TextColor="{DynamicResource ColorBrandText}" />
+                                <Entry Grid.Column="1"
+                                       Placeholder="Código de 6 dígitos"
+                                       Text="{Binding Codigo}"
+                                       Keyboard="Numeric"
+                                       MaxLength="6"
+                                       SemanticProperties.Description="Código recebido por e-mail" />
+                            </Grid>
+                        </Border>
 
-                    <controls:ErrorBanner Message="{Binding ErrorMessage}" />
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                <Label Text="{StaticResource IconLock}"
+                                       Style="{StaticResource IconLabel}"
+                                       TextColor="{DynamicResource ColorBrandText}" />
+                                <Entry Grid.Column="1"
+                                       Placeholder="Nova senha"
+                                       Text="{Binding Senha}"
+                                       IsPassword="True"
+                                       SemanticProperties.Description="Nova senha" />
+                            </Grid>
+                        </Border>
 
-                    <Label Text="{Binding InfoMessage}"
-                           Style="{StaticResource CaptionText}"
-                           IsVisible="{Binding InfoMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                <Label Text="{StaticResource IconLock}"
+                                       Style="{StaticResource IconLabel}"
+                                       TextColor="{DynamicResource ColorBrandText}" />
+                                <Entry Grid.Column="1"
+                                       Placeholder="Confirme a senha"
+                                       Text="{Binding ConfirmacaoSenha}"
+                                       IsPassword="True"
+                                       SemanticProperties.Description="Confirmação da nova senha" />
+                            </Grid>
+                        </Border>
 
-                    <Button Text="Criar senha e entrar"
-                            Style="{StaticResource PrimaryButtonStyle}"
-                            Command="{Binding CriarSenhaCommand}"
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                        <controls:ErrorBanner Message="{Binding ErrorMessage}" />
 
-                    <Button Text="Reenviar código"
-                            Style="{StaticResource SecondaryButtonStyle}"
-                            Command="{Binding ReenviarCodigoCommand}"
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Label Text="{Binding InfoMessage}"
+                               Style="{StaticResource CaptionText}"
+                               IsVisible="{Binding InfoMessage, Converter={StaticResource StringNotEmptyConverter}}" />
 
-                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-            </Border>
+                        <Button Text="Criar senha e entrar"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Command="{Binding CriarSenhaCommand}"
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                        <Button Text="Reenviar código"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Command="{Binding ReenviarCodigoCommand}"
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

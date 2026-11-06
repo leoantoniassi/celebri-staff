@@ -4,17 +4,24 @@
              x:Class="CelebriStaff.Views.Controls.EmptyStateView">
 
     <!-- Estado vazio: ícone em disco suave + título + mensagem + ação opcional. -->
-    <VerticalStackLayout Padding="32,48" Spacing="12" HorizontalOptions="Center">
+    <VerticalStackLayout Padding="32,44" Spacing="14" HorizontalOptions="Center">
 
-        <Border x:Name="IconDisc"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 40"
-                BackgroundColor="{DynamicResource ColorSurfaceAlt}"
-                WidthRequest="80"
-                HeightRequest="80"
-                HorizontalOptions="Center">
-            <Label x:Name="IconView" Style="{StaticResource IconLabelLarge}" />
-        </Border>
+        <Grid WidthRequest="92" HeightRequest="92" HorizontalOptions="Center">
+            <Border x:Name="IconDisc"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 46"
+                    Background="{DynamicResource BrandGradientSoftBrush}" />
+            <Border StrokeThickness="1"
+                    Stroke="{DynamicResource ColorBorder}"
+                    StrokeShape="RoundRectangle 34"
+                    BackgroundColor="{DynamicResource ColorSurface}"
+                    Margin="11">
+                <Label x:Name="IconView"
+                       Style="{StaticResource IconLabelLarge}"
+                       FontSize="36"
+                       TextColor="{DynamicResource ColorOnAccentSoft}" />
+            </Border>
+        </Grid>
 
         <Label x:Name="TitleView" Style="{StaticResource EmptyStateTitleStyle}" />
         <Label x:Name="MessageView" Style="{StaticResource EmptyStateMessageStyle}" />

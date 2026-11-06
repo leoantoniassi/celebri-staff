@@ -4,36 +4,58 @@
              x:Class="CelebriStaff.Views.Controls.BrandHero">
 
     <!-- Cabeçalho das telas de entrada: logo do buffet (ou emblema Celebri), título e subtítulo. -->
-    <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+    <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
 
-        <!-- Logo oficial Celebri (mesmo arquivo do painel web), usado quando o buffet não tem logo. -->
-        <Image x:Name="Emblem"
-               Source="logo_celebri.png"
-               WidthRequest="96"
-               HeightRequest="96"
-               Aspect="AspectFit"
-               HorizontalOptions="Center"
-               SemanticProperties.Description="Logo Celebri" />
+        <Grid WidthRequest="112" HeightRequest="112" HorizontalOptions="Center">
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 38"
+                    Background="{DynamicResource BrandGradientSoftBrush}" />
+            <Border StrokeThickness="1"
+                    Stroke="{DynamicResource ColorBorder}"
+                    StrokeShape="RoundRectangle 30"
+                    BackgroundColor="{DynamicResource ColorSurface}"
+                    Margin="11"
+                    Padding="10">
+                <Border.Shadow>
+                    <Shadow Brush="{DynamicResource ColorShadow}" Offset="0,8" Radius="22" Opacity="0.9" />
+                </Border.Shadow>
+                <Grid>
+                    <!-- Logo oficial Celebri (mesmo arquivo do painel web), usado quando o buffet não tem logo. -->
+                    <Image x:Name="Emblem"
+                           Source="logo_celebri.png"
+                           WidthRequest="58"
+                           HeightRequest="58"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           SemanticProperties.Description="Logo Celebri" />
 
-        <Image x:Name="LogoView"
-               HeightRequest="84"
-               Aspect="AspectFit"
-               HorizontalOptions="Center"
-               IsVisible="False" />
+                    <Image x:Name="LogoView"
+                           HeightRequest="58"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="False" />
+                </Grid>
+            </Border>
+        </Grid>
 
-        <Label x:Name="TitleView"
-               Style="{StaticResource TitleText}"
-               FontSize="26"
-               TextColor="{DynamicResource ColorBrandText}"
-               HorizontalOptions="Center"
-               HorizontalTextAlignment="Center"
-               SemanticProperties.HeadingLevel="Level1" />
+        <VerticalStackLayout Spacing="6">
+            <Label x:Name="TitleView"
+                   Style="{StaticResource TitleText}"
+                   FontSize="28"
+                   TextColor="{DynamicResource ColorTextPrimary}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   SemanticProperties.HeadingLevel="Level1" />
 
-        <Label x:Name="SubtitleView"
-               Style="{StaticResource CaptionText}"
-               FontSize="14"
-               HorizontalOptions="Center"
-               HorizontalTextAlignment="Center"
-               IsVisible="False" />
+            <Label x:Name="SubtitleView"
+                   Style="{StaticResource BodyText}"
+                   FontSize="14"
+                   TextColor="{DynamicResource ColorTextSecondary}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="False" />
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentView>

@@ -4,59 +4,98 @@
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
              xmlns:models="clr-namespace:CelebriStaff.Models"
              xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
+             xmlns:behaviors="clr-namespace:CelebriStaff.Views.Behaviors"
              x:Class="CelebriStaff.Views.PortariaPage"
              x:DataType="vm:PortariaViewModel"
+             behaviors:PageEntrance.Enabled="True"
              Title="Portaria">
 
     <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16" RowSpacing="12">
 
-        <!-- Contador -->
-        <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16" StrokeShape="RoundRectangle 20">
-            <VerticalStackLayout Spacing="2">
-                <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" HorizontalOptions="Center" />
-                <Label Text="{Binding TotalTexto}"
-                       FontSize="64"
-                       FontFamily="PlusJakartaSansBold"
-                       HorizontalOptions="Center"
-                       TextColor="{DynamicResource ColorBrandText}"
-                       AutomationId="TotalPresentes"
-                       SemanticProperties.Description="Total de pessoas presentes" />
-                <Label Text="pessoas presentes" Style="{StaticResource BodyText}" HorizontalOptions="Center" />
-                <Label Text="{Binding PrevistoTexto}" HorizontalOptions="Center" Style="{StaticResource CaptionText}" />
-            </VerticalStackLayout>
+        <!-- Contador em destaque -->
+        <Border Style="{StaticResource HeroCardStyle}" Margin="0" Padding="20">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" />
+                    <Label Text="PESSOAS PRESENTES" Style="{StaticResource Eyebrow}" Margin="0,4,0,0" />
+                    <Label Text="{Binding TotalTexto}"
+                           FontSize="60"
+                           FontFamily="PlusJakartaSansBold"
+                           HorizontalOptions="Start"
+                           TextColor="{DynamicResource ColorBrandText}"
+                           AutomationId="TotalPresentes"
+                           SemanticProperties.Description="Total de pessoas presentes" />
+                    <Label Text="{Binding PrevistoTexto}" Style="{StaticResource CaptionText}" />
+                </VerticalStackLayout>
+
+                <Border Grid.Column="1"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 32"
+                        Background="{DynamicResource BrandGradientBrush}"
+                        WidthRequest="64"
+                        HeightRequest="64"
+                        VerticalOptions="Start">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 26"
+                            BackgroundColor="{DynamicResource ColorSurface}"
+                            Margin="4"
+                            Opacity="0.95">
+                        <Label Text="{StaticResource IconGroups}"
+                               Style="{StaticResource IconLabel}"
+                               FontSize="26"
+                               TextColor="{DynamicResource ColorBrandText}" />
+                    </Border>
+                </Border>
+            </Grid>
         </Border>
 
         <!-- Entrada sem convite -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,2*" ColumnSpacing="8">
-            <Button Style="{StaticResource SecondaryButtonStyle}" Text="− 1" FontSize="20"
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+            <Button Style="{StaticResource IconButtonStyle}"
+                    Text="{StaticResource IconRemove}"
+                    WidthRequest="56"
+                    HeightRequest="56"
+                    CornerRadius="18"
+                    BackgroundColor="{DynamicResource ColorSurface}"
                     SemanticProperties.Description="Desfazer uma entrada sem convite"
                     Command="{Binding DesfazerAvulsoCommand}" />
-            <Button Grid.Column="1" Style="{StaticResource PrimaryButtonStyle}" Text="+ 1 entrou" FontSize="20"
+            <Button Grid.Column="1"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Text="+ 1 entrada"
+                    FontSize="16"
+                    MinimumHeightRequest="56"
+                    ContentLayout="Left,10"
                     SemanticProperties.Description="Registrar uma entrada sem convite"
-                    Command="{Binding EntrouAvulsoCommand}" />
+                    Command="{Binding EntrouAvulsoCommand}">
+                <Button.ImageSource>
+                    <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE145;" Size="22"
+                                     Color="{DynamicResource ColorOnGradient}" />
+                </Button.ImageSource>
+            </Button>
         </Grid>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="8">
+        <VerticalStackLayout Grid.Row="2" Spacing="10">
             <controls:ErrorBanner Message="{Binding Erro}" />
 
             <Button Text="Ler QR code do convite"
                     Command="{Binding LerQrCodeCommand}"
                     IsVisible="{Binding UsaConvites}"
-                    BackgroundColor="{DynamicResource ColorSecondary}"
-                    TextColor="{DynamicResource ColorOnSecondary}"
+                    Style="{StaticResource PrimaryButtonStyle}"
                     ContentLayout="Left,10"
                     FontSize="16"
                     MinimumHeightRequest="56"
                     SemanticProperties.Description="Ler QR code do convite com a câmera">
                 <Button.ImageSource>
-                    <FontImageSource FontFamily="MaterialIcons" Glyph="&#xF206;" Size="26"
-                                     Color="{DynamicResource ColorOnSecondary}" />
+                    <FontImageSource FontFamily="MaterialIcons" Glyph="&#xF206;" Size="24"
+                                     Color="{DynamicResource ColorOnGradient}" />
                 </Button.ImageSource>
             </Button>
 
-            <Border Style="{StaticResource InputBorderStyle}" IsVisible="{Binding UsaConvites}" Padding="14,0">
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                    <Label Text="{StaticResource IconSearch}" Style="{StaticResource IconLabel}" />
+            <Border Style="{StaticResource InputBorderStyle}" IsVisible="{Binding UsaConvites}" Padding="16,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Label Text="{StaticResource IconSearch}"
+                           Style="{StaticResource IconLabel}"
+                           TextColor="{DynamicResource ColorBrandText}" />
                     <Entry Grid.Column="1"
                            Placeholder="Buscar convidado pelo nome"
                            Text="{Binding Busca}"
@@ -74,19 +113,33 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:ConvitePortaria">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14,12" StrokeShape="RoundRectangle 14">
+                    <Border Style="{StaticResource CardStyle}"
+                            Margin="0,0,0,10"
+                            Padding="12"
+                            StrokeShape="RoundRectangle 18"
+                            behaviors:PressFeedback.Enabled="True">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PortariaViewModel}}, Path=AbrirConviteCommand, x:DataType=vm:PortariaViewModel}"
                                 CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                            <Label Text="{StaticResource IconPerson}" Style="{StaticResource IconLabel}" />
-                            <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                <Label Text="{Binding Nome}" FontFamily="InterSemibold" />
+                            <Border Style="{StaticResource IconTileStyle}"
+                                    WidthRequest="44"
+                                    HeightRequest="44"
+                                    StrokeShape="RoundRectangle 22">
+                                <Label Text="{StaticResource IconPerson}"
+                                       Style="{StaticResource IconLabelOnAccent}"
+                                       FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="{Binding Nome}" FontFamily="InterSemibold" FontSize="15" />
                                 <Label Text="{Binding Situacao}" Style="{StaticResource CaptionText}" />
                             </VerticalStackLayout>
-                            <Label Grid.Column="2" Text="&#xE5CC;" Style="{StaticResource IconLabel}" />
+                            <Label Grid.Column="2"
+                                   Text="{StaticResource IconChevronRight}"
+                                   Style="{StaticResource IconLabel}"
+                                   TextColor="{DynamicResource ColorTextSecondary}" />
                         </Grid>
                     </Border>
                 </DataTemplate>

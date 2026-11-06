@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
              xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
+             xmlns:behaviors="clr-namespace:CelebriStaff.Views.Behaviors"
              x:Class="CelebriStaff.Views.HomePage"
              x:DataType="vm:HomeViewModel"
+             behaviors:PageEntrance.Enabled="True"
              Title="Minhas Escalas">
 
     <ContentPage.ToolbarItems>
@@ -17,28 +19,38 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <Grid RowDefinitions="Auto,*" Padding="16,8,16,0">
+    <Grid RowDefinitions="Auto,*" Padding="16,8,16,0" RowSpacing="4">
 
-        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Margin="4,4,0,8">
-            <!-- Avatar com a inicial do nome, na cor da marca -->
-            <Border StrokeThickness="0" StrokeShape="RoundRectangle 22"
-                    BackgroundColor="{DynamicResource ColorPrimary}"
-                    WidthRequest="44" HeightRequest="44" VerticalOptions="Start"
-                    SemanticProperties.Description="Seu perfil">
-                <Label Text="{Binding Inicial}"
-                       Style="{StaticResource Headline}"
-                       TextColor="{DynamicResource ColorOnPrimary}"
-                       HorizontalOptions="Center" VerticalOptions="Center" />
-            </Border>
-            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                <Label Text="{Binding WelcomeMessage}"
-                       Style="{StaticResource TitleText}"
-                       SemanticProperties.HeadingLevel="Level1" />
-                <Label Text="{Binding Aviso}"
-                       Style="{StaticResource CaptionText}"
-                       IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
-            </VerticalStackLayout>
-        </Grid>
+        <Border Style="{StaticResource HeroCardStyle}" Padding="18" Margin="0,4,0,10">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+
+                <!-- Avatar com a inicial do nome, em anel gradiente -->
+                <Grid WidthRequest="54" HeightRequest="54" VerticalOptions="Center"
+                      SemanticProperties.Description="Seu perfil">
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 27"
+                            Background="{DynamicResource BrandGradientBrush}" />
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 24"
+                            BackgroundColor="{DynamicResource ColorSurface}"
+                            Margin="3">
+                        <Label Text="{Binding Inicial}"
+                               Style="{StaticResource Headline}"
+                               FontSize="19"
+                               TextColor="{DynamicResource ColorBrandText}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                    <Label Text="{Binding WelcomeMessage}"
+                           Style="{StaticResource TitleText}"
+                           FontSize="22"
+                           SemanticProperties.HeadingLevel="Level1" />
+                    <Label Text="{Binding Aviso}"
+                           Style="{StaticResource CaptionText}"
+                           IsVisible="{Binding Aviso, Converter={StaticResource StringNotEmptyConverter}}" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
 
         <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding CarregarCommand}">
             <CollectionView ItemsSource="{Binding Grupos}" IsGrouped="True" SelectionMode="None">
@@ -49,10 +61,15 @@
 
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate x:DataType="vm:GrupoEscalas">
-                        <Label Text="{Binding Titulo}"
-                               Style="{StaticResource SectionHeaderStyle}"
-                               Margin="4,16,0,8"
-                               SemanticProperties.HeadingLevel="Level2" />
+                        <HorizontalStackLayout Spacing="8" Margin="4,18,0,10">
+                            <BoxView WidthRequest="4" HeightRequest="16" CornerRadius="2"
+                                     Color="{DynamicResource ColorPrimary}"
+                                     VerticalOptions="Center" />
+                            <Label Text="{Binding Titulo}"
+                                   Style="{StaticResource SectionHeaderStyle}"
+                                   VerticalOptions="Center"
+                                   SemanticProperties.HeadingLevel="Level2" />
+                        </HorizontalStackLayout>
                     </DataTemplate>
                 </CollectionView.GroupHeaderTemplate>
 
@@ -64,56 +81,87 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:EscalaCardViewModel">
-                        <Border Style="{StaticResource CardStyle}">
-                            <VerticalStackLayout Spacing="10">
+                        <Border Style="{StaticResource CardStyle}" Padding="0">
+                            <Grid>
+                                <Border StrokeThickness="0"
+                                        HeightRequest="6"
+                                        VerticalOptions="Start"
+                                        Background="{DynamicResource BrandGradientBrush}" />
 
-                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                    <VerticalStackLayout Spacing="2">
-                                        <Label Text="{Binding NomeEvento}" Style="{StaticResource Headline}" />
-                                        <Label Text="{Binding Quando}" Style="{StaticResource CaptionText}" />
-                                    </VerticalStackLayout>
-                                    <controls:StatusChip Grid.Column="1"
-                                                         VerticalOptions="Start"
-                                                         Text="{Binding Status}"
-                                                         Kind="{Binding StatusKind}"
-                                                         Icon="{Binding StatusIcon}" />
-                                </Grid>
+                                <VerticalStackLayout Padding="18,22,18,18" Spacing="14">
 
-                                <BoxView HeightRequest="1" />
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                        <VerticalStackLayout Spacing="5">
+                                            <Label Text="{Binding NomeEvento}" Style="{StaticResource Headline}" />
+                                            <HorizontalStackLayout Spacing="6">
+                                                <Label Text="{StaticResource IconEvent}"
+                                                       Style="{StaticResource IconLabel}"
+                                                       FontSize="14"
+                                                       TextColor="{DynamicResource ColorBrandText}" />
+                                                <Label Text="{Binding Quando}"
+                                                       Style="{StaticResource CaptionText}"
+                                                       VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                        <controls:StatusChip Grid.Column="1"
+                                                             VerticalOptions="Start"
+                                                             Text="{Binding Status}"
+                                                             Kind="{Binding StatusKind}"
+                                                             Icon="{Binding StatusIcon}" />
+                                    </Grid>
 
-                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="6">
-                                    <Label Text="{StaticResource IconBadge}" Style="{StaticResource IconLabel}" FontSize="18" />
-                                    <Label Grid.Column="1" Text="{Binding Funcao}" Style="{StaticResource BodyText}" VerticalOptions="Center" />
+                                    <Border Style="{StaticResource SoftCardStyle}" Padding="12,10">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                            <Border Style="{StaticResource IconTileStyle}" WidthRequest="36" HeightRequest="36">
+                                                <Label Text="{StaticResource IconBadge}"
+                                                       Style="{StaticResource IconLabelOnAccent}"
+                                                       FontSize="18" />
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                                <Label Text="SUA FUNÇÃO" Style="{StaticResource Eyebrow}" FontSize="10" />
+                                                <Label Text="{Binding Funcao}" Style="{StaticResource BodyText}"
+                                                       FontFamily="InterSemibold" />
+                                                <HorizontalStackLayout Spacing="5"
+                                                                       IsVisible="{Binding Local, Converter={StaticResource StringNotEmptyConverter}}">
+                                                    <Label Text="{StaticResource IconPlace}"
+                                                           Style="{StaticResource IconLabel}"
+                                                           FontSize="13" />
+                                                    <Label Text="{Binding Local}"
+                                                           Style="{StaticResource CaptionText}"
+                                                           VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
 
-                                    <Label Grid.Row="1" Text="{StaticResource IconPlace}" Style="{StaticResource IconLabel}" FontSize="18"
-                                           IsVisible="{Binding Local, Converter={StaticResource StringNotEmptyConverter}}" />
-                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Local}" Style="{StaticResource CaptionText}" VerticalOptions="Center"
-                                           IsVisible="{Binding Local, Converter={StaticResource StringNotEmptyConverter}}" />
-                                </Grid>
+                                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,2,0,0" IsVisible="{Binding PodeResponder}">
+                                        <Button Text="Confirmar" Style="{StaticResource PrimaryButtonStyle}"
+                                                FontSize="14"
+                                                MinimumHeightRequest="46"
+                                                IsVisible="{Binding PodeConfirmar}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=ConfirmarCommand, x:DataType=vm:HomeViewModel}"
+                                                CommandParameter="{Binding .}" />
+                                        <Button Grid.Column="1" Text="Recusar" Style="{StaticResource DangerButtonStyle}"
+                                                FontSize="14"
+                                                MinimumHeightRequest="46"
+                                                IsVisible="{Binding PodeRecusar}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=RecusarCommand, x:DataType=vm:HomeViewModel}"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
 
-                                <Grid ColumnDefinitions="*,*" ColumnSpacing="8" Margin="0,4,0,0" IsVisible="{Binding PodeResponder}">
-                                    <Button Text="Confirmar" Style="{StaticResource PrimaryButtonStyle}"
-                                            IsVisible="{Binding PodeConfirmar}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=ConfirmarCommand, x:DataType=vm:HomeViewModel}"
+                                    <Button Text="Cheguei no evento"
+                                            IsVisible="{Binding PodeFazerCheckin}"
+                                            Style="{StaticResource SuccessButtonStyle}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=CheckinCommand, x:DataType=vm:HomeViewModel}"
                                             CommandParameter="{Binding .}" />
-                                    <Button Grid.Column="1" Text="Recusar" Style="{StaticResource DangerButtonStyle}"
-                                            IsVisible="{Binding PodeRecusar}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=RecusarCommand, x:DataType=vm:HomeViewModel}"
+
+                                    <Button Text="{Binding TextoModulo}"
+                                            IsVisible="{Binding PodeAbrirModulo}"
+                                            Style="{StaticResource PrimaryButtonStyle}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AbrirModuloCommand, x:DataType=vm:HomeViewModel}"
                                             CommandParameter="{Binding .}" />
-                                </Grid>
-
-                                <Button Text="Cheguei no evento"
-                                        IsVisible="{Binding PodeFazerCheckin}"
-                                        Style="{StaticResource SuccessButtonStyle}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=CheckinCommand, x:DataType=vm:HomeViewModel}"
-                                        CommandParameter="{Binding .}" />
-
-                                <Button Text="{Binding TextoModulo}"
-                                        IsVisible="{Binding PodeAbrirModulo}"
-                                        Style="{StaticResource PrimaryButtonStyle}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AbrirModuloCommand, x:DataType=vm:HomeViewModel}"
-                                        CommandParameter="{Binding .}" />
-                            </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

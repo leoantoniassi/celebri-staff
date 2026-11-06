@@ -3,28 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
              xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
+             xmlns:behaviors="clr-namespace:CelebriStaff.Views.Behaviors"
              x:Class="CelebriStaff.Views.CozinhaPage"
              x:DataType="vm:CozinhaViewModel"
+             behaviors:PageEntrance.Enabled="True"
              Title="Cozinha">
 
     <ContentPage.Resources>
-        <!-- Aba: inativa = texto neutro sobre fundo suave; ativa (DataTrigger) = marca. -->
+        <!-- Aba: inativa = texto neutro; ativa (DataTrigger) = gradiente da marca. -->
         <Style x:Key="TabButtonStyle" TargetType="Button" BasedOn="{StaticResource CompactButtonStyle}">
             <Setter Property="BackgroundColor" Value="Transparent" />
             <Setter Property="TextColor" Value="{DynamicResource ColorTextSecondary}" />
-            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="MinimumHeightRequest" Value="44" />
         </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="16,12" RowSpacing="12">
-        <VerticalStackLayout Spacing="2">
-            <Label Text="{Binding EventoNome}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16,12" RowSpacing="14">
+        <VerticalStackLayout Spacing="3">
+            <Label Text="COZINHA DO EVENTO" Style="{StaticResource Eyebrow}" />
+            <Label Text="{Binding EventoNome}" Style="{StaticResource TitleText}" FontSize="24"
+                   SemanticProperties.HeadingLevel="Level1" />
             <Label Text="{Binding Publico}" Style="{StaticResource CaptionText}" />
-            <controls:ErrorBanner Message="{Binding Erro}" Margin="0,6,0,0" />
+            <controls:ErrorBanner Message="{Binding Erro}" Margin="0,8,0,0" />
         </VerticalStackLayout>
 
         <!-- Abas (segmented control) -->
-        <Border Grid.Row="1" Padding="4" StrokeShape="RoundRectangle 14"
+        <Border Grid.Row="1" Padding="5" StrokeShape="RoundRectangle 18"
                 BackgroundColor="{DynamicResource ColorSurfaceAlt}" StrokeThickness="0">
             <Grid ColumnDefinitions="*,*,*" ColumnSpacing="4">
                 <Button Style="{StaticResource TabButtonStyle}" Text="{Binding TituloPedidos}"
@@ -32,8 +38,9 @@
                         SemanticProperties.Description="Aba de pedidos">
                     <Button.Triggers>
                         <DataTrigger TargetType="Button" Binding="{Binding AbaPedidos}" Value="True">
-                            <Setter Property="BackgroundColor" Value="{DynamicResource ColorPrimary}" />
-                            <Setter Property="TextColor" Value="{DynamicResource ColorOnPrimary}" />
+                            <Setter Property="Background" Value="{DynamicResource BrandGradientBrush}" />
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="TextColor" Value="{DynamicResource ColorOnGradient}" />
                         </DataTrigger>
                     </Button.Triggers>
                 </Button>
@@ -42,8 +49,9 @@
                         SemanticProperties.Description="Aba do cardápio">
                     <Button.Triggers>
                         <DataTrigger TargetType="Button" Binding="{Binding AbaCardapio}" Value="True">
-                            <Setter Property="BackgroundColor" Value="{DynamicResource ColorPrimary}" />
-                            <Setter Property="TextColor" Value="{DynamicResource ColorOnPrimary}" />
+                            <Setter Property="Background" Value="{DynamicResource BrandGradientBrush}" />
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="TextColor" Value="{DynamicResource ColorOnGradient}" />
                         </DataTrigger>
                     </Button.Triggers>
                 </Button>
@@ -52,8 +60,9 @@
                         SemanticProperties.Description="Aba do estoque">
                     <Button.Triggers>
                         <DataTrigger TargetType="Button" Binding="{Binding AbaEstoque}" Value="True">
-                            <Setter Property="BackgroundColor" Value="{DynamicResource ColorPrimary}" />
-                            <Setter Property="TextColor" Value="{DynamicResource ColorOnPrimary}" />
+                            <Setter Property="Background" Value="{DynamicResource BrandGradientBrush}" />
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="TextColor" Value="{DynamicResource ColorOnGradient}" />
                         </DataTrigger>
                     </Button.Triggers>
                 </Button>
@@ -69,15 +78,30 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:PedidoNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10" Padding="14" StrokeShape="RoundRectangle 14"
-                            Stroke="{Binding Cor}" StrokeThickness="2">
-                        <VerticalStackLayout Spacing="8">
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                <Label Text="{Binding Cabecalho}" FontFamily="PlusJakartaSansSemibold" FontSize="16" />
-                                <controls:StatusChip Grid.Column="1" Text="{Binding Status}" Kind="{Binding StatusKind}" />
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12" Padding="16" StrokeShape="RoundRectangle 20">
+                        <VerticalStackLayout Spacing="12">
+                            <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
+                                <BoxView WidthRequest="4" HeightRequest="42" CornerRadius="2"
+                                         Color="{Binding Cor}" VerticalOptions="Center" />
+                                <Border Grid.Column="1" Style="{StaticResource IconTileStyle}"
+                                        WidthRequest="42" HeightRequest="42"
+                                        BackgroundColor="{DynamicResource ColorAccentSoft}">
+                                    <Label Text="{StaticResource IconReceipt}"
+                                           Style="{StaticResource IconLabelOnAccent}" FontSize="20" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="2" Spacing="3" VerticalOptions="Center">
+                                    <Label Text="{Binding Cabecalho}" FontFamily="PlusJakartaSansSemibold" FontSize="16" />
+                                    <Label Text="PEDIDO À COZINHA" Style="{StaticResource Eyebrow}" FontSize="10" />
+                                </VerticalStackLayout>
                             </Grid>
-                            <Label Text="{Binding Itens}" FontSize="16" />
-                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+
+                            <controls:StatusChip Text="{Binding Status}" Kind="{Binding StatusKind}" />
+
+                            <Border Style="{StaticResource SoftCardStyle}" Padding="12,10">
+                                <Label Text="{Binding Itens}" FontSize="15" />
+                            </Border>
+
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
                                 <Button Style="{StaticResource CompactButtonStyle}" Text="Começar" IsVisible="{Binding PodeComecar}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=ComecarCommand, x:DataType=vm:CozinhaViewModel}"
                                         CommandParameter="{Binding .}"
@@ -104,14 +128,20 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ServicoNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14" StrokeShape="RoundRectangle 14">
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10" Padding="14" StrokeShape="RoundRectangle 20">
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                            <Label Text="{Binding Horario}" FontSize="18" FontFamily="PlusJakartaSansSemibold"
-                                   TextColor="{DynamicResource ColorBrandText}" VerticalOptions="Center" />
-                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Border Style="{StaticResource IconTileStyle}"
+                                    WidthRequest="48" HeightRequest="48"
+                                    StrokeShape="RoundRectangle 16">
+                                <VerticalStackLayout Spacing="0" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label Text="{Binding Horario}" FontSize="13" FontFamily="PlusJakartaSansSemibold"
+                                           TextColor="{DynamicResource ColorBrandText}" HorizontalTextAlignment="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
                                 <Label Text="{Binding Item}" FontFamily="InterSemibold" />
-                                <Label Text="{Binding Quantidade}" Style="{StaticResource BodyText}" />
-                                <controls:StatusChip Text="{Binding Status}" Kind="{Binding StatusKind}" Margin="0,4,0,0" />
+                                <Label Text="{Binding Quantidade}" Style="{StaticResource CaptionText}" />
+                                <controls:StatusChip Text="{Binding Status}" Kind="{Binding StatusKind}" Margin="0,2,0,0" />
                             </VerticalStackLayout>
                             <Button Grid.Column="2" Text="{Binding ProximaAcao}" VerticalOptions="Center"
                                     Style="{StaticResource CompactButtonStyle}"
@@ -133,13 +163,19 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EstoqueNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8" Padding="14" StrokeShape="RoundRectangle 14">
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding Nome}" FontFamily="InterSemibold" />
-                            <Label Text="{Binding Detalhe}" Style="{StaticResource CaptionText}" />
-                            <controls:StatusChip Text="Estoque baixo" Kind="error" Icon="{StaticResource IconWarning}"
-                                                 IsVisible="{Binding Baixo}" Margin="0,4,0,0" />
-                        </VerticalStackLayout>
+                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10" Padding="14" StrokeShape="RoundRectangle 20">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border Style="{StaticResource IconTileStyle}" WidthRequest="42" HeightRequest="42">
+                                <Label Text="{StaticResource IconInventory}"
+                                       Style="{StaticResource IconLabelOnAccent}" FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="{Binding Nome}" FontFamily="InterSemibold" />
+                                <Label Text="{Binding Detalhe}" Style="{StaticResource CaptionText}" />
+                                <controls:StatusChip Text="Estoque baixo" Kind="error" Icon="{StaticResource IconWarning}"
+                                                     IsVisible="{Binding Baixo}" Margin="0,4,0,0" />
+                            </VerticalStackLayout>
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
