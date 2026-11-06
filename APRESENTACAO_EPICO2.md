@@ -136,7 +136,7 @@ Fonte dos dados: [`README.md`](README.md) (Projeto Ágil do Aplicativo v3.0).
 
 **Fala:** "O desafio mais prático foi o celular físico não achar a API cada vez que mudávamos de rede; resolvemos pelo cabo USB. O mais importante foi de prioridade: não cabia tudo, então escolhemos deixar o app seguro e usável antes de criar telas novas."
 
-### Slide 11 — Próximos passos até o EF (10/12) · Luis · 40 s
+### Slide 11 — Próximos passos até o EF · Luis · 40 s
 **Tela:**
 1. Homologação completa em celulares reais (QR real, 2 porteiros, garçom + cozinha).
 2. Contador adulto/criança + lotação.
