@@ -500,7 +500,6 @@ gantt
 | Aviso de privacidade e anonimização (LGPD) | ✅ **Na API e no painel:** página `/privacidade`, aceite de termos, exportação e anonimização de titular, rotina de retenção (US16). 📅 Aviso no primeiro acesso do app. |
 | Contador adulto/criança (US04) e cronograma (US14) | 📅 **Replanejados para o EF** (ver 3.6). |
 | Atalho do gerente no app | 📅 **Virou a US18**, no EF. |
-| Desafios de organização da equipe | *(a completar pela equipe)* |
 
 ### 3.6 Épico 2 (EP3)
 
@@ -562,7 +561,6 @@ gantt
 | **Escopo grande da auditoria de segurança**: muitos pontos espalhados pela API, painel e infraestrutura. | Divisão em **8 fases**, cada uma com testes próprios. Os casos "adversariais" (funcionário tentando acessar rota de gerente) viraram testes automáticos. |
 | **Prioridade: telas novas ou base segura?** Não dava tempo para tudo. | O PO priorizou UX e segurança, que eram condição para usar o app com dados reais. Adulto/criança, cronograma e atalho do gerente foram replanejados para o EF, de forma explícita no backlog. |
 | **Visual inconsistente entre telas** feitas em momentos diferentes. | Criamos componentes reutilizáveis e tokens de cor/tipografia; as telas passaram a usar os mesmos blocos. |
-| *(Desafios de organização da equipe — a completar pela equipe.)* | |
 
 **No Épico 1 (resumo):**
 - Escolha MAUI × Flutter.
