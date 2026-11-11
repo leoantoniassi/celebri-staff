@@ -50,6 +50,10 @@ public static class MauiProgram
             .AddHttpClient<ApiClient>(client =>
             {
                 client.BaseAddress = new Uri(AppConfig.ApiBaseUrl);
+                // Túnel ngrok gratuito: sem este header ele pode responder com
+                // uma página HTML de aviso em vez do JSON da API. Inofensivo
+                // para qualquer outro servidor.
+                client.DefaultRequestHeaders.Add("ngrok-skip-browser-warning", "true");
             })
             .AddHttpMessageHandler<AuthHeaderHandler>();
 

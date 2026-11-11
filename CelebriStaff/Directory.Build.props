@@ -9,4 +9,9 @@
     <BaseIntermediateOutputPath>$(LocalAppData)\CelebriStaffBuild\obj\</BaseIntermediateOutputPath>
     <BaseOutputPath>$(LocalAppData)\CelebriStaffBuild\bin\</BaseOutputPath>
   </PropertyGroup>
+
+  <!-- Configuração só desta máquina (não versionada): define CelebriApiUrl,
+       a URL da API que o app usa — ex.: o túnel ngrok para rodar no celular
+       sem cabo. Modelo em Directory.Build.local.props.example. -->
+  <Import Project="Directory.Build.local.props" Condition="Exists('$(MSBuildThisFileDirectory)Directory.Build.local.props')" />
 </Project>

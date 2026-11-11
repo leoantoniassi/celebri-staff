@@ -201,7 +201,7 @@ O Celebri Staff é um **app nativo Android** (.NET MAUI compila para um APK com 
 - **Sem modo offline:** sem internet o app mostra erro e não guarda entradas para enviar depois (planejado para o EF).
 - **E-mail do código:** em desenvolvimento o e-mail sai pelo **Mailpit** (caixa local). Em produção falta configurar um SMTP transacional.
 - **Leitura de QR:** exige celular com câmera (o emulador não lê QR real).
-- **Celular físico em desenvolvimento:** o app fala com a API pelo cabo USB (`adb reverse`); por Wi-Fi é preciso informar o IP do PC.
+- **Celular físico em desenvolvimento:** o app fala com a API pelo túnel ngrok (sem cabo, de qualquer rede, URL em `Directory.Build.local.props`) ou, sem túnel, pelo cabo USB (`adb reverse`).
 - **Gerente no app:** o gerente sem vínculo de funcionário ainda não tem atalho para os módulos (EF).
 
 ### 2.5 Objetivos do Desenvolvimento
@@ -744,8 +744,12 @@ O roteiro completo de homologação está em **[`TESTE_MANUAL.md`](TESTE_MANUAL.
 2. **App:** Visual Studio 2026 com o workload **.NET MAUI**, e um emulador Android ou celular com depuração USB.
 3. **Endereço da API** (ver `Services/Api/AppConfig.cs`):
    - **Emulador:** o app usa `http://10.0.2.2:3001/api/`.
-   - **Celular físico:** ligue o cabo USB e rode `adb reverse tcp:3001 tcp:3001`. O app usa `http://127.0.0.1:3001/api/` e o adb leva até a API no PC, então o IP do computador não importa. Refaça o comando sempre que reconectar o cabo.
-   - **Wi-Fi:** preencha `LanHost` no `AppConfig.cs` com o IP do PC e suba a API com `API_BIND=0.0.0.0`. A rede e o firewall precisam liberar a porta 3001.
+   - **Celular físico, sem cabo (recomendado): túnel ngrok.** A API fica acessível em `https://<seu-dominio>.ngrok-free.dev/api/` (ou `.app`) de qualquer rede (Wi-Fi do lab, 4G), sem `adb reverse` e sem depender do IP do PC. Configuração única:
+     1. Crie uma conta gratuita em [ngrok.com](https://ngrok.com). Copie o **authtoken** e reserve o **domínio estático gratuito** (Dashboard → Domains).
+     2. No `.env` do celebri, preencha `NGROK_AUTHTOKEN` e `NGROK_DOMAIN` (só o domínio, sem `https://`) e rode `.\dev-up.ps1`, ou `docker compose --profile tunel up -d`. O container `celebri_ngrok` sobe junto com a API e volta sozinho com o Docker.
+     3. Copie `CelebriStaff/Directory.Build.local.props.example` para `CelebriStaff/Directory.Build.local.props` (arquivo não versionado), coloque seu domínio em `CelebriApiUrl` e faça **Rebuild**.
+     4. Instale o app no celular pelo VS uma vez (cabo ou depuração por Wi-Fi). Depois disso, o app funciona sem cabo.
+   - **Celular físico pelo cabo (sem ngrok):** sem `Directory.Build.local.props`, o app usa `http://127.0.0.1:3001/api/`. Nesse caso, rode `adb reverse tcp:3001 tcp:3001` e refaça o comando sempre que reconectar o cabo.
 4. **Código de primeiro acesso (o app pede o código por e-mail):** no ambiente de dev o SMTP é o **Mailpit** (definido no `docker-compose.dev.yml`). O e-mail sai de verdade e fica numa caixa local em `http://localhost:8025`. Sem SMTP configurado, o código aparece no log da API: `docker compose logs backend | grep "Código de primeiro acesso"`.
 
 ### 6.2 Credenciais de teste (seed)
@@ -763,4 +767,6 @@ O roteiro completo de homologação está em **[`TESTE_MANUAL.md`](TESTE_MANUAL.
 - Sem cores ou "empresa não encontrada": confira se o seed rodou sem erro.
 - Crashes do app: `adb logcat -d | grep -i FATAL`.
 - Erro 400 no login: API fora do ar ou `.env` sem `JWT_SECRET`.
-- Celular físico sem conexão: confira `adb reverse --list` (deve mostrar `tcp:3001 tcp:3001`).
+- Celular físico sem conexão:
+  - **Com ngrok:** abra `https://<seu-dominio>/api/health` no navegador do celular. Se não responder, veja `docker compose logs ngrok` e o inspector em `http://127.0.0.1:4040`. Se responder mas o app não conectar, confira o `CelebriApiUrl` e faça Rebuild.
+  - **Pelo cabo:** confira `adb reverse --list` (deve mostrar `tcp:3001 tcp:3001`).

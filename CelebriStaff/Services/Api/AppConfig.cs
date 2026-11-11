@@ -1,28 +1,47 @@
+using System.Reflection;
+
 namespace CelebriStaff.Services.Api;
 
 public static class AppConfig
 {
     /// <summary>
-    /// Só para testar o celular físico por Wi-Fi: IP do PC na rede (ipconfig),
-    /// com a API subida com API_BIND=0.0.0.0. Deixe null para o padrão: celular
-    /// no cabo USB com `adb reverse tcp:3001 tcp:3001`, que leva o 127.0.0.1
-    /// do celular até a API no PC — aí o IP do PC não importa.
+    /// URL da API configurada na build (propriedade MSBuild <c>CelebriApiUrl</c>,
+    /// definida em CelebriStaff/Directory.Build.local.props — não versionado).
+    /// Usada para o túnel ngrok do repositório celebri: o celular chega na API
+    /// de qualquer rede, sem cabo USB e sem <c>adb reverse</c>.
     /// </summary>
-    private const string? LanHost = null;
+    private static readonly string? UrlConfigurada = LerUrlConfigurada();
 
     /// <summary>
-    /// Base da API do celebri (backend Node/Express, ver docker-compose.yml do
-    /// repositório celebri — porta 3001). 10.0.2.2 é o alias que o emulador
-    /// Android usa para "localhost" da máquina host.
+    /// Base da API do celebri (backend Node/Express, porta 3001). Com
+    /// <c>CelebriApiUrl</c> definida, ela vale para qualquer dispositivo.
+    /// Sem ela, o padrão local: 10.0.2.2 (alias do "localhost" do PC no
+    /// emulador Android), 127.0.0.1 no celular físico (exige
+    /// <c>adb reverse tcp:3001 tcp:3001</c> pelo cabo) e localhost no Windows.
     /// </summary>
-    public static string ApiBaseUrl =>
+    public static string ApiBaseUrl => UrlConfigurada ?? UrlLocalPadrao;
+
+    private static string UrlLocalPadrao =>
 #if ANDROID
         DeviceInfo.DeviceType == DeviceType.Virtual
             ? "http://10.0.2.2:3001/api/"
-            : string.IsNullOrWhiteSpace(LanHost)
-                ? "http://127.0.0.1:3001/api/"
-                : $"http://{LanHost}:3001/api/";
+            : "http://127.0.0.1:3001/api/";
 #else
         "http://localhost:3001/api/";
 #endif
+
+    private static string? LerUrlConfigurada()
+    {
+        var valor = typeof(AppConfig).Assembly
+            .GetCustomAttributes<AssemblyMetadataAttribute>()
+            .FirstOrDefault(a => a.Key == "CelebriApiUrl")?.Value?.Trim();
+
+        if (string.IsNullOrWhiteSpace(valor)
+            || !Uri.TryCreate(valor, UriKind.Absolute, out var uri)
+            || (uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeHttp))
+            return null;
+
+        // HttpClient só concatena caminhos relativos corretamente com "/" no fim.
+        return valor.EndsWith('/') ? valor : valor + "/";
+    }
 }

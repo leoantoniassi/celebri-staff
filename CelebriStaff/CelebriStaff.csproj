@@ -74,4 +74,10 @@
 		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.10.4" />
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(CelebriApiUrl)' != ''">
+		<!-- URL da API definida por máquina em Directory.Build.local.props
+		     (ex.: túnel ngrok). Lida em runtime por Services/Api/AppConfig.cs. -->
+		<AssemblyMetadata Include="CelebriApiUrl" Value="$(CelebriApiUrl)" />
+	</ItemGroup>
+
 </Project>

@@ -5,6 +5,9 @@ obj/
 *.user
 *.suo
 
+# Configuração local por máquina (URL da API / túnel ngrok)
+Directory.Build.local.props
+
 # Rider / VS Code
 .idea/
 .vscode/
