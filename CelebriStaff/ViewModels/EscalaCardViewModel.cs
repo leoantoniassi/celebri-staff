@@ -57,8 +57,13 @@ public partial class EscalaCardViewModel : ObservableObject
     [ObservableProperty]
     private bool podeRecusar;
 
+    /// <summary>"Cheguei no evento" habilitado: só depois de confirmar presença.</summary>
     [ObservableProperty]
     private bool podeFazerCheckin;
+
+    /// <summary>Dentro da janela, mas a presença ainda não foi confirmada: botão desabilitado + dica.</summary>
+    [ObservableProperty]
+    private bool checkinBloqueado;
 
     [ObservableProperty]
     private bool podeAbrirModulo;
@@ -89,7 +94,9 @@ public partial class EscalaCardViewModel : ObservableObject
         PodeResponder = !Terminou && Escala.CheckinEm is null;
         PodeConfirmar = PodeResponder && Escala.Confirmacao != "confirmado";
         PodeRecusar = PodeResponder && Escala.Confirmacao != "recusado";
-        PodeFazerCheckin = JanelaDoEvento && Escala.CheckinEm is null && Escala.Confirmacao != "recusado";
+        var mostrarCheckin = JanelaDoEvento && Escala.CheckinEm is null && Escala.Confirmacao != "recusado";
+        PodeFazerCheckin = mostrarCheckin && Escala.Confirmacao == "confirmado";
+        CheckinBloqueado = mostrarCheckin && !PodeFazerCheckin;
         PodeAbrirModulo = JanelaDoEvento && !string.IsNullOrEmpty(TextoModulo) && Escala.Confirmacao != "recusado";
     }
 }

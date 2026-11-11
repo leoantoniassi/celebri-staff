@@ -108,6 +108,17 @@
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=CheckinCommand, x:DataType=vm:HomeViewModel}"
                                         CommandParameter="{Binding .}" />
 
+                                <!-- Presença ainda não confirmada: o check-in fica travado até tocar em Confirmar.
+                                     Sem Command de propósito — com Command o MAUI reabilitaria o botão via CanExecute. -->
+                                <VerticalStackLayout Spacing="4" IsVisible="{Binding CheckinBloqueado}">
+                                    <Button Text="Cheguei no evento"
+                                            Style="{StaticResource SuccessButtonStyle}"
+                                            IsEnabled="False" />
+                                    <Label Text="Confirme sua presença para liberar o check-in."
+                                           Style="{StaticResource CaptionText}"
+                                           HorizontalTextAlignment="Center" />
+                                </VerticalStackLayout>
+
                                 <Button Text="{Binding TextoModulo}"
                                         IsVisible="{Binding PodeAbrirModulo}"
                                         Style="{StaticResource PrimaryButtonStyle}"
