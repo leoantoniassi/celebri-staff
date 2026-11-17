@@ -1,0 +1,15 @@
+<Project>
+  <!-- Copie este arquivo para Directory.Build.local.props (não versionado) e
+       troque o domínio pelo seu domínio estático do ngrok — o mesmo
+       NGROK_DOMAIN do .env do repositório celebri.
+
+       Com CelebriApiUrl preenchida, o app usa essa URL em QUALQUER
+       dispositivo (celular, emulador, Windows): sem cabo, sem adb reverse e
+       sem depender do IP do PC. Sem ela, volta ao padrão local
+       (10.0.2.2 no emulador, 127.0.0.1 + adb reverse no celular físico).
+
+       Depois de criar/alterar, faça Rebuild no Visual Studio. -->
+  <PropertyGroup>
+    <CelebriApiUrl>https://seu-dominio.ngrok-free.app/api/</CelebriApiUrl>
+  </PropertyGroup>
+</Project>

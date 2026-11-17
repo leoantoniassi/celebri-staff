@@ -108,6 +108,12 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     private async Task CheckinAsync(EscalaCardViewModel card)
     {
+        if (card.Escala.Confirmacao != "confirmado")
+        {
+            _feedback.Info("Confirme sua presença antes de fazer o check-in.");
+            return;
+        }
+
         var result = await _api.CheckinEscalaAsync(card.Escala.Id);
         if (!result.Success)
         {
