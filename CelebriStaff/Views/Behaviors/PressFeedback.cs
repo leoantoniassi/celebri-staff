@@ -3,8 +3,8 @@ using CommunityToolkit.Maui.Behaviors;
 namespace CelebriStaff.Views.Behaviors;
 
 /// <summary>
-/// Feedback de toque global: encolhe levemente e reduz a opacidade ao pressionar.
-/// Aplicado via estilo aos botões e por atributo nos cards tocáveis.
+/// Feedback de toque: encolhe levemente e reduz a opacidade ao pressionar.
+/// Ligado em todos os botões pelo ButtonHandler.Mapper (MauiProgram) e, por atributo, nos cards tocáveis.
 /// </summary>
 public static class PressFeedback
 {

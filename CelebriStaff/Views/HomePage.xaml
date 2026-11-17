@@ -81,9 +81,11 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:EscalaCardViewModel">
-                        <Border Style="{StaticResource CardStyle}" Padding="0">
+                        <Border Style="{StaticResource ListCardStyle}" Padding="0">
                             <Grid>
+                                <!-- Cantos de cima acompanham o raio do card (22 - 1px de borda). -->
                                 <Border StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 21,21,0,0"
                                         HeightRequest="6"
                                         VerticalOptions="Start"
                                         Background="{DynamicResource BrandGradientBrush}" />

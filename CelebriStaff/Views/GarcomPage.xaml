@@ -59,7 +59,8 @@
                                     <Border StrokeThickness="0" StrokeShape="RoundRectangle 10"
                                             BackgroundColor="{DynamicResource ColorSurface}"
                                             Padding="6,2" HorizontalOptions="End" VerticalOptions="Start"
-                                            Margin="0,-4,-4,0">
+                                            Margin="0,-4,-4,0"
+                                            IsVisible="{Binding Selo, Converter={StaticResource StringNotEmptyConverter}}">
                                         <Border.Shadow>
                                             <Shadow Brush="{DynamicResource ColorShadow}" Offset="0,2" Radius="6" Opacity="0.8" />
                                         </Border.Shadow>

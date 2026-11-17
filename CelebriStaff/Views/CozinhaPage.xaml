@@ -78,7 +78,9 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:PedidoNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12" Padding="16" StrokeShape="RoundRectangle 20">
+                    <!-- Borda vermelha no card inteiro quando há alergia/restrição (Cor = erro); não pode passar despercebido. -->
+                    <Border Style="{StaticResource ListCardStyle}" Margin="0,0,0,12" Padding="16" StrokeShape="RoundRectangle 20"
+                            Stroke="{Binding Cor}" StrokeThickness="2">
                         <VerticalStackLayout Spacing="12">
                             <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
                                 <BoxView WidthRequest="4" HeightRequest="42" CornerRadius="2"
@@ -128,7 +130,7 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ServicoNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10" Padding="14" StrokeShape="RoundRectangle 20">
+                    <Border Style="{StaticResource ListCardStyle}" Margin="0,0,0,10" Padding="14" StrokeShape="RoundRectangle 20">
                         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                             <Border Style="{StaticResource IconTileStyle}"
                                     WidthRequest="48" HeightRequest="48"
@@ -163,7 +165,7 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:EstoqueNaCozinha">
-                    <Border Style="{StaticResource CardStyle}" Margin="0,0,0,10" Padding="14" StrokeShape="RoundRectangle 20">
+                    <Border Style="{StaticResource ListCardStyle}" Margin="0,0,0,10" Padding="14" StrokeShape="RoundRectangle 20">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                             <Border Style="{StaticResource IconTileStyle}" WidthRequest="42" HeightRequest="42">
                                 <Label Text="{StaticResource IconInventory}"

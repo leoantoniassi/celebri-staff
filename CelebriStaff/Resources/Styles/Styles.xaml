@@ -16,8 +16,10 @@
         <Setter Property="SelectedIndicatorColor" Value="{DynamicResource ColorPrimary}" />
     </Style>
 
+    <!-- Color (e não BackgroundColor): o fundo nativo é retangular e ignoraria o CornerRadius
+         das faixas/pontos decorativos, deixando um quadrado cinza atrás deles. -->
     <Style TargetType="BoxView">
-        <Setter Property="BackgroundColor" Value="{DynamicResource ColorBorder}" />
+        <Setter Property="Color" Value="{DynamicResource ColorBorder}" />
     </Style>
 
     <Style TargetType="Border" x:Key="BorderBaseStyle">
@@ -252,11 +254,7 @@
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="Background" Value="{DynamicResource BrandGradientBrush}" />
         <Setter Property="FontFamily" Value="InterSemibold" />
-        <Setter Property="Shadow">
-            <Setter.Value>
-                <Shadow Brush="{DynamicResource ColorShadow}" Offset="0,8" Radius="20" Opacity="0.9" />
-            </Setter.Value>
-        </Setter>
+        <!-- Sem Shadow: no Android a sombra de Button é recortada num retângulo cinza de borda reta. -->
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -360,6 +358,12 @@
                 <Shadow Brush="{DynamicResource ColorShadow}" Offset="0,10" Radius="26" Opacity="0.9" />
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!-- Card dentro de CollectionView: a célula recorta a sombra num retângulo cinza de
+         quina reta, então aqui fica só a borda de 1px. -->
+    <Style TargetType="Border" x:Key="ListCardStyle" BasedOn="{StaticResource CardStyle}">
+        <Setter Property="Shadow" Value="{x:Null}" />
     </Style>
 
     <Style TargetType="Border" x:Key="SoftCardStyle" BasedOn="{StaticResource BorderBaseStyle}">

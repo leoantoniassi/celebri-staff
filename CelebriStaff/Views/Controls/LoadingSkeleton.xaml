@@ -8,7 +8,7 @@
     <VerticalStackLayout x:Name="Host" Padding="16,8" Spacing="14" InputTransparent="True">
         <VerticalStackLayout.Resources>
             <Style x:Key="Bone" TargetType="BoxView">
-                <Setter Property="BackgroundColor" Value="{DynamicResource ColorSurfaceContainer}" />
+                <Setter Property="Color" Value="{DynamicResource ColorSurfaceContainer}" />
                 <Setter Property="CornerRadius" Value="8" />
                 <Setter Property="HorizontalOptions" Value="Start" />
             </Style>

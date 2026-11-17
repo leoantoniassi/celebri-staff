@@ -61,7 +61,7 @@
                     Command="{Binding DesfazerAvulsoCommand}" />
             <Button Grid.Column="1"
                     Style="{StaticResource PrimaryButtonStyle}"
-                    Text="+ 1 entrada"
+                    Text="1 entrada"
                     FontSize="16"
                     MinimumHeightRequest="56"
                     ContentLayout="Left,10"
@@ -113,7 +113,7 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:ConvitePortaria">
-                    <Border Style="{StaticResource CardStyle}"
+                    <Border Style="{StaticResource ListCardStyle}"
                             Margin="0,0,0,10"
                             Padding="12"
                             StrokeShape="RoundRectangle 18"

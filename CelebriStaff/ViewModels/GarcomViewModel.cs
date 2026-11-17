@@ -29,7 +29,8 @@ public class MesaNoMapa(MesaMapa mesa)
     };
 
     public Color CorTexto => Mesa.Situacao is "pronto" or "aguardando" ? Colors.White : Tokens.Get("ColorTextPrimary");
-    public Color CorBorda => Mesa.Situacao is "pronto" or "aguardando" ? Cor : Tokens.Get("ColorBorder");
+    // Mesa livre: ColorOutline (mais forte que ColorBorder) para não sumir sobre o fundo do mapa.
+    public Color CorBorda => Mesa.Situacao is "pronto" or "aguardando" ? Cor : Tokens.Get("ColorOutline");
 
     public string Selo => Mesa.PedidosProntos > 0 ? "✓" : Mesa.PedidosAbertos > 0 ? Mesa.PedidosAbertos.ToString() : string.Empty;
 }
