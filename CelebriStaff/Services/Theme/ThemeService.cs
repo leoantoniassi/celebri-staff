@@ -82,7 +82,7 @@ public class ThemeService : INotifyPropertyChanged
             Set(resources, "ColorShadow", "#66000000");
             Set(resources, "ColorGlass", "#CC141A21");
             Set(resources, "ColorScrim", "#99000000");
-            Set(resources, "ColorSuccessContainer", "#1B5E20");
+            Set(resources, "ColorSuccessContainer", "#276D3A");
             Set(resources, "ColorWarningContainer", "#7E2A00");
             Set(resources, "ColorInfoContainer", "#0D47A1");
             Set(resources, "ColorErrorContainer", "#93000A");
@@ -90,6 +90,11 @@ public class ThemeService : INotifyPropertyChanged
             Set(resources, "ColorOnWarningContainer", "#FFE0B2");
             Set(resources, "ColorOnInfoContainer", "#D6E6FF");
             Set(resources, "ColorOnErrorContainer", "#FFDAD6");
+            // Ações da cozinha: azul/verde médios com texto branco (AA nos dois temas).
+            Set(resources, "ColorActionStart", "#3572C4");
+            Set(resources, "ColorOnActionStart", "#FFFFFF");
+            Set(resources, "ColorActionDone", "#2F855A");
+            Set(resources, "ColorOnActionDone", "#FFFFFF");
         }
         else
         {
@@ -113,6 +118,10 @@ public class ThemeService : INotifyPropertyChanged
             Set(resources, "ColorOnWarningContainer", "#3B1A00");
             Set(resources, "ColorOnInfoContainer", "#001A3D");
             Set(resources, "ColorOnErrorContainer", "#410002");
+            Set(resources, "ColorActionStart", "#3572C4");
+            Set(resources, "ColorOnActionStart", "#FFFFFF");
+            Set(resources, "ColorActionDone", "#2F855A");
+            Set(resources, "ColorOnActionDone", "#FFFFFF");
         }
 
         ApplyBrand();

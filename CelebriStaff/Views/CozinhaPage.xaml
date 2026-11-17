@@ -104,11 +104,10 @@
                             </Border>
 
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                                <Button Style="{StaticResource CompactButtonStyle}" Text="Começar" IsVisible="{Binding PodeComecar}"
+                                <Button Style="{StaticResource KitchenStartButtonStyle}" Text="Começar" IsVisible="{Binding PodeComecar}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=ComecarCommand, x:DataType=vm:CozinhaViewModel}"
-                                        CommandParameter="{Binding .}"
-                                        BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{DynamicResource ColorOnSecondary}" />
-                                <Button Grid.Column="1" Style="{StaticResource SuccessButtonStyle}" Text="Pronto" IsVisible="{Binding PodeFinalizar}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Grid.Column="1" Style="{StaticResource KitchenDoneButtonStyle}" Text="Pronto" IsVisible="{Binding PodeFinalizar}"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=ProntoCommand, x:DataType=vm:CozinhaViewModel}"
                                         CommandParameter="{Binding .}" />
                                 <Button Grid.ColumnSpan="2" Style="{StaticResource SecondaryButtonStyle}" Text="Voltar para preparo" IsVisible="{Binding PodeReabrir}"
@@ -146,10 +145,21 @@
                                 <controls:StatusChip Text="{Binding Status}" Kind="{Binding StatusKind}" Margin="0,2,0,0" />
                             </VerticalStackLayout>
                             <Button Grid.Column="2" Text="{Binding ProximaAcao}" VerticalOptions="Center"
-                                    Style="{StaticResource CompactButtonStyle}"
+                                    Style="{StaticResource KitchenStartButtonStyle}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CozinhaViewModel}}, Path=AvancarServicoCommand, x:DataType=vm:CozinhaViewModel}"
-                                    CommandParameter="{Binding .}"
-                                    BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{DynamicResource ColorOnSecondary}" />
+                                    CommandParameter="{Binding .}">
+                                <!-- Mesma linguagem dos pedidos: azul = começar, verde = servir, neutro = reabrir. -->
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding ProximoStatus}" Value="servido">
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource ColorActionDone}" />
+                                        <Setter Property="TextColor" Value="{DynamicResource ColorOnActionDone}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding ProximoStatus}" Value="pendente">
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource ColorSurfaceAlt}" />
+                                        <Setter Property="TextColor" Value="{DynamicResource ColorBrandText}" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
                         </Grid>
                     </Border>
                 </DataTemplate>

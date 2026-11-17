@@ -317,6 +317,21 @@
         <Setter Property="BorderWidth" Value="0" />
     </Style>
 
+    <!-- Cozinha: "Começar" (azul) e "Pronto" (verde) — tokens ColorAction* variam por tema. -->
+    <Style TargetType="Button" x:Key="KitchenStartButtonStyle" BasedOn="{StaticResource CompactButtonStyle}">
+        <Setter Property="TextColor" Value="{DynamicResource ColorOnActionStart}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource ColorActionStart}" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="FontFamily" Value="InterSemibold" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="KitchenDoneButtonStyle" BasedOn="{StaticResource CompactButtonStyle}">
+        <Setter Property="TextColor" Value="{DynamicResource ColorOnActionDone}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource ColorActionDone}" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="FontFamily" Value="InterSemibold" />
+    </Style>
+
     <Style TargetType="Button" x:Key="IconButtonStyle" BasedOn="{StaticResource ButtonBaseStyle}">
         <Setter Property="FontFamily" Value="MaterialIcons" />
         <Setter Property="FontSize" Value="22" />

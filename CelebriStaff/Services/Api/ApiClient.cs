@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using CelebriStaff.Models;
 
 namespace CelebriStaff.Services.Api;
@@ -15,6 +16,9 @@ public class ApiClient(HttpClient http)
     {
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        // DECIMAL do Postgres pode chegar como string ("800.00"); aceitar evita
+        // que um campo numérico derrube a tela inteira.
+        NumberHandling = JsonNumberHandling.AllowReadingFromString,
     };
 
     public Task<ApiResponse<TenantConfig>> GetTenantConfigAsync(string tenantSlug, CancellationToken ct = default)
@@ -151,7 +155,17 @@ public class ApiClient(HttpClient http)
                 Message = $"Resposta inesperada do servidor (HTTP {(int)response.StatusCode}).",
             };
         }
-        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or JsonException)
+        catch (JsonException ex)
+        {
+            // Formato inesperado não é falta de internet: não disfarçar como tal.
+            System.Diagnostics.Debug.WriteLine($"[ApiClient] {request.Method} {request.RequestUri}: {ex}");
+            return new ApiResponse<T>
+            {
+                Success = false,
+                Message = "Resposta inesperada do servidor. Atualize o app ou tente novamente.",
+            };
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
         {
             return new ApiResponse<T>
             {
