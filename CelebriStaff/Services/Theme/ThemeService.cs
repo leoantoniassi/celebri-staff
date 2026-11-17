@@ -82,7 +82,7 @@ public class ThemeService : INotifyPropertyChanged
             Set(resources, "ColorShadow", "#66000000");
             Set(resources, "ColorGlass", "#CC141A21");
             Set(resources, "ColorScrim", "#99000000");
-            Set(resources, "ColorSuccessContainer", "#1B5E20");
+            Set(resources, "ColorSuccessContainer", "#276D3A");
             Set(resources, "ColorWarningContainer", "#7E2A00");
             Set(resources, "ColorInfoContainer", "#0D47A1");
             Set(resources, "ColorErrorContainer", "#93000A");
@@ -90,6 +90,11 @@ public class ThemeService : INotifyPropertyChanged
             Set(resources, "ColorOnWarningContainer", "#FFE0B2");
             Set(resources, "ColorOnInfoContainer", "#D6E6FF");
             Set(resources, "ColorOnErrorContainer", "#FFDAD6");
+            // Ações da cozinha: um tom mais suave no escuro para não "estourar" no fundo.
+            Set(resources, "ColorActionStart", "#8AB8EC");
+            Set(resources, "ColorOnActionStart", "#0A2540");
+            Set(resources, "ColorActionDone", "#7CCB9A");
+            Set(resources, "ColorOnActionDone", "#0B2E16");
         }
         else
         {
@@ -113,6 +118,10 @@ public class ThemeService : INotifyPropertyChanged
             Set(resources, "ColorOnWarningContainer", "#3B1A00");
             Set(resources, "ColorOnInfoContainer", "#001A3D");
             Set(resources, "ColorOnErrorContainer", "#410002");
+            Set(resources, "ColorActionStart", "#6FA8E8");
+            Set(resources, "ColorOnActionStart", "#0A2540");
+            Set(resources, "ColorActionDone", "#5FBF85");
+            Set(resources, "ColorOnActionDone", "#0B2E16");
         }
 
         ApplyBrand();

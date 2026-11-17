@@ -51,6 +51,13 @@
     <Color x:Key="ColorOnInfoContainer">#001A3D</Color>
     <Color x:Key="ColorOnErrorContainer">#410002</Color>
 
+    <!-- Ações da cozinha: tons médios (nem escuros, nem neon) com texto escuro, AA nos dois temas.
+         ThemeService.ApplyMode ajusta por tema; estes são os valores do tema claro. -->
+    <Color x:Key="ColorActionStart">#6FA8E8</Color>
+    <Color x:Key="ColorOnActionStart">#0A2540</Color>
+    <Color x:Key="ColorActionDone">#5FBF85</Color>
+    <Color x:Key="ColorOnActionDone">#0B2E16</Color>
+
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource ColorPrimary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource ColorSecondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource ColorTertiary}"/>
