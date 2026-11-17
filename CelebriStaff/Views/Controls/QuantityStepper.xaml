@@ -4,35 +4,48 @@
              x:Class="CelebriStaff.Views.Controls.QuantityStepper"
              HorizontalOptions="Center">
 
-    <!-- Seletor − n + com alvos de toque de 52px. -->
-    <HorizontalStackLayout Spacing="16" HorizontalOptions="Center">
-        <Button x:Name="MinusButton"
-                Text="{StaticResource IconRemove}"
-                FontFamily="MaterialIcons"
-                FontSize="24"
-                Padding="0"
-                WidthRequest="52"
-                HeightRequest="52"
-                CornerRadius="26"
-                Style="{StaticResource SecondaryButtonStyle}"
-                SemanticProperties.Description="Diminuir quantidade" />
+    <!-- Seletor − n + com alvos de toque de 48px. -->
+    <Border StrokeThickness="0"
+            StrokeShape="RoundRectangle 30"
+            BackgroundColor="{DynamicResource ColorSurfaceAlt}"
+            Padding="6"
+            HorizontalOptions="Center">
+        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+            <Button x:Name="MinusButton"
+                    Text="{StaticResource IconRemove}"
+                    FontFamily="MaterialIcons"
+                    FontSize="22"
+                    Padding="0"
+                    WidthRequest="48"
+                    HeightRequest="48"
+                    MinimumHeightRequest="48"
+                    MinimumWidthRequest="48"
+                    CornerRadius="24"
+                    BackgroundColor="{DynamicResource ColorSurface}"
+                    TextColor="{DynamicResource ColorBrandText}"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    SemanticProperties.Description="Diminuir quantidade" />
 
-        <Label x:Name="ValueLabel"
-               FontSize="36"
-               FontFamily="InterSemibold"
-               MinimumWidthRequest="64"
-               HorizontalTextAlignment="Center"
-               VerticalOptions="Center" />
+            <Label x:Name="ValueLabel"
+                   FontSize="30"
+                   FontFamily="PlusJakartaSansBold"
+                   TextColor="{DynamicResource ColorTextPrimary}"
+                   MinimumWidthRequest="62"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center" />
 
-        <Button x:Name="PlusButton"
-                Text="{StaticResource IconAdd}"
-                FontFamily="MaterialIcons"
-                FontSize="24"
-                Padding="0"
-                WidthRequest="52"
-                HeightRequest="52"
-                CornerRadius="26"
-                Style="{StaticResource PrimaryButtonStyle}"
-                SemanticProperties.Description="Aumentar quantidade" />
-    </HorizontalStackLayout>
+            <Button x:Name="PlusButton"
+                    Text="{StaticResource IconAdd}"
+                    FontFamily="MaterialIcons"
+                    FontSize="22"
+                    Padding="0"
+                    WidthRequest="48"
+                    HeightRequest="48"
+                    MinimumHeightRequest="48"
+                    MinimumWidthRequest="48"
+                    CornerRadius="24"
+                    Style="{StaticResource GradientButtonStyle}"
+                    SemanticProperties.Description="Aumentar quantidade" />
+        </HorizontalStackLayout>
+    </Border>
 </ContentView>

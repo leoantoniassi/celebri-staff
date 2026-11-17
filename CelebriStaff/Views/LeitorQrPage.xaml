@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:behaviors="clr-namespace:CelebriStaff.Views.Behaviors"
              x:Class="CelebriStaff.Views.LeitorQrPage"
+             behaviors:PageEntrance.Enabled="True"
              Title="Ler QR code">
 
     <Grid RowDefinitions="*,Auto">
@@ -12,15 +14,45 @@
 
             <!-- Escurece tudo fora da moldura de leitura (240x240 no centro) -->
             <Grid RowDefinitions="*,240,*" ColumnDefinitions="*,240,*" InputTransparent="True">
-                <BoxView Grid.ColumnSpan="3" Color="Black" Opacity="0.55" />
-                <BoxView Grid.Row="1" Color="Black" Opacity="0.55" />
-                <BoxView Grid.Row="1" Grid.Column="2" Color="Black" Opacity="0.55" />
-                <BoxView Grid.Row="2" Grid.ColumnSpan="3" Color="Black" Opacity="0.55" />
+                <BoxView Grid.ColumnSpan="3" Color="Black" Opacity="0.58" />
+                <BoxView Grid.Row="1" Color="Black" Opacity="0.58" />
+                <BoxView Grid.Row="1" Grid.Column="2" Color="Black" Opacity="0.58" />
+                <BoxView Grid.Row="2" Grid.ColumnSpan="3" Color="Black" Opacity="0.58" />
 
                 <Border Grid.Row="1" Grid.Column="1"
                         StrokeThickness="3" Stroke="{DynamicResource ColorPrimary}"
-                        StrokeShape="RoundRectangle 24" BackgroundColor="Transparent" />
+                        StrokeShape="RoundRectangle 28" BackgroundColor="Transparent">
+                    <Grid>
+                        <BoxView x:Name="ScanLine"
+                                 HeightRequest="2"
+                                 Color="{DynamicResource ColorPrimary}"
+                                 Opacity="0.9"
+                                 VerticalOptions="Start"
+                                 Margin="18,0" />
+                    </Grid>
+                </Border>
             </Grid>
+
+            <!-- Etiqueta flutuante no topo -->
+            <Border Margin="16,16,16,0"
+                    Padding="14,10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20"
+                    BackgroundColor="{DynamicResource ColorGlass}">
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="{StaticResource IconQrScanner}"
+                           Style="{StaticResource IconLabel}"
+                           FontSize="18"
+                           TextColor="{DynamicResource ColorBrandText}" />
+                    <Label Text="Leitor de convites"
+                           FontFamily="InterSemibold"
+                           FontSize="13"
+                           TextColor="{DynamicResource ColorTextPrimary}"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
 
             <!-- Lanterna -->
             <Button x:Name="Lanterna"
@@ -28,9 +60,9 @@
                     FontFamily="MaterialIcons"
                     FontSize="24"
                     Padding="0"
-                    WidthRequest="52"
-                    HeightRequest="52"
-                    CornerRadius="26"
+                    WidthRequest="54"
+                    HeightRequest="54"
+                    CornerRadius="27"
                     Margin="0,0,16,16"
                     HorizontalOptions="End"
                     VerticalOptions="End"
@@ -40,12 +72,23 @@
                     Clicked="OnLanternaClicked" />
         </Grid>
 
-        <VerticalStackLayout Grid.Row="1" Padding="20,16" Spacing="8" BackgroundColor="{DynamicResource ColorSurface}">
-            <Label x:Name="Mensagem" Text="Aponte a câmera para o QR code do convite."
-                   Style="{StaticResource BodyText}"
-                   HorizontalTextAlignment="Center"
-                   SemanticProperties.Description="Instrução do leitor de QR code" />
-            <ActivityIndicator x:Name="Carregando" IsRunning="False" IsVisible="False" HorizontalOptions="Center" />
-        </VerticalStackLayout>
+        <Grid Grid.Row="1" Padding="16,0,16,18">
+            <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Border Style="{StaticResource IconTileStyle}" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20">
+                        <Label Text="{StaticResource IconQrScanner}"
+                               Style="{StaticResource IconLabelOnAccent}"
+                               FontSize="18" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <Label x:Name="Mensagem"
+                               Text="Aponte a câmera para o QR code do convite."
+                               Style="{StaticResource BodyText}"
+                               SemanticProperties.Description="Instrução do leitor de QR code" />
+                        <ActivityIndicator x:Name="Carregando" IsRunning="False" IsVisible="False" HorizontalOptions="Start" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </ContentPage>

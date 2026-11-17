@@ -4,121 +4,164 @@
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
              xmlns:models="clr-namespace:CelebriStaff.Models"
              xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
+             xmlns:behaviors="clr-namespace:CelebriStaff.Views.Behaviors"
              x:Class="CelebriStaff.Views.MesaPage"
              x:DataType="vm:MesaViewModel"
+             behaviors:PageEntrance.Enabled="True"
              Title="Comanda">
 
     <Grid RowDefinitions="*,Auto">
-    <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
-            <Label Text="{Binding Titulo}" Style="{StaticResource TitleText}" SemanticProperties.HeadingLevel="Level1" />
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="14">
 
-            <!-- Novo pedido -->
-            <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="Novo pedido" Style="{StaticResource Headline}" />
-
-                    <Border Style="{StaticResource InputBorderStyle}" MinimumHeightRequest="0" Padding="14,4">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                            <Label Text="{StaticResource IconRestaurant}" Style="{StaticResource IconLabel}" />
-                            <Entry Grid.Column="1" Placeholder="Item (ex.: suco de uva, mais salgados)" Text="{Binding Descricao}" />
-                        </Grid>
-                    </Border>
-
-                    <controls:QuantityStepper Value="{Binding Quantidade}"
-                                              MinusCommand="{Binding MenosCommand}"
-                                              PlusCommand="{Binding MaisCommand}" />
-
-                    <Border Style="{StaticResource InputBorderStyle}" MinimumHeightRequest="0" Padding="14,4">
-                        <Entry Placeholder="Anotação (ex.: sem gelo, sem glúten)" Text="{Binding ObservacaoItem}" />
-                    </Border>
-
-                    <!-- Alergia: destaque visual quando marcada -->
-                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="8,2"
-                            BackgroundColor="{DynamicResource ColorSurfaceAlt}">
-                        <Border.Triggers>
-                            <DataTrigger TargetType="Border" Binding="{Binding Alerta}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{DynamicResource ColorErrorContainer}" />
-                            </DataTrigger>
-                        </Border.Triggers>
-                        <HorizontalStackLayout Spacing="6">
-                            <CheckBox IsChecked="{Binding Alerta}" Color="{DynamicResource ColorError}"
-                                      SemanticProperties.Description="Marcar alergia ou restrição" />
-                            <Label Text="Alergia ou restrição (destaque na cozinha)" VerticalOptions="Center" FontSize="14" />
-                        </HorizontalStackLayout>
-                    </Border>
-
-                    <Button Text="Adicionar item" Style="{StaticResource SecondaryButtonStyle}" Command="{Binding AdicionarItemCommand}" />
-
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Novos}" Spacing="6">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="models:PedidoItem">
-                                <Border StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="12,8"
-                                        BackgroundColor="{DynamicResource ColorSurfaceAlt}">
-                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                        <Label Text="{Binding Linha}" VerticalOptions="Center" />
-                                        <Button Grid.Column="1"
-                                                Text="{StaticResource IconClose}"
-                                                FontFamily="MaterialIcons"
-                                                FontSize="18"
-                                                Padding="0"
-                                                WidthRequest="44"
-                                                HeightRequest="44"
-                                                Style="{StaticResource CompactDangerButtonStyle}"
-                                                SemanticProperties.Description="Remover item"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MesaViewModel}}, Path=RemoverItemCommand, x:DataType=vm:MesaViewModel}"
-                                                CommandParameter="{Binding .}" />
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-
+                <VerticalStackLayout Spacing="3">
+                    <Label Text="COMANDA" Style="{StaticResource Eyebrow}" />
+                    <Label Text="{Binding Titulo}" Style="{StaticResource TitleText}" FontSize="24"
+                           SemanticProperties.HeadingLevel="Level1" />
                 </VerticalStackLayout>
-            </Border>
 
-            <!-- Pedidos da mesa -->
-            <Label Text="Pedidos desta mesa" Style="{StaticResource Headline}" Margin="0,8,0,0"
-                   SemanticProperties.HeadingLevel="Level2" />
-            <controls:LoadingSkeleton IsVisible="{Binding CarregandoInicial}" HeightRequest="190" Margin="-16,0" />
-            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Pedidos}" Spacing="8"
-                                 IsVisible="{Binding CarregandoInicial, Converter={StaticResource InvertedBoolConverter}}">
-                <BindableLayout.EmptyView>
-                    <controls:EmptyStateView Icon="{StaticResource IconReceipt}"
-                                             Title="Nenhum pedido ainda"
-                                             Message="Os pedidos enviados para a cozinha aparecem aqui." />
-                </BindableLayout.EmptyView>
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="vm:PedidoDaMesa">
-                        <Border Style="{StaticResource CardStyle}" Margin="0" Padding="14" StrokeShape="RoundRectangle 14">
-                            <VerticalStackLayout Spacing="8">
-                                <controls:StatusChip Text="{Binding Rotulo}" Kind="{Binding StatusKind}" />
-                                <Label Text="{Binding Hora}" Style="{StaticResource CaptionText}" />
-                                <Label Text="{Binding Itens}" Style="{StaticResource BodyText}" />
-                                <Button Text="Entreguei na mesa" IsVisible="{Binding PodeEntregar}"
-                                        Style="{StaticResource SuccessButtonStyle}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MesaViewModel}}, Path=EntregarCommand, x:DataType=vm:MesaViewModel}"
-                                        CommandParameter="{Binding .}" />
-                                <Button Text="Cancelar pedido" IsVisible="{Binding PodeCancelar}"
-                                        Style="{StaticResource DangerButtonStyle}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MesaViewModel}}, Path=CancelarCommand, x:DataType=vm:MesaViewModel}"
-                                        CommandParameter="{Binding .}" />
+                <!-- Novo pedido -->
+                <Border Style="{StaticResource CardStyle}" Margin="0" Padding="18">
+                    <VerticalStackLayout Spacing="14">
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border Style="{StaticResource IconTileStyle}" WidthRequest="42" HeightRequest="42">
+                                <Label Text="{StaticResource IconRoomService}"
+                                       Style="{StaticResource IconLabelOnAccent}" FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Novo pedido" Style="{StaticResource Headline}" />
+                                <Label Text="Monte o pedido e envie para a cozinha" Style="{StaticResource CaptionText}" />
                             </VerticalStackLayout>
-                        </Border>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+                        </Grid>
 
-    <!-- Barra fixa: o envio fica sempre ao alcance do polegar enquanto há itens na comanda -->
-    <Border Grid.Row="1" IsVisible="{Binding TemItens}" StrokeShape="RoundRectangle 0"
-            StrokeThickness="0" Padding="16,10"
-            BackgroundColor="{DynamicResource ColorSurface}">
-        <Button Text="Enviar pedido para a cozinha" Command="{Binding EnviarCommand}"
-                BackgroundColor="{DynamicResource ColorSecondary}" TextColor="{DynamicResource ColorOnSecondary}"
-                MinimumHeightRequest="52"
-                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
-    </Border>
+                        <Border Style="{StaticResource InputBorderStyle}" MinimumHeightRequest="0" Padding="14,4">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                <Label Text="{StaticResource IconRestaurant}"
+                                       Style="{StaticResource IconLabel}"
+                                       TextColor="{DynamicResource ColorBrandText}" />
+                                <Entry Grid.Column="1" Placeholder="Item (ex.: suco de uva, mais salgados)" Text="{Binding Descricao}" />
+                            </Grid>
+                        </Border>
+
+                        <controls:QuantityStepper Value="{Binding Quantidade}"
+                                                  MinusCommand="{Binding MenosCommand}"
+                                                  PlusCommand="{Binding MaisCommand}" />
+
+                        <Border Style="{StaticResource InputBorderStyle}" MinimumHeightRequest="0" Padding="14,4">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                <Label Text="{StaticResource IconInfo}"
+                                       Style="{StaticResource IconLabel}"
+                                       TextColor="{DynamicResource ColorTextSecondary}" />
+                                <Entry Grid.Column="1" Placeholder="Anotação (ex.: sem gelo, sem glúten)" Text="{Binding ObservacaoItem}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Alergia: destaque visual quando marcada -->
+                        <Border StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,10"
+                                BackgroundColor="{DynamicResource ColorSurfaceAlt}">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding Alerta}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource ColorErrorContainer}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <CheckBox IsChecked="{Binding Alerta}" Color="{DynamicResource ColorError}"
+                                          SemanticProperties.Description="Marcar alergia ou restrição" />
+                                <Label Grid.Column="1" Text="Alergia ou restrição (destaque na cozinha)"
+                                       VerticalOptions="Center" FontSize="14" />
+                            </Grid>
+                        </Border>
+
+                        <Button Text="Adicionar item" Style="{StaticResource SecondaryButtonStyle}" Command="{Binding AdicionarItemCommand}" />
+
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Novos}" Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:PedidoItem">
+                                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="12,8"
+                                            BackgroundColor="{DynamicResource ColorSurfaceAlt}">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                            <Label Text="{Binding Linha}" VerticalOptions="Center" FontSize="14" />
+                                            <Button Grid.Column="1"
+                                                    Text="{StaticResource IconClose}"
+                                                    FontFamily="MaterialIcons"
+                                                    FontSize="17"
+                                                    Padding="0"
+                                                    WidthRequest="40"
+                                                    HeightRequest="40"
+                                                    MinimumHeightRequest="40"
+                                                    MinimumWidthRequest="40"
+                                                    CornerRadius="12"
+                                                    Style="{StaticResource CompactDangerButtonStyle}"
+                                                    SemanticProperties.Description="Remover item"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MesaViewModel}}, Path=RemoverItemCommand, x:DataType=vm:MesaViewModel}"
+                                                    CommandParameter="{Binding .}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Pedidos da mesa -->
+                <HorizontalStackLayout Spacing="8" Margin="2,8,0,0">
+                    <BoxView WidthRequest="4" HeightRequest="16" CornerRadius="2"
+                             Color="{DynamicResource ColorPrimary}" VerticalOptions="Center" />
+                    <Label Text="Pedidos desta mesa" Style="{StaticResource SectionHeaderStyle}"
+                           SemanticProperties.HeadingLevel="Level2" />
+                </HorizontalStackLayout>
+
+                <controls:LoadingSkeleton IsVisible="{Binding CarregandoInicial}" HeightRequest="190" Margin="-16,0" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Pedidos}" Spacing="10"
+                                     IsVisible="{Binding CarregandoInicial, Converter={StaticResource InvertedBoolConverter}}">
+                    <BindableLayout.EmptyView>
+                        <controls:EmptyStateView Icon="{StaticResource IconReceipt}"
+                                                 Title="Nenhum pedido ainda"
+                                                 Message="Os pedidos enviados para a cozinha aparecem aqui." />
+                    </BindableLayout.EmptyView>
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:PedidoDaMesa">
+                            <Border Style="{StaticResource CardStyle}" Margin="0" Padding="16" StrokeShape="RoundRectangle 20">
+                                <VerticalStackLayout Spacing="10">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="{Binding Hora}" Style="{StaticResource CaptionText}" />
+                                            <Label Text="PEDIDO" Style="{StaticResource Eyebrow}" FontSize="10" />
+                                        </VerticalStackLayout>
+                                        <controls:StatusChip Grid.Column="1" Text="{Binding Rotulo}" Kind="{Binding StatusKind}" />
+                                    </Grid>
+                                    <Border Style="{StaticResource SoftCardStyle}" Padding="12,10">
+                                        <Label Text="{Binding Itens}" Style="{StaticResource BodyText}" />
+                                    </Border>
+                                    <Button Text="Entreguei na mesa" IsVisible="{Binding PodeEntregar}"
+                                            Style="{StaticResource SuccessButtonStyle}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MesaViewModel}}, Path=EntregarCommand, x:DataType=vm:MesaViewModel}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Cancelar pedido" IsVisible="{Binding PodeCancelar}"
+                                            Style="{StaticResource DangerButtonStyle}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MesaViewModel}}, Path=CancelarCommand, x:DataType=vm:MesaViewModel}"
+                                            CommandParameter="{Binding .}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Barra fixa: o envio fica sempre ao alcance do polegar enquanto há itens na comanda -->
+        <Border Grid.Row="1" IsVisible="{Binding TemItens}" StrokeShape="RoundRectangle 0"
+                StrokeThickness="0" Padding="16,12"
+                BackgroundColor="{DynamicResource ColorSurface}">
+            <Border.Shadow>
+                <Shadow Brush="{DynamicResource ColorShadow}" Offset="0,-8" Radius="24" Opacity="0.9" />
+            </Border.Shadow>
+            <Button Text="Enviar pedido para a cozinha" Command="{Binding EnviarCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    MinimumHeightRequest="56"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+        </Border>
     </Grid>
 </ContentPage>

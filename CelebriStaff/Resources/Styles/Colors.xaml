@@ -17,17 +17,25 @@
          BrandText = cor de marca segura para TEXTO e ícones sobre ColorSurface/ColorBackground. -->
     <Color x:Key="ColorOnPrimary">#021A1D</Color>
     <Color x:Key="ColorOnSecondary">#29012A</Color>
+    <Color x:Key="ColorOnGradient">#021A1D</Color>
     <Color x:Key="ColorBrandText">#1F357F</Color>
+    <Color x:Key="ColorAccentSoft">#E3FAFD</Color>
+    <Color x:Key="ColorOnAccentSoft">#0B4B54</Color>
 
     <!-- Neutros: valores do tema CLARO. O ThemeService.ApplyMode troca estes
          mesmos tokens para o tema ESCURO quando o sistema entra em modo escuro. -->
-    <Color x:Key="ColorBackground">#FAFCFD</Color>
+    <Color x:Key="ColorBackground">#F6F8FB</Color>
     <Color x:Key="ColorSurface">#FFFFFF</Color>
-    <Color x:Key="ColorSurfaceAlt">#F3F6F6</Color>
-    <Color x:Key="ColorTextPrimary">#020708</Color>
-    <Color x:Key="ColorTextSecondary">#566E71</Color>
-    <Color x:Key="ColorBorder">#B0CACD</Color>
-    <Color x:Key="ColorShadow">#14000000</Color>
+    <Color x:Key="ColorSurfaceAlt">#F1F5F8</Color>
+    <Color x:Key="ColorSurfaceContainer">#EAF0F4</Color>
+    <Color x:Key="ColorSurfaceHigh">#E1E9EE</Color>
+    <Color x:Key="ColorTextPrimary">#0B1220</Color>
+    <Color x:Key="ColorTextSecondary">#5B6B7C</Color>
+    <Color x:Key="ColorBorder">#E3EAEF</Color>
+    <Color x:Key="ColorOutline">#C9D5DD</Color>
+    <Color x:Key="ColorShadow">#1A0B1220</Color>
+    <Color x:Key="ColorGlass">#CCFFFFFF</Color>
+    <Color x:Key="ColorScrim">#66000000</Color>
 
     <!-- Status (base fixa nos dois temas; containers variam por tema) -->
     <Color x:Key="ColorSuccess">#2E7D32</Color>
@@ -47,10 +55,21 @@
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource ColorSecondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource ColorTertiary}"/>
 
-    <!-- Gradiente da marca Celebri (ciano -> magenta, 45 graus) -->
+    <!-- Gradientes da marca Celebri (ciano -> magenta).
+         O ThemeService recria estes brushes em runtime com as cores do buffet. -->
     <LinearGradientBrush x:Key="BrandGradientBrush" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Color="#1CEAFF" Offset="0.0" />
         <GradientStop Color="#FF45FF" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BrandGradientVerticalBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#1CEAFF" Offset="0.0" />
+        <GradientStop Color="#FF45FF" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BrandGradientSoftBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#331CEAFF" Offset="0.0" />
+        <GradientStop Color="#1FFF45FF" Offset="1.0" />
     </LinearGradientBrush>
 
     <Color x:Key="BrandNavy">#0E1A3A</Color>

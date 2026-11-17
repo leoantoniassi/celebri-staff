@@ -3,56 +3,76 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
              xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
+             xmlns:behaviors="clr-namespace:CelebriStaff.Views.Behaviors"
              x:Class="CelebriStaff.Views.LoginPage"
              x:DataType="vm:LoginViewModel"
+             behaviors:PageEntrance.Enabled="True"
              Title="Entrar">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24,32" Spacing="24" VerticalOptions="Center">
+    <Grid>
+        <Border StrokeThickness="0"
+                StrokeShape="RoundRectangle 0,0,0,48"
+                Background="{DynamicResource BrandGradientSoftBrush}"
+                HeightRequest="260"
+                VerticalOptions="Start"
+                InputTransparent="True" />
 
-            <controls:BrandHero
-                                LogoUrl="{Binding LogoUrl}"
-                                Title="{Binding NomeFantasia}"
-                                Subtitle="Entre com seu e-mail e senha" />
+        <ScrollView>
+            <VerticalStackLayout Padding="24,32" Spacing="26" VerticalOptions="Center">
 
-            <Border Style="{StaticResource CardStyle}" Padding="20" Margin="0">
-                <VerticalStackLayout Spacing="16">
+                <controls:BrandHero
+                                    LogoUrl="{Binding LogoUrl}"
+                                    Title="{Binding NomeFantasia}"
+                                    Subtitle="Entre com seu e-mail e senha" />
 
-                    <Border Style="{StaticResource InputBorderStyle}">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                            <Label Text="{StaticResource IconMail}" Style="{StaticResource IconLabel}" />
-                            <Entry Grid.Column="1"
-                                   Placeholder="E-mail"
-                                   Text="{Binding Email}"
-                                   Keyboard="Email"
-                                   IsSpellCheckEnabled="False"
-                                   IsTextPredictionEnabled="False"
-                                   SemanticProperties.Description="E-mail" />
-                        </Grid>
-                    </Border>
+                <Border Style="{StaticResource CardStyle}" Padding="22" Margin="0">
+                    <VerticalStackLayout Spacing="16">
 
-                    <Border Style="{StaticResource InputBorderStyle}">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                            <Label Text="{StaticResource IconLock}" Style="{StaticResource IconLabel}" />
-                            <Entry Grid.Column="1"
-                                   Placeholder="Senha"
-                                   Text="{Binding Senha}"
-                                   IsPassword="True"
-                                   SemanticProperties.Description="Senha" />
-                        </Grid>
-                    </Border>
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="BEM-VINDO DE VOLTA" Style="{StaticResource Eyebrow}" />
+                            <Label Text="Entre na sua conta" Style="{StaticResource Headline}" />
+                        </VerticalStackLayout>
 
-                    <controls:ErrorBanner Message="{Binding ErrorMessage}" />
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                <Label Text="{StaticResource IconMail}"
+                                       Style="{StaticResource IconLabel}"
+                                       TextColor="{DynamicResource ColorBrandText}" />
+                                <Entry Grid.Column="1"
+                                       Placeholder="E-mail"
+                                       Text="{Binding Email}"
+                                       Keyboard="Email"
+                                       IsSpellCheckEnabled="False"
+                                       IsTextPredictionEnabled="False"
+                                       SemanticProperties.Description="E-mail" />
+                            </Grid>
+                        </Border>
 
-                    <Button Text="Entrar"
-                            Style="{StaticResource PrimaryButtonStyle}"
-                            Command="{Binding LoginCommand}"
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                <Label Text="{StaticResource IconLock}"
+                                       Style="{StaticResource IconLabel}"
+                                       TextColor="{DynamicResource ColorBrandText}" />
+                                <Entry Grid.Column="1"
+                                       Placeholder="Senha"
+                                       Text="{Binding Senha}"
+                                       IsPassword="True"
+                                       SemanticProperties.Description="Senha" />
+                            </Grid>
+                        </Border>
 
-                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
-                </VerticalStackLayout>
-            </Border>
+                        <controls:ErrorBanner Message="{Binding ErrorMessage}" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                        <Button Text="Entrar"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Command="{Binding LoginCommand}"
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

@@ -6,6 +6,8 @@ namespace CelebriStaff.Views;
 /// <summary>Lê o QR do convite e abre a tela de entrada com os dados dele.</summary>
 public partial class LeitorQrPage : ContentPage, IQueryAttributable
 {
+    private const string ScanAnimation = "scan-line";
+
     private readonly ApiClient _api;
     private string _eventoId = string.Empty;
     private bool _processando;
@@ -32,13 +34,24 @@ public partial class LeitorQrPage : ContentPage, IQueryAttributable
         base.OnAppearing();
         _processando = false;
         Leitor.IsDetecting = true;
+        StartScanAnimation();
     }
 
     protected override void OnDisappearing()
     {
+        this.AbortAnimation(ScanAnimation);
         Leitor.IsDetecting = false;
         Leitor.IsTorchOn = false;
         base.OnDisappearing();
+    }
+
+    private void StartScanAnimation()
+    {
+        this.AbortAnimation(ScanAnimation);
+        ScanLine.TranslationY = 0;
+
+        new Animation(v => ScanLine.TranslationY = v, 0, 190)
+            .Commit(this, ScanAnimation, length: 1800, easing: Easing.Linear, repeat: () => true);
     }
 
     private void OnLanternaClicked(object? sender, EventArgs e)

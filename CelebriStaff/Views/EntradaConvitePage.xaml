@@ -3,53 +3,83 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CelebriStaff.ViewModels"
              xmlns:controls="clr-namespace:CelebriStaff.Views.Controls"
+             xmlns:behaviors="clr-namespace:CelebriStaff.Views.Behaviors"
              x:Class="CelebriStaff.Views.EntradaConvitePage"
              x:DataType="vm:EntradaConviteViewModel"
+             behaviors:PageEntrance.Enabled="True"
              Title="Entrada do convidado">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="20" VerticalOptions="Center">
+    <Grid>
+        <Border StrokeThickness="0"
+                StrokeShape="RoundRectangle 0,0,0,48"
+                Background="{DynamicResource BrandGradientSoftBrush}"
+                HeightRequest="260"
+                VerticalOptions="Start"
+                InputTransparent="True" />
 
-            <Border Style="{StaticResource CardStyle}" Margin="0" Padding="20">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="{StaticResource IconGroups}" Style="{StaticResource IconLabelLarge}" />
-                    <Label Text="{Binding Nome}"
-                           Style="{StaticResource TitleText}"
-                           HorizontalTextAlignment="Center"
-                           SemanticProperties.HeadingLevel="Level1" />
-                    <Label Text="{Binding Situacao}"
-                           Style="{StaticResource CaptionText}"
-                           HorizontalTextAlignment="Center" />
-                </VerticalStackLayout>
-            </Border>
+        <ScrollView>
+            <VerticalStackLayout Padding="24,28" Spacing="18" VerticalOptions="Center">
 
-            <VerticalStackLayout Spacing="12">
-                <Label Text="Quantas pessoas estão entrando agora?"
-                       Style="{StaticResource BodyText}"
-                       HorizontalTextAlignment="Center" />
-                <controls:QuantityStepper Value="{Binding Quantidade}"
-                                          MinusCommand="{Binding MenosCommand}"
-                                          PlusCommand="{Binding MaisCommand}" />
+                <Border Style="{StaticResource HeroCardStyle}" Margin="0" Padding="24">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid WidthRequest="76" HeightRequest="76" HorizontalOptions="Center">
+                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 38"
+                                    Background="{DynamicResource BrandGradientBrush}" />
+                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 32"
+                                    BackgroundColor="{DynamicResource ColorSurface}"
+                                    Margin="5">
+                                <Label Text="{StaticResource IconGroups}"
+                                       Style="{StaticResource IconLabel}"
+                                       FontSize="30"
+                                       TextColor="{DynamicResource ColorBrandText}" />
+                            </Border>
+                        </Grid>
+
+                        <Label Text="CONVITE DO EVENTO" Style="{StaticResource Eyebrow}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding Nome}"
+                               Style="{StaticResource TitleText}"
+                               HorizontalTextAlignment="Center"
+                               SemanticProperties.HeadingLevel="Level1" />
+                        <Label Text="{Binding Situacao}"
+                               Style="{StaticResource CaptionText}"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Margin="0" Padding="20">
+                    <VerticalStackLayout Spacing="16">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Quantas pessoas estão entrando agora?" Style="{StaticResource Headline}"
+                                   HorizontalTextAlignment="Center" />
+                            <Label Text="Informe a quantidade para registrar a entrada."
+                                   Style="{StaticResource CaptionText}"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <controls:QuantityStepper Value="{Binding Quantidade}"
+                                                  MinusCommand="{Binding MenosCommand}"
+                                                  PlusCommand="{Binding MaisCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Registrar entrada"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding RegistrarCommand}"
+                        IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                        FontSize="17"
+                        MinimumHeightRequest="56" />
+
+                <Label Text="{Binding Mensagem}"
+                       TextColor="{Binding MensagemCor}"
+                       FontFamily="InterSemibold"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="{Binding Mensagem, Converter={StaticResource StringNotEmptyConverter}}" />
+
+                <Button Text="Desfazer 1 entrada (lançamento errado)"
+                        Style="{StaticResource CompactDangerButtonStyle}"
+                        Command="{Binding DesfazerUmaCommand}"
+                        IsVisible="{Binding JaEntraram, Converter={StaticResource PositivoConverter}}" />
             </VerticalStackLayout>
-
-            <Button Text="Registrar entrada"
-                    Command="{Binding RegistrarCommand}"
-                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-                    BackgroundColor="{DynamicResource ColorSecondary}"
-                    TextColor="{DynamicResource ColorOnSecondary}"
-                    FontSize="17"
-                    MinimumHeightRequest="52" />
-
-            <Label Text="{Binding Mensagem}"
-                   TextColor="{Binding MensagemCor}"
-                   FontFamily="InterSemibold"
-                   HorizontalTextAlignment="Center"
-                   IsVisible="{Binding Mensagem, Converter={StaticResource StringNotEmptyConverter}}" />
-
-            <Button Text="Desfazer 1 entrada (lançamento errado)"
-                    Style="{StaticResource CompactDangerButtonStyle}"
-                    Command="{Binding DesfazerUmaCommand}"
-                    IsVisible="{Binding JaEntraram, Converter={StaticResource PositivoConverter}}" />
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </ContentPage>

@@ -43,9 +43,11 @@ public partial class StatusChip : ContentView
         Chip.SetDynamicResource(VisualElement.BackgroundColorProperty, background);
         TextView.SetDynamicResource(Label.TextColorProperty, foreground);
         IconView.SetDynamicResource(Label.TextColorProperty, foreground);
+        Dot.SetDynamicResource(BoxView.ColorProperty, foreground);
 
         TextView.Text = Text;
         IconView.Text = Icon;
         IconView.IsVisible = !string.IsNullOrEmpty(Icon);
+        Dot.IsVisible = string.IsNullOrEmpty(Icon);
     }
 }

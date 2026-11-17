@@ -6,17 +6,26 @@
 
     <!-- Faixa de erro padrão: some quando Message está vazia. -->
     <Border StrokeThickness="0"
-            StrokeShape="RoundRectangle 12"
+            StrokeShape="RoundRectangle 16"
             BackgroundColor="{DynamicResource ColorErrorContainer}"
-            Padding="12">
-        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-            <Label Text="{StaticResource IconError}"
-                   Style="{StaticResource IconLabel}"
-                   TextColor="{DynamicResource ColorOnErrorContainer}"
-                   VerticalOptions="Start" />
+            Padding="14,12">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 16"
+                    BackgroundColor="{DynamicResource ColorSurface}"
+                    Opacity="0.75"
+                    WidthRequest="32"
+                    HeightRequest="32"
+                    VerticalOptions="Start">
+                <Label Text="{StaticResource IconError}"
+                       Style="{StaticResource IconLabel}"
+                       FontSize="18"
+                       TextColor="{DynamicResource ColorOnErrorContainer}" />
+            </Border>
             <Label x:Name="MessageView"
                    Grid.Column="1"
                    FontSize="14"
+                   LineHeight="1.35"
                    TextColor="{DynamicResource ColorOnErrorContainer}"
                    VerticalOptions="Center"
                    SemanticProperties.HeadingLevel="None" />
