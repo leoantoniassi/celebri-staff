@@ -49,15 +49,37 @@
                         </Border>
 
                         <Border Style="{StaticResource InputBorderStyle}">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                                 <Label Text="{StaticResource IconLock}"
                                        Style="{StaticResource IconLabel}"
                                        TextColor="{DynamicResource ColorBrandText}" />
                                 <Entry Grid.Column="1"
                                        Placeholder="Senha"
                                        Text="{Binding Senha}"
-                                       IsPassword="True"
+                                       IsPassword="{Binding SenhaVisivel, Converter={StaticResource InvertedBoolConverter}}"
                                        SemanticProperties.Description="Senha" />
+                                <!-- Mostrar/ocultar a senha digitada -->
+                                <Button Grid.Column="2"
+                                        Style="{StaticResource IconButtonStyle}"
+                                        Text="{StaticResource IconVisibility}"
+                                        FontSize="20"
+                                        WidthRequest="36"
+                                        HeightRequest="36"
+                                        MinimumWidthRequest="36"
+                                        MinimumHeightRequest="36"
+                                        CornerRadius="18"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{DynamicResource ColorTextSecondary}"
+                                        VerticalOptions="Center"
+                                        Command="{Binding AlternarSenhaCommand}"
+                                        SemanticProperties.Description="Mostrar senha">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding SenhaVisivel}" Value="True">
+                                            <Setter Property="Text" Value="{StaticResource IconVisibilityOff}" />
+                                            <Setter Property="SemanticProperties.Description" Value="Ocultar senha" />
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
                             </Grid>
                         </Border>
 

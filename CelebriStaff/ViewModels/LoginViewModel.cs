@@ -29,6 +29,13 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty]
     private string senha = string.Empty;
 
+    /// <summary>Botão de "olho" no campo de senha: mostra o que está sendo digitado.</summary>
+    [ObservableProperty]
+    private bool senhaVisivel;
+
+    [RelayCommand]
+    private void AlternarSenha() => SenhaVisivel = !SenhaVisivel;
+
     [ObservableProperty]
     private string? errorMessage;
 

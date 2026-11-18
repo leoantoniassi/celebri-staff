@@ -148,6 +148,10 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     private async Task LogoutAsync()
     {
+        var sair = await Shell.Current.DisplayAlertAsync(
+            "Sair da conta", "Deseja mesmo sair do app?", "Sair", "Cancelar");
+        if (!sair) return;
+
         await _authService.LogoutAsync();
         await Shell.Current.GoToAsync("//entrar");
     }
