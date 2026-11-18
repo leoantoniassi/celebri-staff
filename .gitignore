@@ -19,6 +19,9 @@ Directory.Build.local.props
 *.appx
 *.msix
 
+# Claude Code (worktrees e configurações locais)
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
