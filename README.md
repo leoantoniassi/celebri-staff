@@ -96,7 +96,7 @@ O app resolve isso com:
 | Camada | Tecnologia |
 | :--- | :--- |
 | App | **.NET MAUI (.NET 10)**, CommunityToolkit.Mvvm, CommunityToolkit.Maui (toasts/snackbars), **ZXing.Net.Maui** (leitor de QR), `SecureStorage` e `Preferences` (dados locais) |
-| Alvo | **Android** (emulador e aparelho). iOS fica fora do semestre (exige macOS). |
+| Alvo | **Android** (emulador e aparelho). **Windows** só para testar a interface no PC (janela do tamanho de um celular; sem leitor de QR). iOS fica fora do semestre (exige macOS). |
 | API | Node.js 22 + Express, Sequelize, JWT, bcrypt, `qrcode` |
 | Banco | PostgreSQL 15 (Docker), migrations SQL versionadas |
 | Painel web | React + Vite + Tailwind |
@@ -139,6 +139,16 @@ O Plano de Projeto v1.0 previa um app com 7 histórias genéricas:
 | 13 | **Prioridade para segurança e LGPD antes de novas telas.** | Antes de pôr o app em uso real com dados de convidados, a API precisava estar pronta para isso: revogação de sessão, autorização do funcionário de campo, auditoria, anonimização. |
 | 14 | **Contador adulto/criança, cronograma com avisos e atalho do gerente** passam para o EF. | Consequência do item 13: o esforço do épico foi para UX e segurança. |
 
+**Refinamentos após o Marco 2 (rumo ao EF):**
+
+| # | Refinamento | Por quê |
+| :-: | :--- | :--- |
+| 15 | **Check-in só depois de confirmar presença.** Antes de confirmar, o botão "Cheguei no evento" aparece desabilitado com a dica "Confirme sua presença para liberar o check-in". A API também recusa o check-in de escala não confirmada (erro 409). | Antes, o check-in confirmava a presença automaticamente, e o gerente não distinguia quem tinha confirmado de quem só apareceu. |
+| 16 | **Estoque reservado pelo painel.** O gerente reserva os produtos do evento (botão "Produtos / Estoque" no detalhe do evento) e, ao converter um orçamento em evento, os produtos do orçamento são copiados. | A aba Estoque da cozinha já existia no app, mas só o seed preenchia esses dados. |
+| 17 | **Novo visual do app:** todas as telas redesenhadas, com animação de entrada nas páginas (fade + deslize) e resposta ao toque em botões e cards (encolhem levemente ao pressionar). | Deixar o app com cara de app moderno e dar retorno imediato a cada toque. |
+| 18 | **Login e saída:** botão de "olho" para mostrar ou ocultar a senha, e confirmação "Deseja mesmo sair do app?" antes de deslogar. | Evitar erro de digitação da senha e saída acidental no meio do evento. |
+| 19 | **App também roda no Windows**, numa janela do tamanho de um celular. | Testar a interface no PC, sem emulador nem aparelho. |
+
 ---
 
 # 2. O APLICATIVO
@@ -150,9 +160,10 @@ O Plano de Projeto v1.0 previa um app com 7 histórias genéricas:
 
 | Perfil | O que faz no app | Situação |
 | :--- | :--- | :---: |
-| **Todos** | Entrar só com o e-mail (o app descobre o buffet). Primeiro acesso com código de 6 dígitos e criação de senha. Identidade visual do buffet (cores, logo, nome). | ✅ |
-| **Todos** | **Minhas escalas:** próximos eventos e anteriores, com função e local. **Confirmar ou recusar** presença. **"Cheguei no evento"** (check-in, de 3h antes até o fim). | ✅ |
+| **Todos** | Entrar só com o e-mail (o app descobre o buffet). Primeiro acesso com código de 6 dígitos e criação de senha. Botão para **mostrar/ocultar a senha**. Identidade visual do buffet (cores, logo, nome). **Confirmação antes de sair** da conta. | ✅ |
+| **Todos** | **Minhas escalas:** próximos eventos e anteriores, com função e local. **Confirmar ou recusar** presença. **"Cheguei no evento"** (check-in, de 3h antes até o fim, **liberado só depois de confirmar a presença**). | ✅ |
 | **Todos** | Visual padronizado, **modo escuro**, feedback com vibração e toasts, carregamento com skeleton. | ✅ (Épico 2) |
+| **Todos** | **Novo visual** das telas, com animação de entrada e resposta ao toque em botões e cards. | ✅ (EF) |
 | **Porteiro / recepção** | **Contador de pessoas** (+1 / −1) compartilhado entre porteiros. **Leitura do QR** do convite com nome e quantidade, **lanterna** no leitor. **Entrada parcial** e correção. Busca do convidado pelo nome. | ✅ |
 | **Garçom** | **Mapa das mesas** do salão com a situação de cada uma (livre / aguardando cozinha / pronto). **Comanda** com itens, quantidade, anotação e alerta de alergia. Marcar entregue ou cancelar. | ✅ |
 | **Cozinha** | **Pedidos** dos garçons por ordem de chegada (começar / pronto). **Cardápio** com o que será servido, quantidade e horário previsto. **Estoque** reservado ao evento com alerta de mínimo. | ✅ |
@@ -168,7 +179,8 @@ O Plano de Projeto v1.0 previa um app com 7 histórias genéricas:
 - **intervalo mínimo** entre escalas;
 - **lista de convidados** com envio do QR pelo WhatsApp;
 - **mapa de mesas** por salão;
-- **cardápio da cozinha** por evento.
+- **cardápio da cozinha** por evento;
+- **produtos reservados** para o evento (estoque da cozinha), copiados do orçamento quando ele vira evento.
 
 ### 2.3 Funcionalidades Características de Aplicativo
 
@@ -217,6 +229,7 @@ O Celebri Staff é um **app nativo Android** (.NET MAUI compila para um APK com 
    - `Views` (XAML) + `ViewModels` (CommunityToolkit.Mvvm).
    - Navegação por **Shell** com rotas por módulo (`portaria`, `garcom`, `cozinha`). A home decide qual módulo abrir pela **função da escala**.
    - Componentes visuais reutilizáveis em `Views/Controls`.
+   - Animações em `Views/Behaviors`: `PageEntrance` (entrada das páginas), `PressFeedback` (resposta ao toque, ligada em todos os botões pelo `MauiProgram`) e `Motion` (microanimações compartilhadas).
 2. **Serviços do app:**
    - `ApiClient`: HttpClient tipado, JSON camelCase.
    - `AuthHeaderHandler`: injeta o JWT.
@@ -426,9 +439,9 @@ Legenda: ✅ **Concluído** · 🔄 **Em execução** · 📅 **Planejado**
 | **US01** | **Como** funcionário, **quero** entrar só com meu e-mail, **para que** o app encontre meu buffet e aplique a marca dele. | • E-mail em mais de um buffet → lista para escolher.<br>• Cores, logo e nome do buffet aplicados.<br>• Sessão restaurada ao reabrir. | Alta | 1 | ✅ |
 | **US08** | **Como** funcionário novo, **quero** criar minha senha no primeiro acesso, **para que** eu não dependa do gerente. | • Código de 6 dígitos por e-mail, válido 15 min, 5 tentativas.<br>• Só o hash do código é guardado.<br>• Após criar a senha, entra direto. | Alta | 1 | ✅ |
 | **US02** | **Como** funcionário, **quero** ver minhas escalas e confirmar ou recusar, **para que** o gerente saiba quem vai. | • Próximos e anteriores, com função e local.<br>• Confirmar/Recusar refletem no painel. | Alta | 1 | ✅ |
-| **US09** | **Como** funcionário, **quero** avisar que cheguei, **para que** o gerente acompanhe a equipe. | • Disponível de 3h antes até o fim do evento.<br>• Horário aparece no painel. | Média | 1 | ✅ |
+| **US09** | **Como** funcionário, **quero** avisar que cheguei, **para que** o gerente acompanhe a equipe. | • Disponível de 3h antes até o fim do evento.<br>• Liberado só depois de confirmar a presença.<br>• Horário aparece no painel. | Média | 1 | ✅ |
 | **US10** | **Como** gerente, **quero** definir o intervalo mínimo entre escalas e a função de cada pessoa por evento, **para que** a escala respeite as regras do buffet. | • Intervalo de 0 a 24h por buffet.<br>• Função por escala; módulo do app por função. | Média | 1 | ✅ |
-| **US13** | **Como** gerente, **quero** cadastrar convidados, mesas e cardápio no painel, **para que** o app tenha os dados do evento. | • Convite com envio do QR pelo WhatsApp.<br>• Mapa de mesas por clique.<br>• Cardápio com horário. | Alta | 1 | ✅ |
+| **US13** | **Como** gerente, **quero** cadastrar convidados, mesas e cardápio no painel, **para que** o app tenha os dados do evento. | • Convite com envio do QR pelo WhatsApp.<br>• Mapa de mesas por clique.<br>• Cardápio com horário.<br>• Produtos reservados ao evento (estoque da cozinha). | Alta | 1 | ✅ |
 | **US03** | **Como** porteiro, **quero** ler o QR do convite, **para que** a entrada seja rápida e o nome apareça. | • QR para 1 ou N pessoas.<br>• Quantidade editável; entrada parcial; aviso se passar do previsto.<br>• Busca por nome se não houver QR.<br>• Lanterna no leitor. | Alta | 1 | ✅ código · 🔄 homologação com QR em celular real |
 | **US04** | **Como** porteiro, **quero** um contador de pessoas, **para que** o buffet saiba quantos estão no salão. | • +1/−1 compartilhado entre porteiros sem perder contagem.<br>• *(EF)* separar adultos/crianças e barra de lotação. | Média | 1 → 3 | ✅ contador · 📅 adulto/criança |
 | **US11** | **Como** garçom, **quero** ver o mapa das mesas e anotar pedidos, **para que** a cozinha receba sem eu ir até lá. | • Mapa com situação por cor.<br>• Itens com quantidade, anotação e alerta de alergia.<br>• Marcar entregue/cancelar. | Alta | 1 | ✅ código · 🔄 homologação |
@@ -744,6 +757,7 @@ O roteiro completo de homologação está em **[`TESTE_MANUAL.md`](TESTE_MANUAL.
 2. **App:** Visual Studio 2026 com o workload **.NET MAUI**, e um emulador Android ou celular com depuração USB.
 3. **Endereço da API** (ver `Services/Api/AppConfig.cs`):
    - **Emulador:** o app usa `http://10.0.2.2:3001/api/`.
+   - **Windows:** o app usa `http://localhost:3001/api/`.
    - **Celular físico, sem cabo (recomendado): túnel ngrok.** A API fica acessível em `https://<seu-dominio>.ngrok-free.dev/api/` (ou `.app`) de qualquer rede (Wi-Fi do lab, 4G), sem `adb reverse` e sem depender do IP do PC. Configuração única:
      1. Crie uma conta gratuita em [ngrok.com](https://ngrok.com). Copie o **authtoken** e reserve o **domínio estático gratuito** (Dashboard → Domains).
      2. No `.env` do celebri, preencha `NGROK_AUTHTOKEN` e `NGROK_DOMAIN` (só o domínio, sem `https://`) e rode `.\dev-up.ps1`, ou `docker compose --profile tunel up -d`. O container `celebri_ngrok` sobe junto com a API e volta sozinho com o Docker.
@@ -762,6 +776,7 @@ O roteiro completo de homologação está em **[`TESTE_MANUAL.md`](TESTE_MANUAL.
 ### 6.3 Como rodar o app
 - **Visual Studio:** selecione o projeto `CelebriStaff`, escolha o emulador/dispositivo Android e pressione **F5**.
 - **Linha de comando:** `dotnet build -t:Run -f net10.0-android`
+- **Windows (testar a interface no PC):** no Visual Studio, escolha **Windows Machine** como destino, ou rode `dotnet build -t:Run -f net10.0-windows10.0.19041.0`. A janela abre no tamanho de um celular e continua redimensionável. A câmera/leitor de QR não é usada nesse modo.
 
 ### 6.4 Dicas de depuração
 - Sem cores ou "empresa não encontrada": confira se o seed rodou sem erro.
